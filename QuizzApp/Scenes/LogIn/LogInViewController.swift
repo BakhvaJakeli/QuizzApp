@@ -28,13 +28,14 @@ final class LogInViewController: UIViewController {
         return textFIeld
     }()
     
-    private let logInButton: UIButton = {
+    private lazy var logInButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("ქვიზის დაწყება", for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: LogInViewControllerConstants.logInButtonTitleLableFont)
         button.layer.cornerRadius = LogInViewControllerConstants.logInTextFieldCornerRadius
         button.backgroundColor = QuizzAppColors.buttonColor
+        button.addTarget(self, action: #selector(clickLogIn), for: .touchUpInside)
         
         return button
     }()
@@ -50,7 +51,6 @@ final class LogInViewController: UIViewController {
     //MARK: Config UI
     private func configUI() {
         view.backgroundColor = .systemBackground
-        logInButton.addTarget(self, action: #selector(clickLogIn), for: .touchUpInside)
     }
 
     //MARK: Add SubViews
@@ -98,7 +98,10 @@ final class LogInViewController: UIViewController {
     }
     
     @objc private func clickLogIn() {
-        print("jeff")
+        let homePageViewController = HomePageViewController()
+        let navigactionController = UINavigationController(rootViewController: homePageViewController)
+        navigactionController.modalPresentationStyle = .fullScreen
+        present(navigactionController, animated: true)
     }
 }
 
