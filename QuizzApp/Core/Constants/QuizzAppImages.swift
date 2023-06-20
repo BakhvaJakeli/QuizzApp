@@ -19,4 +19,6 @@ enum QuizzAppImages {
     static let physics = UIImage(named: "Physics")
     static let programming = UIImage(named: "Programming")
     static let star = UIImage(named: "Star")
+    static let testCover = UIImage(named: "Test_Cover")
+    static let xMark = UIImage(named: "X_Mark")
 }

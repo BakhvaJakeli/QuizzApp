@@ -7,22 +7,22 @@
 
 import UIKit
 
-final class LogInImageView: UIView {
+final class CoverView: UIView {
     
     //MARK: Components
-    private lazy var title: UILabel = {
+    private let title: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.backgroundColor = .clear
-        label.text = "ჩემი პირველი ქვიზი"
-        label.font = .boldSystemFont(ofSize: LogInImageViewConstants.titleFontSize)
+        label.text = Constants.titleText
+        label.font = .boldSystemFont(ofSize: Constants.titleFontSize)
         label.textColor = .white
         label.textAlignment = .center
         
         return label
     }()
     
-    private lazy var logInImage: UIImageView = {
+    private let logInImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = QuizzAppImages.myFirstQuizzImage
@@ -51,7 +51,7 @@ final class LogInImageView: UIView {
     //MARK: Add Views
     private func addViews() {
         addSubview(title)
-        addSubview(logInImage)
+        addSubview(logInImageView)
     }
     
     //MARK: Add constraints
@@ -63,17 +63,17 @@ final class LogInImageView: UIView {
     //MARK: Title Constraints
     private func titleConstraints() {
         NSLayoutConstraint.activate([
-            title.topAnchor.constraint(equalTo: topAnchor, constant: LogInImageViewConstants.titleTopPadding),
+            title.topAnchor.constraint(equalTo: topAnchor, constant: Constants.titleTopPadding),
             title.centerXAnchor.constraint(equalTo: centerXAnchor),
-            title.bottomAnchor.constraint(equalTo: logInImage.topAnchor, constant: LogInImageViewConstants.titleBottomPadding)
+            title.bottomAnchor.constraint(equalTo: logInImageView.topAnchor, constant: Constants.titleBottomPadding)
         ])
     }
     
     // MARK: Log In Image Constraints
     private func logInImageConstraints() {
         NSLayoutConstraint.activate([
-            logInImage.centerXAnchor.constraint(equalTo: centerXAnchor),
-            logInImage.bottomAnchor.constraint(equalTo: bottomAnchor, constant: LogInImageViewConstants.logInImageBottomPadding)
+            logInImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            logInImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: Constants.logInImageBottomPadding)
         ])
     }
     
@@ -139,11 +139,12 @@ final class LogInImageView: UIView {
     }
 }
 
-private extension LogInImageView {
-    enum LogInImageViewConstants {
+private extension CoverView {
+    enum Constants {
         static let titleFontSize: CGFloat = 20
         static let titleTopPadding: CGFloat = 121
         static let titleBottomPadding: CGFloat = -34
         static let logInImageBottomPadding: CGFloat = -23
+        static let titleText = "ჩემი პირველი ქვიზი"
     }
 }

@@ -7,23 +7,209 @@
 
 import UIKit
 
-class ScoreViewController: UIViewController {
-
+final class ScoreViewController: UIViewController {
+    
+    let scores = [
+        Score(image: QuizzAppImages.georgraphy ?? UIImage(), title: "გეოგრაფია", score: 2),
+        Score(image: QuizzAppImages.programming ?? UIImage(), title: "პროგრამირება", score: 4),
+        Score(image: QuizzAppImages.history ?? UIImage(), title: "ისტორია", score: 2),
+        Score(image: QuizzAppImages.physics ?? UIImage(), title: "ფიზიკა", score: 5),
+    ]
+    
+    //MARK: Components
+    let alertView: LogOutAlert = {
+        let view = LogOutAlert()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.setTitleText(Constants.alertTitleLabelText)
+        
+        return view
+    }()
+    
+    private let noScoreLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.text = Constants.noScoreLabelText
+        label.font = .systemFont(ofSize: Constants.noScoreLabelFont)
+        label.textColor = .black
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        return label
+    }()
+    
+    private lazy var scoreTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.register(ScoreTableViewCell.self, forCellReuseIdentifier: ScoreTableViewCell.identifier)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.separatorStyle = .none
+        tableView.allowsSelection = false
+        tableView.isHidden = true
+        
+        return tableView
+    }()
+    
+    private let separatorView: UIView = {
+        let view = UIView()
+        view.backgroundColor = QuizzAppColors.lightGray
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+    
+    private lazy var logOutButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        var configuration = UIButton.Configuration.filled()
+        configuration.baseBackgroundColor = QuizzAppColors.buttonColor
+        configuration.image = QuizzAppImages.logOut
+        configuration.cornerStyle = .capsule
+        button.configuration = configuration
+        button.addTarget(self, action: #selector(logOut), for: .touchUpInside)
+        
+        return button
+    }()
+    
+    //MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
+        configUI()
+        addSubViews()
+        addConstraints()
+    }
+}
 
-        // Do any additional setup after loading the view.
+//MARK: - Private Functions
+private extension ScoreViewController {
+    //MARK: Config UI
+    func configUI() {
+        view.backgroundColor = .systemBackground
+        navigationController?.isNavigationBarHidden = false
+        navigationController?.navigationBar.tintColor = .black
+        navigationController?.navigationBar.backItem?.title = ""
+        navigationController?.navigationBar.topItem?.title = Constants.navigationTitle
+        alertView.delegate = self
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    //MARK: Add Sub Views
+    func addSubViews() {
+        view.addSubview(noScoreLabel)
+        view.addSubview(scoreTableView)
+        view.addSubview(separatorView)
+        view.addSubview(logOutButton)
     }
-    */
+    
+    //MARK: Add Constraints
+    func addConstraints() {
+        separatorViewConstraints()
+        scoreTableViewConstraints()
+        logOutButtonConstraints()
+        noScoreLabelConstraints()
+    }
+    //MARK: No Score Label Constraints
+    func noScoreLabelConstraints() {
+        NSLayoutConstraint.activate([
+            noScoreLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            noScoreLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
+    }
+    
+    //MARK: Score Table View Constraints
+    func scoreTableViewConstraints() {
+        NSLayoutConstraint.activate([
+            scoreTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scoreTableView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            scoreTableView.bottomAnchor.constraint(equalTo: separatorView.topAnchor),
+            scoreTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.scoreTableViewLeftPadding)
+        ])
+    }
+    
+    //MARK: Separator View Constraints
+    func separatorViewConstraints() {
+        NSLayoutConstraint.activate([
+            separatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            separatorView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.separatorViewLeftPadding),
+            separatorView.heightAnchor.constraint(equalToConstant: Constants.separatorViewHeight)
+        ])
+    }
+    
+    //MARK: Log Out Button Constraints
+    func logOutButtonConstraints() {
+        NSLayoutConstraint.activate([
+            logOutButton.topAnchor.constraint(equalTo: separatorView.bottomAnchor, constant: Constants.logOutButtonTopPadding),
+            logOutButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: Constants.logOutButtonRightPadding),
+            logOutButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: Constants.logOutButtonBottomPadding)
+        ])
+    }
+    
+    //MARK: Alert View Constraints
+    func alertViewConstraints() {
+        NSLayoutConstraint.activate([
+            alertView.topAnchor.constraint(equalTo: view.topAnchor),
+            alertView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            alertView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            alertView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
+        ])
+    }
+    
+    //MARK: Log Out
+    @objc func logOut() {
+        view.addSubview(alertView)
+        alertViewConstraints()
+        alertView.alpha = 0
+        UIView.animate(withDuration: 0.3,
+                       animations: {
+            self.alertView.alpha = 1
+            self.navigationController?.isNavigationBarHidden = true
+        },completion: nil)
+    }
+}
 
+//MARK: - Table View Functions
+extension ScoreViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        scores.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ScoreTableViewCell.identifier) as? ScoreTableViewCell else {return UITableViewCell()}
+        let score = scores[indexPath.row]
+        cell.configCell(with: score)
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        UITableView.automaticDimension
+    }
+}
+
+//MARK: -Log Out Alert Delegate
+extension ScoreViewController: logOutAlertProtocol {
+    func pressYes() {
+        dismiss(animated: true)
+    }
+    
+    func pressNo() {
+        alertView.removeFromSuperview()
+        navigationController?.isNavigationBarHidden = false
+    }
+}
+
+//MARK: -Constants
+private extension ScoreViewController {
+    enum Constants {
+        static let navigationTitle = "დაგროვილი ქულები ⭐"
+        static let separatorViewTopPadding: CGFloat = 81
+        static let separatorViewLeftPadding: CGFloat = 0
+        static let separatorViewHeight: CGFloat = 2
+        static let logOutButtonTopPadding: CGFloat = 12
+        static let logOutButtonRightPadding: CGFloat = -16
+        static let logOutButtonBottomPadding: CGFloat = -11
+        static let noScoreLabelText = "🧐 \nსამწუხაროდ,\nქულები ჯერ არ გაქვს \nდაგროვილი."
+        static let noScoreLabelFont: CGFloat = 18
+        static let scoreTableViewLeftPadding: CGFloat = 16
+        static let alertTitleLabelText = "ნამდვილად გსურს გასვლა?"
+    }
 }

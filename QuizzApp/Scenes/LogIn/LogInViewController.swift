@@ -8,10 +8,10 @@
 import UIKit
 
 final class LogInViewController: UIViewController {
-
+    
     //MARK: Components
-    private let logInImage: LogInImageView = {
-        let logInImage = LogInImageView()
+    private let logInImageView: CoverView = {
+        let logInImage = CoverView()
         logInImage.translatesAutoresizingMaskIntoConstraints = false
         return logInImage
     }()
@@ -20,10 +20,11 @@ final class LogInViewController: UIViewController {
         let textFIeld = UITextField()
         textFIeld.translatesAutoresizingMaskIntoConstraints = false
         textFIeld.textAlignment = .center
-        textFIeld.placeholder = "შეიყვანე სახელი"
-        textFIeld.layer.cornerRadius = LogInViewControllerConstants.logInTextFieldCornerRadius
-        textFIeld.layer.borderWidth = LogInViewControllerConstants.logInTextFieldBorderWidth
+        textFIeld.placeholder = Constants.logInTextFieldPlaceHolder
+        textFIeld.layer.cornerRadius = Constants.logInTextFieldCornerRadius
+        textFIeld.layer.borderWidth = Constants.logInTextFieldBorderWidth
         textFIeld.layer.borderColor = QuizzAppColors.buttonColor.cgColor
+        textFIeld.autocorrectionType = .no
         
         return textFIeld
     }()
@@ -31,9 +32,9 @@ final class LogInViewController: UIViewController {
     private lazy var logInButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("ქვიზის დაწყება", for: .normal)
-        button.titleLabel?.font = .boldSystemFont(ofSize: LogInViewControllerConstants.logInButtonTitleLableFont)
-        button.layer.cornerRadius = LogInViewControllerConstants.logInTextFieldCornerRadius
+        button.setTitle(Constants.logInButtonTitle, for: .normal)
+        button.titleLabel?.font = .boldSystemFont(ofSize: Constants.logInButtonTitleLableFont)
+        button.layer.cornerRadius = Constants.logInTextFieldCornerRadius
         button.backgroundColor = QuizzAppColors.buttonColor
         button.addTarget(self, action: #selector(clickLogIn), for: .touchUpInside)
         
@@ -48,56 +49,88 @@ final class LogInViewController: UIViewController {
         configUI()
     }
     
-    //MARK: Config UI
-    private func configUI() {
-        view.backgroundColor = .systemBackground
+    //MARK: View Will Appear
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        AppUtility.lockOrientation(.portrait)
     }
+    
+    //MARK: View Will Disappear
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        AppUtility.lockOrientation(.all)
+    }
+}
 
+//MARK: - Functions
+private extension LogInViewController {
+    
+    //MARK: Config UI
+    func configUI() {
+        view.backgroundColor = .systemBackground
+        hideKeyboardWhenTappedAround()
+    }
+    
     //MARK: Add SubViews
-    private func addSubViews() {
-        view.addSubview(logInImage)
+    func addSubViews() {
+        view.addSubview(logInImageView)
         view.addSubview(logInTextField)
         view.addSubview(logInButton)
     }
     
     //MARK: Add Constrants
-    private func addConstraints() {
+    func addConstraints() {
         logInImageConstraints()
         logInTextFieldConstraints()
         logInButtonConstraints()
     }
     
     //MARK: Log In Image Constraints
-    private func logInImageConstraints() {
+    func logInImageConstraints() {
         NSLayoutConstraint.activate([
-            logInImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            logInImage.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            logInImage.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            logInImage.heightAnchor.constraint(equalToConstant: LogInViewControllerConstants.logInImageHeight)
+            logInImageView.topAnchor.constraint(equalTo: view.topAnchor),
+            logInImageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            logInImageView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
         ])
     }
     
     //MARK: Log In Text Field Constrants
-    private func logInTextFieldConstraints() {
+    func logInTextFieldConstraints() {
         NSLayoutConstraint.activate([
-            logInTextField.topAnchor.constraint(equalTo: logInImage.bottomAnchor, constant: LogInViewControllerConstants.logInTextFieldTopPadding),
+            logInTextField.topAnchor.constraint(equalTo: logInImageView.bottomAnchor,
+                                                constant: Constants.logInTextFieldTopPadding),
             logInTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            logInTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: LogInViewControllerConstants.logInTextFieldLeadingPadding),
-            logInTextField.heightAnchor.constraint(equalToConstant: LogInViewControllerConstants.logInTextFieldHeight)
+            logInTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                    constant: Constants.logInTextFieldLeadingPadding),
+            logInTextField.heightAnchor.constraint(equalToConstant: Constants.logInTextFieldHeight)
         ])
     }
     
     //MARK: Log in Button Constraints
-    private func logInButtonConstraints() {
+    func logInButtonConstraints() {
         NSLayoutConstraint.activate([
-            logInButton.topAnchor.constraint(equalTo: logInTextField.bottomAnchor, constant: LogInViewControllerConstants.logInButtonTopPadding),
+            logInButton.topAnchor.constraint(equalTo: logInTextField.bottomAnchor,
+                                             constant: Constants.logInButtonTopPadding),
             logInButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            logInButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: LogInViewControllerConstants.logInButtonLeadingPadding),
-            logInButton.heightAnchor.constraint(equalToConstant: LogInViewControllerConstants.logInButtonHeight)
+            logInButton.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                 constant: Constants.logInButtonLeadingPadding),
+            logInButton.heightAnchor.constraint(equalToConstant: Constants.logInButtonHeight)
         ])
     }
     
-    @objc private func clickLogIn() {
+    //MARK: Hide Keyboard Function
+    func hideKeyboardWhenTappedAround() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
+    //MARK: Click Log In Function
+    @objc func clickLogIn() {
         let homePageViewController = HomePageViewController()
         let navigactionController = UINavigationController(rootViewController: homePageViewController)
         navigactionController.modalPresentationStyle = .fullScreen
@@ -105,9 +138,9 @@ final class LogInViewController: UIViewController {
     }
 }
 
+//MARK: - Constants
 private extension LogInViewController {
-    enum LogInViewControllerConstants {
-        static let logInImageHeight: CGFloat = 433
+    enum Constants {
         static let logInTextFieldCornerRadius: CGFloat = 12
         static let logInTextFieldBorderWidth: CGFloat = 1
         static let logInTextFieldTopPadding: CGFloat = 92
@@ -118,5 +151,7 @@ private extension LogInViewController {
         static let logInButtonLeadingPadding: CGFloat = 117
         static let logInButtonHeight: CGFloat = 44
         static let logInButtonTitleLableFont: CGFloat = 12
+        static let logInTextFieldPlaceHolder = "შეიყვანე სახელი"
+        static let logInButtonTitle = "ქვიზის დაწყება"
     }
 }
