@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol CompletionAlertProtocol: AnyObject {
+    func pressClose()
+}
+
 final class CompletionAlert: UIView {
+    
+    weak var delegate: CompletionAlertProtocol?
     
     //MARK: Components
     private let alertView: UIView = {
@@ -66,12 +72,13 @@ final class CompletionAlert: UIView {
         return view
     }()
     
-    private let closeButton: UIButton = {
+    private lazy var closeButton: UIButton = {
         let button = UIButton()
         var configuration = UIButton.Configuration.filled()
         configuration.title = Constants.closeButtonTitle
         configuration.baseBackgroundColor = .clear
         button.configuration = configuration
+        button.addTarget(self, action: #selector(close), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
@@ -162,6 +169,11 @@ private extension CompletionAlert {
             closeButton.leadingAnchor.constraint(equalTo: alertView.leadingAnchor, constant: Constants.closeButtonLeftPadding),
             closeButton.bottomAnchor.constraint(equalTo: alertView.bottomAnchor, constant: Constants.closeButtonBottomPadding)
         ])
+    }
+    
+    //MARK: Close Function
+    @objc func close() {
+        delegate?.pressClose()
     }
 }
 

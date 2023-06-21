@@ -31,7 +31,7 @@ final class LogOutAlert: UIView {
         label.font = .boldSystemFont(ofSize: Constants.titleLabelFont)
         label.textColor = .systemBackground
         label.textAlignment = .center
-        label.numberOfLines = 0
+        label.numberOfLines = Constants.titleLabelNumberOfLines
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -162,5 +162,6 @@ private extension LogOutAlert {
         static let stackViewTopPadding: CGFloat = 20
         static let stackViewLeftPadding: CGFloat = 24
         static let stackViewBottomPadding: CGFloat = -40
+        static let titleLabelNumberOfLines = 0
     }
 }

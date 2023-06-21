@@ -31,7 +31,7 @@ final class ScoreViewController: UIViewController {
         label.text = Constants.noScoreLabelText
         label.font = .systemFont(ofSize: Constants.noScoreLabelFont)
         label.textColor = .black
-        label.numberOfLines = 0
+        label.numberOfLines = Constants.noScoreLabelNumberOfLines
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -211,5 +211,6 @@ private extension ScoreViewController {
         static let noScoreLabelFont: CGFloat = 18
         static let scoreTableViewLeftPadding: CGFloat = 16
         static let alertTitleLabelText = "ნამდვილად გსურს გასვლა?"
+        static let noScoreLabelNumberOfLines = 0
     }
 }

@@ -17,10 +17,17 @@ final class TestViewController: UIViewController {
     ]
     
     //MARK: Components
-    let alertView: LogOutAlert = {
+    let logOutAlertView: LogOutAlert = {
         let view = LogOutAlert()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.setTitleText(Constants.alertTitleLabelText)
+        
+        return view
+    }()
+    
+    let finishedQuizzAlertView: CompletionAlert = {
+        let view = CompletionAlert()
+        view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
     }()
@@ -110,7 +117,8 @@ private extension TestViewController {
     //MARK: Config UI
     func configUI() {
         view.backgroundColor = .systemBackground
-        alertView.delegate = self
+        logOutAlertView.delegate = self
+        finishedQuizzAlertView.delegate = self
     }
     
     //MARK: Add Sub Views
@@ -201,24 +209,44 @@ private extension TestViewController {
         ])
     }
     
-    //MARK: Alert View Constraints
-    func alertViewConstraints() {
+    //MARK: log Out Alert View Constraints
+    func logOutAlertViewConstraints() {
         NSLayoutConstraint.activate([
-            alertView.topAnchor.constraint(equalTo: view.topAnchor),
-            alertView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            alertView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            alertView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
+            logOutAlertView.topAnchor.constraint(equalTo: view.topAnchor),
+            logOutAlertView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            logOutAlertView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            logOutAlertView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
         ])
+    }
+    
+    //MARK: Finished Quizz Alert View Constraints
+    func finishedQuizzAlertConstraints() {
+        NSLayoutConstraint.activate([
+            finishedQuizzAlertView.topAnchor.constraint(equalTo: view.topAnchor),
+            finishedQuizzAlertView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            finishedQuizzAlertView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            finishedQuizzAlertView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
+        ])
+    }
+    
+    func showFinishedQuizzAlert() {
+        view.addSubview(finishedQuizzAlertView)
+        finishedQuizzAlertConstraints()
+        finishedQuizzAlertView.alpha = Constants.alertViewInitialAlpha
+        UIView.animate(withDuration: Constants.comletionAlertAnimationDuration,
+                       animations: {
+            self.finishedQuizzAlertView.alpha = Constants.alertViewFinalAlpha
+        },completion: nil)
     }
     
     //MARK: Quit Action
     @objc func quit() {
-        view.addSubview(alertView)
-        alertViewConstraints()
-        alertView.alpha = 0
-        UIView.animate(withDuration: 0.3,
+        view.addSubview(logOutAlertView)
+        logOutAlertViewConstraints()
+        logOutAlertView.alpha = Constants.alertViewFinalAlpha
+        UIView.animate(withDuration: Constants.logOutAlertAnimationDuration,
                        animations: {
-            self.alertView.alpha = 1
+            self.logOutAlertView.alpha = Constants.alertViewFinalAlpha
         },completion: nil)
     }
 }
@@ -240,16 +268,34 @@ extension TestViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         UITableView.automaticDimension
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) as? AnswerTableViewCell else {return}
+        if indexPath.row == 2 {
+            cell.correctAnswerSelected()
+            cell.setCorrectAnswerColor()
+        } else {
+            cell.setIncorrectAnswerColor()
+        }
+        showFinishedQuizzAlert()
+    }
 }
 
-//MARK: -Alert View Delegate
+//MARK: -Log out Alert View Delegate
 extension TestViewController: logOutAlertProtocol {
     func pressYes() {
         navigationController?.popViewController(animated: true)
     }
     
     func pressNo() {
-        alertView.removeFromSuperview()
+        logOutAlertView.removeFromSuperview()
+    }
+}
+
+//MARK: -Completion Alert View Delegate
+extension TestViewController: CompletionAlertProtocol {
+    func pressClose() {
+        navigationController?.popViewController(animated: true)
     }
 }
 
@@ -276,5 +322,9 @@ private extension TestViewController {
         static let nextButtonBottomPadding: CGFloat = -140
         static let nextButtonHeight: CGFloat = 60
         static let alertTitleLabelText = "ნამდვილად გსურს ქვიზის \nშეწყვეტა?"
+        static let alertViewInitialAlpha: CGFloat = 0
+        static let alertViewFinalAlpha: CGFloat = 1
+        static let comletionAlertAnimationDuration: CGFloat = 1
+        static let logOutAlertAnimationDuration: CGFloat = 0.3
     }
 }

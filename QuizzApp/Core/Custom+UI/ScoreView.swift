@@ -23,11 +23,11 @@ final class ScoreView: UIView {
             .font: UIFont.boldSystemFont(ofSize: Constants.gpaLabelFont)
         ]
         attributedString.addAttributes(initialAttributes,
-                                       range: NSRange(location: 0,
-                                                      length: 6))
+                                       range: NSRange(location: Constants.defaultAttributeLocation,
+                                                      length: Constants.defaultAttributeLength))
         attributedString.addAttributes(yellowBoldAttributes,
-                                       range: NSRange(location: 6,
-                                                      length: Constants.gpaText.count - 6))
+                                       range: NSRange(location: Constants.defaultAttributeLength,
+                                                      length: Constants.gpaText.count - Constants.defaultAttributeLength))
         label.attributedText = attributedString
         label.backgroundColor = QuizzAppColors.blueSecondaryLight
         label.layer.cornerRadius = Constants.gpaLabelCornerRadius
@@ -132,5 +132,7 @@ private extension ScoreView {
         static let arrowImageLeftPadding: CGFloat = 4
         static let detailLabelFont: CGFloat = 12
         static let gpaLabelFont: CGFloat = 16
+        static let defaultAttributeLocation = 0
+        static let defaultAttributeLength = 6
     }
 }
