@@ -11,7 +11,7 @@ final class SubjectsTableViewCell: UITableViewCell {
     
     static let identifier = "SubjectsTableViewCell"
     
-    //MARK: Components
+    // MARK: Components
     private let mainView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -72,9 +72,10 @@ final class SubjectsTableViewCell: UITableViewCell {
         return stackView
     }()
 
-    //MARK: Init
+    // MARK: Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        selectionStyle = .none
         addViews()
         constraints()
     }
@@ -83,16 +84,24 @@ final class SubjectsTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: Config Cell
+    // MARK: Config Cell
     func configCell(with subject: Subject) {
         subjectImageView.image = subject.image
         titleLabel.text = subject.title
     }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        if isSelected {
+            backgroundColor = .clear
+            contentView.backgroundColor = .clear
+        }
+    }
 }
 
-//MARK: Private Functions
+// MARK: -Private Functions
 private extension SubjectsTableViewCell {
-    //MARK: Add Sub Views
+    // MARK: Add Sub Views
     private func addViews() {
         contentView.addSubview(mainView)
         mainView.addSubview(subjectImageView)
@@ -100,7 +109,7 @@ private extension SubjectsTableViewCell {
         mainView.addSubview(nextButton)
     }
     
-    //MARK: Add Constraints
+    // MARK: Add Constraints
     func constraints() {
         mainViewConstraints()
         subjectImageViewConstraints()
@@ -108,7 +117,7 @@ private extension SubjectsTableViewCell {
         nextButtonConstraints()
     }
     
-    //MARK: Main View Constraints
+    // MARK: Main View Constraints
     func mainViewConstraints() {
         NSLayoutConstraint.activate([
             mainView.topAnchor.constraint(equalTo: contentView.topAnchor,
@@ -120,7 +129,7 @@ private extension SubjectsTableViewCell {
         ])
     }
     
-    //MARK: Subject Image View Constraint
+    // MARK: Subject Image View Constraint
     func subjectImageViewConstraints() {
         NSLayoutConstraint.activate([
             subjectImageView.topAnchor.constraint(equalTo: mainView.topAnchor,
@@ -131,7 +140,7 @@ private extension SubjectsTableViewCell {
         ])
     }
     
-    //MARK: Stack View Constraints
+    // MARK: Stack View Constraints
     func stackViewConstraints() {
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: mainView.topAnchor,
@@ -143,7 +152,7 @@ private extension SubjectsTableViewCell {
         ])
     }
     
-    //MARK: Next Button Constraints
+    // MARK: Next Button Constraints
     func nextButtonConstraints() {
         NSLayoutConstraint.activate([
             nextButton.leadingAnchor.constraint(greaterThanOrEqualTo: stackView.trailingAnchor,
@@ -158,7 +167,7 @@ private extension SubjectsTableViewCell {
     }
 }
 
-//MARK: -Constants
+// MARK: -Constants
 private extension SubjectsTableViewCell {
     enum Constants {
         static let mainViewCornerRadius: CGFloat = 26

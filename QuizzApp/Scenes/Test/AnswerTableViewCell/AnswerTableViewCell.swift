@@ -13,7 +13,7 @@ final class AnswerTableViewCell: UITableViewCell {
     
     private var stackViewIsHidden: Bool = true
     
-    //MARK: Components
+    // MARK: Components
     private let mainView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -59,9 +59,10 @@ final class AnswerTableViewCell: UITableViewCell {
         return stackView
     }()
     
-    //MARK: Init
+    // MARK: Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        selectionStyle = .none
         addViews()
         constraints()
     }
@@ -70,38 +71,30 @@ final class AnswerTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: Config Cell
+    // MARK: Config Cell
     func configCell(with answer: String) {
         answerLabel.text = answer
     }
     
-    //MARK: Cell Selection Override
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        if isSelected {
-            backgroundColor = .clear
-        }
-    }
-    
-    //MARK: Point gets added
+    // MARK: Point gets added
     func correctAnswerSelected() {
         stackView.isHidden = false
     }
     
-    //MARK: Correct Answer Color Set
+    // MARK: Correct Answer Color Set
     func setCorrectAnswerColor() {
         mainView.backgroundColor = .green
     }
     
-    //MARK: Incorrect Answer Color Set
+    // MARK: Incorrect Answer Color Set
     func setIncorrectAnswerColor() {
         mainView.backgroundColor = .red
     }
 }
 
-//MARK: -Private Functions
+// MARK: -Private Functions
 private extension AnswerTableViewCell {
-    //MARK: Add Sub Views
+    // MARK: Add Sub Views
     func addViews() {
         contentView.addSubview(mainView)
         mainView.addSubview(answerLabel)
@@ -110,14 +103,14 @@ private extension AnswerTableViewCell {
         mainView.addSubview(stackView)
     }
     
-    //MARK: Add Constraints
+    // MARK: Add Constraints
     func constraints() {
         mainViewConstraints()
         answerLabelConstraints()
         stackViewConstraints()
     }
     
-    //MARK: Main View Constraints
+    // MARK: Main View Constraints
     func mainViewConstraints() {
         NSLayoutConstraint.activate([
             mainView.topAnchor.constraint(equalTo: contentView.topAnchor,
@@ -129,7 +122,7 @@ private extension AnswerTableViewCell {
         ])
     }
     
-    //MARK: Answer Label Constraints
+    // MARK: Answer Label Constraints
     func answerLabelConstraints() {
         NSLayoutConstraint.activate([
             answerLabel.topAnchor.constraint(equalTo: mainView.topAnchor,
@@ -140,7 +133,7 @@ private extension AnswerTableViewCell {
         ])
     }
     
-    //MARK: Stack View Constraints
+    // MARK: Stack View Constraints
     func stackViewConstraints() {
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: mainView.topAnchor, constant: Constants.stackViewTopPadding),
@@ -150,7 +143,7 @@ private extension AnswerTableViewCell {
     }
 }
 
-//MARK: -Constants
+// MARK: -Constants
 private extension AnswerTableViewCell {
     enum Constants {
         static let mainViewCornerRadius: CGFloat = 22

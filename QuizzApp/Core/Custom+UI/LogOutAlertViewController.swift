@@ -7,16 +7,16 @@
 
 import UIKit
 
-protocol logOutAlertProtocol: AnyObject {
-    func pressYes()
-    func pressNo()
+protocol logOutAlertDelegate: AnyObject {
+    func pressedYesOnLogOut()
+    func pressedNoOnLogOut()
 }
 
-final class LogOutAlert: UIView {
+final class LogOutAlertViewController: UIViewController {
     
-    weak var delegate: logOutAlertProtocol?
+    weak var delegate: logOutAlertDelegate?
     
-    //MARK: Components
+    // MARK: Components
     private let alertView: UIView = {
         let view = UIView()
         view.backgroundColor = QuizzAppColors.buttonColor
@@ -44,24 +44,20 @@ final class LogOutAlert: UIView {
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.addArrangedSubview(yesButton)
         stackView.addArrangedSubview(noButton)
+        stackView.addArrangedSubview(yesButton)
         stackView.axis = .horizontal
         stackView.spacing = Constants.stackViewSpacing
         
         return stackView
     }()
     
-    //MARK: Init
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    // MARK: ViewDidLoad
+    override func viewDidLoad() {
+        super.viewDidLoad()
         configUI()
         addViews()
         constraints()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     func setTitleText(_ text: String) {
@@ -69,16 +65,16 @@ final class LogOutAlert: UIView {
     }
 }
 
-//MARK: -Private Functions
-private extension LogOutAlert {
-    //MARK: Config UI
+// MARK: -Private Functions
+private extension LogOutAlertViewController {
+    // MARK: Config UI
     func configUI() {
-        backgroundColor = Constants.backgroundViewColor
+        view.backgroundColor = Constants.backgroundViewColor
         yesButton.addTarget(self, action: #selector(yesPressed), for: .touchUpInside)
         noButton.addTarget(self, action: #selector(noPressed), for: .touchUpInside)
     }
     
-    //MARK: Create Button
+    // MARK: Create Button
     func createButton(_ text: String) -> UIButton {
         let button = UIButton()
         var configuration = UIButton.Configuration.filled()
@@ -92,31 +88,31 @@ private extension LogOutAlert {
         return button
     }
     
-    //MARK: Add Views
+    // MARK: Add Views
     func addViews() {
-        addSubview(alertView)
+        view.addSubview(alertView)
         alertView.addSubview(titleLabel)
         alertView.addSubview(stackView)
     }
     
-    //MARK: Add Constraints
+    // MARK: Add Constraints
     func constraints() {
         alertViewConstraints()
         titleLabelConstraints()
         stackViewConstraints()
     }
     
-    //MARK: Alert View Constraints
+    // MARK: Alert View Constraints
     func alertViewConstraints() {
         NSLayoutConstraint.activate([
-            alertView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            alertView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            alertView.leadingAnchor.constraint(lessThanOrEqualTo: leadingAnchor, constant: Constants.alertViewLeftPadding),
-            alertView.topAnchor.constraint(lessThanOrEqualTo: topAnchor, constant: Constants.alertViewTopPadding)
+            alertView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            alertView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            alertView.leadingAnchor.constraint(lessThanOrEqualTo: view.leadingAnchor, constant: Constants.alertViewLeftPadding),
+            alertView.topAnchor.constraint(lessThanOrEqualTo: view.topAnchor, constant: Constants.alertViewTopPadding)
         ])
     }
     
-    //MARK: Title Label Constraints
+    // MARK: Title Label Constraints
     func titleLabelConstraints() {
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: alertView.topAnchor, constant: Constants.titleTopPadding),
@@ -125,7 +121,7 @@ private extension LogOutAlert {
         ])
     }
     
-    //MARK: Stack View Constraints
+    // MARK: Stack View Constraints
     func stackViewConstraints() {
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: Constants.stackViewTopPadding),
@@ -135,19 +131,21 @@ private extension LogOutAlert {
         ])
     }
     
-    //MARK: Yes Pressed Actin
+    // MARK: Yes Pressed Actin
     @objc func yesPressed() {
-        delegate?.pressYes()
+        dismiss(animated: true)
+        delegate?.pressedYesOnLogOut()
     }
     
-    //MARK: No Pressed Action
+    // MARK: No Pressed Action
     @objc func noPressed() {
-        delegate?.pressNo()
+        dismiss(animated: true)
+        delegate?.pressedNoOnLogOut()
     }
 }
 
-//MARK: -Constants
-private extension LogOutAlert {
+// MARK: -Constants
+private extension LogOutAlertViewController {
     enum Constants {
         static let alertViewRadius: CGFloat = 31
         static let titleLabelFont: CGFloat = 16

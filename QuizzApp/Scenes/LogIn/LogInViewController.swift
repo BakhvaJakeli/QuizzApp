@@ -9,7 +9,7 @@ import UIKit
 
 final class LogInViewController: UIViewController {
     
-    //MARK: Components
+    // MARK: Components
     private let logInImageView: CoverView = {
         let logInImage = CoverView()
         logInImage.translatesAutoresizingMaskIntoConstraints = false
@@ -41,7 +41,7 @@ final class LogInViewController: UIViewController {
         return button
     }()
     
-    //MARK: ViewDidLoad
+    // MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubViews()
@@ -49,43 +49,43 @@ final class LogInViewController: UIViewController {
         configUI()
     }
     
-    //MARK: View Will Appear
+    // MARK: View Will Appear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         AppUtility.lockOrientation(.portrait)
     }
     
-    //MARK: View Will Disappear
+    // MARK: View Will Disappear
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         AppUtility.lockOrientation(.all)
     }
 }
 
-//MARK: - Functions
+// MARK: - Functions
 private extension LogInViewController {
     
-    //MARK: Config UI
+    // MARK: Config UI
     func configUI() {
         view.backgroundColor = .systemBackground
         hideKeyboardWhenTappedAround()
     }
     
-    //MARK: Add SubViews
+    // MARK: Add SubViews
     func addSubViews() {
         view.addSubview(logInImageView)
         view.addSubview(logInTextField)
         view.addSubview(logInButton)
     }
     
-    //MARK: Add Constrants
+    // MARK: Add Constrants
     func addConstraints() {
         logInImageConstraints()
         logInTextFieldConstraints()
         logInButtonConstraints()
     }
     
-    //MARK: Log In Image Constraints
+    // MARK: Log In Image Constraints
     func logInImageConstraints() {
         NSLayoutConstraint.activate([
             logInImageView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -94,7 +94,7 @@ private extension LogInViewController {
         ])
     }
     
-    //MARK: Log In Text Field Constrants
+    // MARK: Log In Text Field Constrants
     func logInTextFieldConstraints() {
         NSLayoutConstraint.activate([
             logInTextField.topAnchor.constraint(equalTo: logInImageView.bottomAnchor,
@@ -106,7 +106,7 @@ private extension LogInViewController {
         ])
     }
     
-    //MARK: Log in Button Constraints
+    // MARK: Log in Button Constraints
     func logInButtonConstraints() {
         NSLayoutConstraint.activate([
             logInButton.topAnchor.constraint(equalTo: logInTextField.bottomAnchor,
@@ -114,7 +114,9 @@ private extension LogInViewController {
             logInButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             logInButton.leadingAnchor.constraint(equalTo: view.leadingAnchor,
                                                  constant: Constants.logInButtonLeadingPadding),
-            logInButton.heightAnchor.constraint(equalToConstant: Constants.logInButtonHeight)
+            logInButton.heightAnchor.constraint(equalToConstant: Constants.logInButtonHeight),
+            logInButton.bottomAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor,
+                                                constant: Constants.logInButtonBottomPadding)
         ])
     }
     
@@ -125,6 +127,7 @@ private extension LogInViewController {
         view.addGestureRecognizer(tap)
     }
     
+    //MARK: Dismiss keyboard
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
@@ -147,7 +150,7 @@ private extension LogInViewController {
         static let logInTextFieldLeadingPadding: CGFloat = 55
         static let logInTextFieldHeight: CGFloat = 44
         static let logInButtonTopPadding: CGFloat = 26
-        static let logInButtonBottomPadding: CGFloat = 149
+        static let logInButtonBottomPadding: CGFloat = -149
         static let logInButtonLeadingPadding: CGFloat = 117
         static let logInButtonHeight: CGFloat = 44
         static let logInButtonTitleLableFont: CGFloat = 12

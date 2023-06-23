@@ -7,15 +7,15 @@
 
 import UIKit
 
-protocol CompletionAlertProtocol: AnyObject {
-    func pressClose()
+protocol CompletionAlertDelegate: AnyObject {
+    func pressedCloseOnCompletion()
 }
 
-final class CompletionAlert: UIView {
+final class CompletionAlertViewController: UIViewController {
     
-    weak var delegate: CompletionAlertProtocol?
+    weak var delegate: CompletionAlertDelegate?
     
-    //MARK: Components
+    // MARK: Components
     private let alertView: UIView = {
         let view = UIView()
         view.backgroundColor = QuizzAppColors.buttonColor
@@ -84,29 +84,25 @@ final class CompletionAlert: UIView {
         return button
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    // MARK: View Did Load
+    override func viewDidLoad() {
+        super.viewDidLoad()
         configUI()
         addViews()
         constraints()
     }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
 }
 
-//MARK: -Private Functions
-private extension CompletionAlert {
-    //MARK: Config UI
+// MARK: -Private Functions
+private extension CompletionAlertViewController {
+    // MARK: Config UI
     func configUI() {
-        backgroundColor = Constants.backgroundViewColor
+        view.backgroundColor = Constants.backgroundViewColor
     }
     
-    //MARK: Add Sub Views
+    // MARK: Add Sub Views
     func addViews() {
-        addSubview(alertView)
+        view.addSubview(alertView)
         [
             alertImageView,
             stackView,
@@ -115,7 +111,7 @@ private extension CompletionAlert {
         ].forEach{alertView.addSubview($0)}
     }
     
-    //MARK: Add Constraints
+    // MARK: Add Constraints
     func constraints() {
         alertViewConstraints()
         alertImageViewConstraints()
@@ -124,17 +120,17 @@ private extension CompletionAlert {
         closeButtonConstraints()
     }
     
-    //MARK: Alert View Constraints
+    // MARK: Alert View Constraints
     func alertViewConstraints() {
         NSLayoutConstraint.activate([
-            alertView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            alertView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            alertView.leadingAnchor.constraint(lessThanOrEqualTo: leadingAnchor, constant: Constants.alertViewLeftPadding),
-            alertView.topAnchor.constraint(lessThanOrEqualTo: topAnchor, constant: Constants.alertViewTopPadding)
+            alertView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            alertView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            alertView.leadingAnchor.constraint(lessThanOrEqualTo: view.leadingAnchor, constant: Constants.alertViewLeftPadding),
+            alertView.topAnchor.constraint(lessThanOrEqualTo: view.topAnchor, constant: Constants.alertViewTopPadding)
         ])
     }
     
-    //MARK: Alert Image View Constraints
+    // MARK: Alert Image View Constraints
     func alertImageViewConstraints() {
         NSLayoutConstraint.activate([
             alertImageView.topAnchor.constraint(equalTo: alertView.topAnchor, constant: Constants.alertImageViewTopPadding),
@@ -142,7 +138,7 @@ private extension CompletionAlert {
         ])
     }
     
-    //MARK: StackView Constraints
+    // MARK: StackView Constraints
     func stackViewConstraints() {
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: alertImageView.bottomAnchor, constant: Constants.stackViewTopPadding),
@@ -151,7 +147,7 @@ private extension CompletionAlert {
         ])
     }
     
-    //MARK: Divider View Constraints
+    // MARK: Divider View Constraints
     func dividerViewConstraints() {
         NSLayoutConstraint.activate([
             dividerView.centerXAnchor.constraint(equalTo: alertView.centerXAnchor),
@@ -161,7 +157,7 @@ private extension CompletionAlert {
         ])
     }
     
-    //MARK: Close Button Constraint
+    // MARK: Close Button Constraint
     func closeButtonConstraints() {
         NSLayoutConstraint.activate([
             closeButton.topAnchor.constraint(equalTo: dividerView.bottomAnchor, constant: Constants.closeButtonTopPadding),
@@ -171,14 +167,15 @@ private extension CompletionAlert {
         ])
     }
     
-    //MARK: Close Function
+    // MARK: Close Function
     @objc func close() {
-        delegate?.pressClose()
+        dismiss(animated: true)
+        delegate?.pressedCloseOnCompletion()
     }
 }
 
-//MARK: -Constants
-private extension CompletionAlert {
+// MARK: -Constants
+private extension CompletionAlertViewController {
     enum Constants {
         static let alertViewRadius: CGFloat = 31
         static let congratulationsLabelText = "გილოცავ!"

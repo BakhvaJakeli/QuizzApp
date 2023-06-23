@@ -9,17 +9,16 @@ import UIKit
 
 final class ScoreViewController: UIViewController {
     
-    let scores = [
-        Score(image: QuizzAppImages.georgraphy ?? UIImage(), title: "გეოგრაფია", score: 2),
-        Score(image: QuizzAppImages.programming ?? UIImage(), title: "პროგრამირება", score: 4),
-        Score(image: QuizzAppImages.history ?? UIImage(), title: "ისტორია", score: 2),
-        Score(image: QuizzAppImages.physics ?? UIImage(), title: "ფიზიკა", score: 5),
+    let scores: [Score] = [
+//        Score(image: QuizzAppImages.georgraphy ?? UIImage(), title: "გეოგრაფია", score: 2),
+//        Score(image: QuizzAppImages.programming ?? UIImage(), title: "პროგრამირება", score: 4),
+//        Score(image: QuizzAppImages.history ?? UIImage(), title: "ისტორია", score: 2),
+//        Score(image: QuizzAppImages.physics ?? UIImage(), title: "ფიზიკა", score: 5),
     ]
     
-    //MARK: Components
-    let alertView: LogOutAlert = {
-        let view = LogOutAlert()
-        view.translatesAutoresizingMaskIntoConstraints = false
+    // MARK: Components
+    let alertView: LogOutAlertViewController = {
+        let view = LogOutAlertViewController()
         view.setTitleText(Constants.alertTitleLabelText)
         
         return view
@@ -45,7 +44,7 @@ final class ScoreViewController: UIViewController {
         tableView.delegate = self
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
-        tableView.isHidden = true
+        tableView.backgroundView = noScoreLabel
         
         return tableView
     }()
@@ -71,7 +70,7 @@ final class ScoreViewController: UIViewController {
         return button
     }()
     
-    //MARK: ViewDidLoad
+    // MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         configUI()
@@ -80,7 +79,7 @@ final class ScoreViewController: UIViewController {
     }
 }
 
-//MARK: - Private Functions
+// MARK: - Private Functions
 private extension ScoreViewController {
     //MARK: Config UI
     func configUI() {
@@ -92,30 +91,30 @@ private extension ScoreViewController {
         alertView.delegate = self
     }
     
-    //MARK: Add Sub Views
+    // MARK: Add Sub Views
     func addSubViews() {
-        view.addSubview(noScoreLabel)
         view.addSubview(scoreTableView)
         view.addSubview(separatorView)
         view.addSubview(logOutButton)
     }
     
-    //MARK: Add Constraints
+    // MARK: Add Constraints
     func addConstraints() {
         separatorViewConstraints()
         scoreTableViewConstraints()
         logOutButtonConstraints()
         noScoreLabelConstraints()
     }
-    //MARK: No Score Label Constraints
+    // MARK: No Score Label Constraints
     func noScoreLabelConstraints() {
+        guard let tableBackground = scoreTableView.backgroundView else {return}
         NSLayoutConstraint.activate([
-            noScoreLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            noScoreLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            tableBackground.centerYAnchor.constraint(equalTo: scoreTableView.centerYAnchor),
+            tableBackground.centerXAnchor.constraint(equalTo: scoreTableView.centerXAnchor)
         ])
     }
     
-    //MARK: Score Table View Constraints
+    // MARK: Score Table View Constraints
     func scoreTableViewConstraints() {
         NSLayoutConstraint.activate([
             scoreTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -125,7 +124,7 @@ private extension ScoreViewController {
         ])
     }
     
-    //MARK: Separator View Constraints
+    // MARK: Separator View Constraints
     func separatorViewConstraints() {
         NSLayoutConstraint.activate([
             separatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -134,7 +133,7 @@ private extension ScoreViewController {
         ])
     }
     
-    //MARK: Log Out Button Constraints
+    // MARK: Log Out Button Constraints
     func logOutButtonConstraints() {
         NSLayoutConstraint.activate([
             logOutButton.topAnchor.constraint(equalTo: separatorView.bottomAnchor, constant: Constants.logOutButtonTopPadding),
@@ -143,30 +142,14 @@ private extension ScoreViewController {
         ])
     }
     
-    //MARK: Alert View Constraints
-    func alertViewConstraints() {
-        NSLayoutConstraint.activate([
-            alertView.topAnchor.constraint(equalTo: view.topAnchor),
-            alertView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            alertView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            alertView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
-        ])
-    }
-    
-    //MARK: Log Out
+    // MARK: Log Out
     @objc func logOut() {
-        view.addSubview(alertView)
-        alertViewConstraints()
-        alertView.alpha = 0
-        UIView.animate(withDuration: 0.3,
-                       animations: {
-            self.alertView.alpha = 1
-            self.navigationController?.isNavigationBarHidden = true
-        },completion: nil)
+        alertView.modalPresentationStyle = .overFullScreen
+        present(alertView, animated: true)
     }
 }
 
-//MARK: - Table View Functions
+// MARK: - Table View Functions
 extension ScoreViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         scores.count
@@ -185,19 +168,18 @@ extension ScoreViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-//MARK: -Log Out Alert Delegate
-extension ScoreViewController: logOutAlertProtocol {
-    func pressYes() {
+// MARK: -Log Out Alert Delegate
+extension ScoreViewController: logOutAlertDelegate {
+    func pressedYesOnLogOut() {
         dismiss(animated: true)
     }
     
-    func pressNo() {
-        alertView.removeFromSuperview()
+    func pressedNoOnLogOut() {
         navigationController?.isNavigationBarHidden = false
     }
 }
 
-//MARK: -Constants
+// MARK: -Constants
 private extension ScoreViewController {
     enum Constants {
         static let navigationTitle = "დაგროვილი ქულები ⭐"

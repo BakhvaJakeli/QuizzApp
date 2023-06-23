@@ -82,6 +82,7 @@ final class ScoreTableViewCell: UITableViewCell {
     }
     
     //MARK: Config Cell
+    // config daarqvi prost
     func configCell(with score: Score) {
         subjectImageView.image = score.image
         titleLabel.text = score.title

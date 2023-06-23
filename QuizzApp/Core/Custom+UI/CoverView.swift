@@ -9,7 +9,7 @@ import UIKit
 
 final class CoverView: UIView {
     
-    //MARK: Components
+    // MARK: Components
     private let title: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -27,11 +27,12 @@ final class CoverView: UIView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = QuizzAppImages.myFirstQuizzImage
         imageView.backgroundColor = .clear
+        imageView.contentMode = .scaleAspectFit
         
         return imageView
     }()
     
-    //MARK: Init
+    // MARK: Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         configUI()
@@ -43,24 +44,24 @@ final class CoverView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: Config UI
+    // MARK: Config UI
     private func configUI() {
         backgroundColor = .clear
     }
     
-    //MARK: Add Views
+    // MARK: Add Views
     private func addViews() {
         addSubview(title)
         addSubview(logInImageView)
     }
     
-    //MARK: Add constraints
+    // MARK: Add constraints
     private func constraints() {
         titleConstraints()
         logInImageConstraints()
     }
     
-    //MARK: Title Constraints
+    // MARK: Title Constraints
     private func titleConstraints() {
         NSLayoutConstraint.activate([
             title.topAnchor.constraint(equalTo: topAnchor, constant: Constants.titleTopPadding),
@@ -77,10 +78,10 @@ final class CoverView: UIView {
         ])
     }
     
-    //MARK: Bazier Path
+    // MARK: Bazier Path
     override func draw(_ rect: CGRect) {
         super.draw(rect)
-        let cornerRadius = rect.height / 2
+        let cornerRadius = rect.height / 2.5
         let path = UIBezierPath()
         
         // Top left corner (curved)

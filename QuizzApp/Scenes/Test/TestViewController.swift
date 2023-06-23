@@ -16,18 +16,12 @@ final class TestViewController: UIViewController {
         "Kotlin"
     ]
     
-    //MARK: Components
-    let logOutAlertView: LogOutAlert = {
-        let view = LogOutAlert()
-        view.translatesAutoresizingMaskIntoConstraints = false
+    // MARK: Components
+    private let completionVC = CompletionAlertViewController()
+
+    private let logOutAlertView: LogOutAlertViewController = {
+        let view = LogOutAlertViewController()
         view.setTitleText(Constants.alertTitleLabelText)
-        
-        return view
-    }()
-    
-    let finishedQuizzAlertView: CompletionAlert = {
-        let view = CompletionAlert()
-        view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
     }()
@@ -102,7 +96,7 @@ final class TestViewController: UIViewController {
         return button
     }()
     
-    //MARK: ViewDidLoad
+    // MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         configUI()
@@ -112,16 +106,16 @@ final class TestViewController: UIViewController {
     
 }
 
-//MARK: -Private Functions
+// MARK: -Private Functions
 private extension TestViewController {
-    //MARK: Config UI
+    // MARK: Config UI
     func configUI() {
         view.backgroundColor = .systemBackground
         logOutAlertView.delegate = self
-        finishedQuizzAlertView.delegate = self
+        completionVC.delegate = self
     }
     
-    //MARK: Add Sub Views
+    // MARK: Add Sub Views
     func addSubViews() {
         view.addSubview(testCoverImageView)
         testCoverImageView.addSubview(quitButton)
@@ -131,7 +125,7 @@ private extension TestViewController {
         view.addSubview(nextButton)
     }
     
-    //MARK: Add Constraints
+    // MARK: Add Constraints
     func addConstraints() {
         testCoverImageViewConstraints()
         quitButtonConstraints()
@@ -141,7 +135,7 @@ private extension TestViewController {
         nextButtonConstraints()
     }
     
-    //MARK: Test Cover Image View Constraints
+    // MARK: Test Cover Image View Constraints
     func testCoverImageViewConstraints() {
         NSLayoutConstraint.activate([
             testCoverImageView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -150,7 +144,7 @@ private extension TestViewController {
         ])
     }
     
-    //MARK: Quit Button Constraints
+    // MARK: Quit Button Constraints
     func quitButtonConstraints() {
         NSLayoutConstraint.activate([
             quitButton.topAnchor.constraint(equalTo: testCoverImageView.topAnchor,
@@ -160,7 +154,7 @@ private extension TestViewController {
         ])
     }
     
-    //MARK: Title Label Constraints
+    // MARK: Title Label Constraints
     func titleLabelConstraints() {
         NSLayoutConstraint.activate([
             titleLabel.centerXAnchor.constraint(equalTo: testCoverImageView.centerXAnchor),
@@ -171,7 +165,7 @@ private extension TestViewController {
         ])
     }
     
-    //MARK: Question Label Constraints
+    // MARK: Question Label Constraints
     func questionLabelConstraints() {
         NSLayoutConstraint.activate([
             questionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor,
@@ -184,7 +178,7 @@ private extension TestViewController {
         ])
     }
     
-    //MARK: Questions Table View Constraints
+    // MARK: Questions Table View Constraints
     func questionsTableViewConstraints() {
         NSLayoutConstraint.activate([
             questionsTableView.topAnchor.constraint(equalTo: testCoverImageView.bottomAnchor,
@@ -195,7 +189,7 @@ private extension TestViewController {
         ])
     }
     
-    //MARK: Next Button Constraints
+    // MARK: Next Button Constraints
     func nextButtonConstraints() {
         NSLayoutConstraint.activate([
             nextButton.topAnchor.constraint(equalTo: questionsTableView.bottomAnchor,
@@ -208,50 +202,20 @@ private extension TestViewController {
             nextButton.heightAnchor.constraint(equalToConstant: Constants.nextButtonHeight)
         ])
     }
-    
-    //MARK: log Out Alert View Constraints
-    func logOutAlertViewConstraints() {
-        NSLayoutConstraint.activate([
-            logOutAlertView.topAnchor.constraint(equalTo: view.topAnchor),
-            logOutAlertView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            logOutAlertView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            logOutAlertView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
-        ])
-    }
-    
-    //MARK: Finished Quizz Alert View Constraints
-    func finishedQuizzAlertConstraints() {
-        NSLayoutConstraint.activate([
-            finishedQuizzAlertView.topAnchor.constraint(equalTo: view.topAnchor),
-            finishedQuizzAlertView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            finishedQuizzAlertView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            finishedQuizzAlertView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
-        ])
-    }
-    
+        
     func showFinishedQuizzAlert() {
-        view.addSubview(finishedQuizzAlertView)
-        finishedQuizzAlertConstraints()
-        finishedQuizzAlertView.alpha = Constants.alertViewInitialAlpha
-        UIView.animate(withDuration: Constants.comletionAlertAnimationDuration,
-                       animations: {
-            self.finishedQuizzAlertView.alpha = Constants.alertViewFinalAlpha
-        },completion: nil)
+        completionVC.modalPresentationStyle = .overFullScreen
+        present(completionVC, animated: true)
     }
     
-    //MARK: Quit Action
+    // MARK: Quit Action
     @objc func quit() {
-        view.addSubview(logOutAlertView)
-        logOutAlertViewConstraints()
-        logOutAlertView.alpha = Constants.alertViewFinalAlpha
-        UIView.animate(withDuration: Constants.logOutAlertAnimationDuration,
-                       animations: {
-            self.logOutAlertView.alpha = Constants.alertViewFinalAlpha
-        },completion: nil)
+        logOutAlertView.modalPresentationStyle = .overFullScreen
+        present(logOutAlertView, animated: true)
     }
 }
 
-//MARK: -Table View Functions
+// MARK: -Table View Functions
 extension TestViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         answers.count
@@ -265,6 +229,7 @@ extension TestViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    //dateste varga tua ra
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         UITableView.automaticDimension
     }
@@ -281,25 +246,25 @@ extension TestViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-//MARK: -Log out Alert View Delegate
-extension TestViewController: logOutAlertProtocol {
-    func pressYes() {
+// MARK: -Log out Alert View Delegate
+extension TestViewController: logOutAlertDelegate {
+    func pressedYesOnLogOut() {
         navigationController?.popViewController(animated: true)
     }
     
-    func pressNo() {
-        logOutAlertView.removeFromSuperview()
+    func pressedNoOnLogOut() {
+        logOutAlertView.dismiss(animated: true)
     }
 }
 
-//MARK: -Completion Alert View Delegate
-extension TestViewController: CompletionAlertProtocol {
-    func pressClose() {
+// MARK: -Completion Alert View Delegate
+extension TestViewController: CompletionAlertDelegate {
+    func pressedCloseOnCompletion() {
         navigationController?.popViewController(animated: true)
     }
 }
 
-//MARK: -Constants
+// MARK: -Constants
 private extension TestViewController {
     enum Constants {
         static let titleLabelText = "პროგრამირება"

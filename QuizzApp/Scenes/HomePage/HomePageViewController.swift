@@ -20,10 +20,9 @@ final class HomePageViewController: UIViewController {
                 title: "ფიზიკა"),
     ]
     
-    //MARK: Components
-    let alertView: LogOutAlert = {
-        let view = LogOutAlert()
-        view.translatesAutoresizingMaskIntoConstraints = false
+    // MARK: Components
+    let alertView: LogOutAlertViewController = {
+        let view = LogOutAlertViewController()
         view.setTitleText(Constants.alertTitleLabelText)
         
         return view
@@ -98,7 +97,7 @@ final class HomePageViewController: UIViewController {
         return button
     }()
     
-    //MARK: ViewDidLoad
+    // MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         configUI()
@@ -106,7 +105,7 @@ final class HomePageViewController: UIViewController {
         addConstraints()
     }
     
-    //MARK: View Will Appear
+    // MARK: View Will Appear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configUI()
@@ -114,16 +113,16 @@ final class HomePageViewController: UIViewController {
     
 }
 
-//MARK: - Private Functions
+// MARK: - Private Functions
 private extension HomePageViewController {
-    //MARK: Config UI
+    // MARK: Config UI
     func configUI() {
         view.backgroundColor = .systemBackground
         navigationController?.isNavigationBarHidden = true
         alertView.delegate = self
     }
     
-    //MARK: Add Sub Views
+    // MARK: Add Sub Views
     func addSubViews() {
         view.addSubview(titleLabel)
         view.addSubview(scoreView)
@@ -133,7 +132,7 @@ private extension HomePageViewController {
         view.addSubview(logOutButton)
     }
     
-    //MARK: Constraints
+    // MARK: Constraints
     func addConstraints() {
         titleLabelConstraints()
         scoreViewConstraints()
@@ -143,7 +142,7 @@ private extension HomePageViewController {
         logOutButtonConstraints()
     }
     
-    //MARK: Title Label Constraints
+    // MARK: Title Label Constraints
     func titleLabelConstraints() {
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
@@ -154,7 +153,7 @@ private extension HomePageViewController {
         ])
     }
     
-    //MARK: Score View Constraints
+    // MARK: Score View Constraints
     func scoreViewConstraints() {
         NSLayoutConstraint.activate([
             scoreView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor,
@@ -165,7 +164,7 @@ private extension HomePageViewController {
         ])
     }
     
-    //MARK: Choose Subject Label Constraints
+    // MARK: Choose Subject Label Constraints
     func chooseSubjectLabelConstraints() {
         NSLayoutConstraint.activate([
             chooseSubjectLabel.topAnchor.constraint(equalTo: scoreView.bottomAnchor,
@@ -177,7 +176,7 @@ private extension HomePageViewController {
         ])
     }
     
-    //MARK: Subjects Table View Constraints
+    // MARK: Subjects Table View Constraints
     func subjectsTableViewConstraints() {
         NSLayoutConstraint.activate([
             subjectsTableView.topAnchor.constraint(equalTo: chooseSubjectLabel.bottomAnchor,
@@ -188,7 +187,7 @@ private extension HomePageViewController {
         ])
     }
     
-    //MARK: Separator View Constraints
+    // MARK: Separator View Constraints
     func separatorViewConstraints() {
         NSLayoutConstraint.activate([
             separatorView.topAnchor.constraint(lessThanOrEqualTo: subjectsTableView.bottomAnchor,
@@ -200,7 +199,7 @@ private extension HomePageViewController {
         ])
     }
     
-    //MARK: Log Out Button Constraints
+    // MARK: Log Out Button Constraints
     func logOutButtonConstraints() {
         NSLayoutConstraint.activate([
             logOutButton.topAnchor.constraint(equalTo: separatorView.bottomAnchor,
@@ -212,35 +211,20 @@ private extension HomePageViewController {
         ])
     }
     
-    //MARK: Alert View Constraints
-    func alertViewConstraints() {
-        NSLayoutConstraint.activate([
-            alertView.topAnchor.constraint(equalTo: view.topAnchor),
-            alertView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            alertView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            alertView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
-        ])
-    }
-    
-    //MARK: Move To Score View Controller
+    // MARK: Move To Score View Controller
     @objc func moveToScore() {
         let viewController = ScoreViewController()
         navigationController?.pushViewController(viewController, animated: true)
     }
     
-    //MARK: Log Out
+    // MARK: Log Out
     @objc func logOut() {
-        view.addSubview(alertView)
-        alertViewConstraints()
-        alertView.alpha = 0
-        UIView.animate(withDuration: 0.3,
-                       animations: {
-            self.alertView.alpha = 1
-        },completion: nil)
+        alertView.modalPresentationStyle = .overFullScreen
+        present(alertView, animated: true)
     }
 }
 
-//MARK: - Table View Functions
+// MARK: - Table View Functions
 extension HomePageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         subjects.count
@@ -265,18 +249,18 @@ extension HomePageViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-//MARK: -Alert View Delegate
-extension HomePageViewController: logOutAlertProtocol {
-    func pressYes() {
+// MARK: -Alert View Delegate
+extension HomePageViewController: logOutAlertDelegate {
+    func pressedYesOnLogOut() {
         dismiss(animated: true)
     }
     
-    func pressNo() {
-        alertView.removeFromSuperview()
+    func pressedNoOnLogOut() {
+        alertView.dismiss(animated: true)
     }
 }
 
-//MARK: - Constants
+// MARK: - Constants
 private extension HomePageViewController {
     enum Constants {
         static let titleLabelText = "გამარჯობა, ირაკლი"

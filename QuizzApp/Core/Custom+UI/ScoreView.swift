@@ -10,7 +10,7 @@ import UIKit
 
 final class ScoreView: UIView {
     
-    //MARK: Components
+    // MARK: Components
     private let gpaLabel: UILabel = {
         let label = UILabel()
         let attributedString = NSMutableAttributedString(string: Constants.gpaText)
@@ -56,7 +56,7 @@ final class ScoreView: UIView {
         return imageView
     }()
     
-    //MARK: Init
+    // MARK: Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         addViews()
@@ -68,23 +68,23 @@ final class ScoreView: UIView {
     }
 }
 
-//MARK: - Functions
+// MARK: - Functions
 private extension ScoreView {
-    //MARK: Add SubViews
+    // MARK: Add SubViews
     func addViews() {
         addSubview(gpaLabel)
         addSubview(detailLabel)
         addSubview(arrowImageVIew)
     }
     
-    //MARK: Add Constraints
+    // MARK: Add Constraints
     func constraints() {
         gpaLabelConstrints()
         detailsLabelConstraints()
         arrowImageConstraints()
     }
     
-    //MARK: GPA Label Constraints
+    // MARK: GPA Label Constraints
     func gpaLabelConstrints() {
         NSLayoutConstraint.activate([
             gpaLabel.topAnchor.constraint(equalTo: topAnchor,
@@ -96,7 +96,7 @@ private extension ScoreView {
         ])
     }
     
-    //MARK: Details Label Constraints
+    // MARK: Details Label Constraints
     func detailsLabelConstraints() {
         NSLayoutConstraint.activate([
             detailLabel.topAnchor.constraint(equalTo: topAnchor,
