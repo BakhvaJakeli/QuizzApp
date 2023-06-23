@@ -16,8 +16,8 @@ final class ScoreViewController: UIViewController {
 //        Score(image: QuizzAppImages.physics ?? UIImage(), title: "ფიზიკა", score: 5),
     ]
     
-    // MARK: Components
-    let alertView: LogOutAlertViewController = {
+    // MARK: Components    
+    private let alertView: LogOutAlertViewController = {
         let view = LogOutAlertViewController()
         view.setTitleText(Constants.alertTitleLabelText)
         
@@ -105,6 +105,7 @@ private extension ScoreViewController {
         logOutButtonConstraints()
         noScoreLabelConstraints()
     }
+    
     // MARK: No Score Label Constraints
     func noScoreLabelConstraints() {
         guard let tableBackground = scoreTableView.backgroundView else {return}
@@ -120,7 +121,8 @@ private extension ScoreViewController {
             scoreTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scoreTableView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             scoreTableView.bottomAnchor.constraint(equalTo: separatorView.topAnchor),
-            scoreTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.scoreTableViewLeftPadding)
+            scoreTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                    constant: Constants.scoreTableViewLeftPadding)
         ])
     }
     
@@ -128,7 +130,8 @@ private extension ScoreViewController {
     func separatorViewConstraints() {
         NSLayoutConstraint.activate([
             separatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            separatorView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.separatorViewLeftPadding),
+            separatorView.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                   constant: Constants.separatorViewLeftPadding),
             separatorView.heightAnchor.constraint(equalToConstant: Constants.separatorViewHeight)
         ])
     }
@@ -136,9 +139,12 @@ private extension ScoreViewController {
     // MARK: Log Out Button Constraints
     func logOutButtonConstraints() {
         NSLayoutConstraint.activate([
-            logOutButton.topAnchor.constraint(equalTo: separatorView.bottomAnchor, constant: Constants.logOutButtonTopPadding),
-            logOutButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: Constants.logOutButtonRightPadding),
-            logOutButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: Constants.logOutButtonBottomPadding)
+            logOutButton.topAnchor.constraint(equalTo: separatorView.bottomAnchor,
+                                              constant: Constants.logOutButtonTopPadding),
+            logOutButton.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                   constant: Constants.logOutButtonRightPadding),
+            logOutButton.bottomAnchor.constraint(equalTo: view.bottomAnchor,
+                                                 constant: Constants.logOutButtonBottomPadding)
         ])
     }
     
@@ -194,5 +200,6 @@ private extension ScoreViewController {
         static let scoreTableViewLeftPadding: CGFloat = 16
         static let alertTitleLabelText = "ნამდვილად გსურს გასვლა?"
         static let noScoreLabelNumberOfLines = 0
+        static let defaultAttributeLength = 17
     }
 }

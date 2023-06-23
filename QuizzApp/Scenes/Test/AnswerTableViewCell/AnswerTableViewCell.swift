@@ -136,9 +136,11 @@ private extension AnswerTableViewCell {
     // MARK: Stack View Constraints
     func stackViewConstraints() {
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: mainView.topAnchor, constant: Constants.stackViewTopPadding),
+            stackView.topAnchor.constraint(equalTo: mainView.topAnchor,
+                                           constant: Constants.stackViewTopPadding),
             stackView.centerYAnchor.constraint(equalTo: mainView.centerYAnchor),
-            stackView.trailingAnchor.constraint(equalTo: mainView.trailingAnchor, constant: Constants.stackViewRightPadding)
+            stackView.trailingAnchor.constraint(equalTo: mainView.trailingAnchor,
+                                                constant: Constants.stackViewRightPadding)
         ])
     }
 }

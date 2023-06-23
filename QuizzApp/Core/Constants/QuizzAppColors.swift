@@ -44,4 +44,8 @@ enum QuizzAppColors {
                                          green: 1,
                                          blue: 1,
                                          alpha: 0.6)
+    static let questionBackgroundColor = UIColor(red: 192/255,
+                                                 green: 208/255,
+                                                 blue: 246/255,
+                                                 alpha: 1)
 }

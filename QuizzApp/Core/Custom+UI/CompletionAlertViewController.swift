@@ -125,15 +125,18 @@ private extension CompletionAlertViewController {
         NSLayoutConstraint.activate([
             alertView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             alertView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            alertView.leadingAnchor.constraint(lessThanOrEqualTo: view.leadingAnchor, constant: Constants.alertViewLeftPadding),
-            alertView.topAnchor.constraint(lessThanOrEqualTo: view.topAnchor, constant: Constants.alertViewTopPadding)
+            alertView.leadingAnchor.constraint(lessThanOrEqualTo: view.leadingAnchor,
+                                               constant: Constants.alertViewLeftPadding),
+            alertView.topAnchor.constraint(lessThanOrEqualTo: view.topAnchor,
+                                           constant: Constants.alertViewTopPadding)
         ])
     }
     
     // MARK: Alert Image View Constraints
     func alertImageViewConstraints() {
         NSLayoutConstraint.activate([
-            alertImageView.topAnchor.constraint(equalTo: alertView.topAnchor, constant: Constants.alertImageViewTopPadding),
+            alertImageView.topAnchor.constraint(equalTo: alertView.topAnchor,
+                                                constant: Constants.alertImageViewTopPadding),
             alertImageView.centerXAnchor.constraint(equalTo: alertView.centerXAnchor)
         ])
     }
@@ -141,9 +144,11 @@ private extension CompletionAlertViewController {
     // MARK: StackView Constraints
     func stackViewConstraints() {
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: alertImageView.bottomAnchor, constant: Constants.stackViewTopPadding),
+            stackView.topAnchor.constraint(equalTo: alertImageView.bottomAnchor,
+                                           constant: Constants.stackViewTopPadding),
             stackView.centerXAnchor.constraint(equalTo: alertView.centerXAnchor),
-            stackView.leadingAnchor.constraint(equalTo: alertView.leadingAnchor, constant: Constants.stackViewLeftPadding)
+            stackView.leadingAnchor.constraint(equalTo: alertView.leadingAnchor,
+                                               constant: Constants.stackViewLeftPadding)
         ])
     }
     
@@ -153,17 +158,21 @@ private extension CompletionAlertViewController {
             dividerView.centerXAnchor.constraint(equalTo: alertView.centerXAnchor),
             dividerView.leadingAnchor.constraint(equalTo: alertView.leadingAnchor),
             dividerView.heightAnchor.constraint(equalToConstant: Constants.dividerViewHeight),
-            dividerView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: Constants.dividerViewTopPadding)
+            dividerView.topAnchor.constraint(equalTo: stackView.bottomAnchor,
+                                             constant: Constants.dividerViewTopPadding)
         ])
     }
     
     // MARK: Close Button Constraint
     func closeButtonConstraints() {
         NSLayoutConstraint.activate([
-            closeButton.topAnchor.constraint(equalTo: dividerView.bottomAnchor, constant: Constants.closeButtonTopPadding),
+            closeButton.topAnchor.constraint(equalTo: dividerView.bottomAnchor,
+                                             constant: Constants.closeButtonTopPadding),
             closeButton.centerXAnchor.constraint(equalTo: alertView.centerXAnchor),
-            closeButton.leadingAnchor.constraint(equalTo: alertView.leadingAnchor, constant: Constants.closeButtonLeftPadding),
-            closeButton.bottomAnchor.constraint(equalTo: alertView.bottomAnchor, constant: Constants.closeButtonBottomPadding)
+            closeButton.leadingAnchor.constraint(equalTo: alertView.leadingAnchor,
+                                                 constant: Constants.closeButtonLeftPadding),
+            closeButton.bottomAnchor.constraint(equalTo: alertView.bottomAnchor,
+                                                constant: Constants.closeButtonBottomPadding)
         ])
     }
     

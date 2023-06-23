@@ -107,27 +107,34 @@ private extension LogOutAlertViewController {
         NSLayoutConstraint.activate([
             alertView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             alertView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            alertView.leadingAnchor.constraint(lessThanOrEqualTo: view.leadingAnchor, constant: Constants.alertViewLeftPadding),
-            alertView.topAnchor.constraint(lessThanOrEqualTo: view.topAnchor, constant: Constants.alertViewTopPadding)
+            alertView.leadingAnchor.constraint(lessThanOrEqualTo: view.leadingAnchor,
+                                               constant: Constants.alertViewLeftPadding),
+            alertView.topAnchor.constraint(lessThanOrEqualTo: view.topAnchor,
+                                           constant: Constants.alertViewTopPadding)
         ])
     }
     
     // MARK: Title Label Constraints
     func titleLabelConstraints() {
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: alertView.topAnchor, constant: Constants.titleTopPadding),
+            titleLabel.topAnchor.constraint(equalTo: alertView.topAnchor,
+                                            constant: Constants.titleTopPadding),
             titleLabel.centerXAnchor.constraint(equalTo: alertView.centerXAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: alertView.leadingAnchor, constant: Constants.titleLeftPadding)
+            titleLabel.leadingAnchor.constraint(equalTo: alertView.leadingAnchor,
+                                                constant: Constants.titleLeftPadding)
         ])
     }
     
     // MARK: Stack View Constraints
     func stackViewConstraints() {
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: Constants.stackViewTopPadding),
+            stackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor,
+                                           constant: Constants.stackViewTopPadding),
             stackView.centerXAnchor.constraint(equalTo: alertView.centerXAnchor),
-            stackView.leadingAnchor.constraint(equalTo: alertView.leadingAnchor, constant: Constants.stackViewLeftPadding),
-            stackView.bottomAnchor.constraint(equalTo: alertView.bottomAnchor, constant: Constants.stackViewBottomPadding)
+            stackView.leadingAnchor.constraint(equalTo: alertView.leadingAnchor,
+                                               constant: Constants.stackViewLeftPadding),
+            stackView.bottomAnchor.constraint(equalTo: alertView.bottomAnchor,
+                                              constant: Constants.stackViewBottomPadding)
         ])
     }
     

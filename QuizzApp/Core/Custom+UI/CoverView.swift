@@ -64,9 +64,11 @@ final class CoverView: UIView {
     // MARK: Title Constraints
     private func titleConstraints() {
         NSLayoutConstraint.activate([
-            title.topAnchor.constraint(equalTo: topAnchor, constant: Constants.titleTopPadding),
+            title.topAnchor.constraint(equalTo: topAnchor,
+                                       constant: Constants.titleTopPadding),
             title.centerXAnchor.constraint(equalTo: centerXAnchor),
-            title.bottomAnchor.constraint(equalTo: logInImageView.topAnchor, constant: Constants.titleBottomPadding)
+            title.bottomAnchor.constraint(equalTo: logInImageView.topAnchor,
+                                          constant: Constants.titleBottomPadding)
         ])
     }
     
@@ -74,7 +76,8 @@ final class CoverView: UIView {
     private func logInImageConstraints() {
         NSLayoutConstraint.activate([
             logInImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            logInImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: Constants.logInImageBottomPadding)
+            logInImageView.bottomAnchor.constraint(equalTo: bottomAnchor,
+                                                   constant: Constants.logInImageBottomPadding)
         ])
     }
     
