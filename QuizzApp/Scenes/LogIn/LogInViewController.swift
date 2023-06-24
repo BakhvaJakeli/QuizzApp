@@ -10,6 +10,14 @@ import UIKit
 final class LogInViewController: UIViewController {
     
     // MARK: Components
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.isScrollEnabled = false
+        
+        return scrollView
+    }()
+    
     private let logInImageView: CoverView = {
         let logInImage = CoverView()
         logInImage.translatesAutoresizingMaskIntoConstraints = false
@@ -69,13 +77,17 @@ private extension LogInViewController {
     func configUI() {
         view.backgroundColor = .systemBackground
         hideKeyboardWhenTappedAround()
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
     }
     
     // MARK: Add SubViews
     func addSubViews() {
-        view.addSubview(logInImageView)
-        view.addSubview(logInTextField)
-        view.addSubview(logInButton)
+        view.addSubview(scrollView)
+        scrollView.addSubview(logInImageView)
+        scrollView.addSubview(logInTextField)
+        scrollView.addSubview(logInButton)
     }
     
     // MARK: Add Constrants
@@ -83,14 +95,15 @@ private extension LogInViewController {
         logInImageConstraints()
         logInTextFieldConstraints()
         logInButtonConstraints()
+        scrollViewConstraints()
     }
     
     // MARK: Log In Image Constraints
     func logInImageConstraints() {
         NSLayoutConstraint.activate([
-            logInImageView.topAnchor.constraint(equalTo: view.topAnchor),
-            logInImageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            logInImageView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            logInImageView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            logInImageView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            logInImageView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor)
         ])
     }
     
@@ -99,8 +112,8 @@ private extension LogInViewController {
         NSLayoutConstraint.activate([
             logInTextField.topAnchor.constraint(equalTo: logInImageView.bottomAnchor,
                                                 constant: Constants.logInTextFieldTopPadding),
-            logInTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            logInTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+            logInTextField.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            logInTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor,
                                                     constant: Constants.logInTextFieldLeadingPadding),
             logInTextField.heightAnchor.constraint(equalToConstant: Constants.logInTextFieldHeight)
         ])
@@ -111,12 +124,22 @@ private extension LogInViewController {
         NSLayoutConstraint.activate([
             logInButton.topAnchor.constraint(equalTo: logInTextField.bottomAnchor,
                                              constant: Constants.logInButtonTopPadding),
-            logInButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            logInButton.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+            logInButton.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            logInButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor,
                                                  constant: Constants.logInButtonLeadingPadding),
             logInButton.heightAnchor.constraint(equalToConstant: Constants.logInButtonHeight),
-            logInButton.bottomAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor,
+            logInButton.bottomAnchor.constraint(lessThanOrEqualTo: scrollView.bottomAnchor,
                                                 constant: Constants.logInButtonBottomPadding)
+        ])
+    }
+    
+    // MARK: Scroll View Constraints
+    func scrollViewConstraints() {
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
     }
     
@@ -138,6 +161,27 @@ private extension LogInViewController {
         let navigactionController = UINavigationController(rootViewController: homePageViewController)
         navigactionController.modalPresentationStyle = .fullScreen
         present(navigactionController, animated: true)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        let frame = logInButton.frame
+        let convertedOrigin = view.convert(frame.origin, to: logInButton.superview)
+        let buttonYCoordinate = view.bounds.height - convertedOrigin.y
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0 {
+                if keyboardSize.height > buttonYCoordinate {
+                    self.view.frame.origin.y -= keyboardSize.height
+                } else {
+                    self.view.frame.origin.y -= keyboardSize.height + Constants.logInButtonBottomPadding
+                }
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
     }
 }
 
