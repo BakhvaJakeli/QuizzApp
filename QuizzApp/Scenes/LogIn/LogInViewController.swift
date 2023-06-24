@@ -120,19 +120,19 @@ private extension LogInViewController {
         ])
     }
     
-    //MARK: Hide Keyboard Function
+    // MARK: Hide Keyboard Function
     func hideKeyboardWhenTappedAround() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
     }
     
-    //MARK: Dismiss keyboard
+    // MARK: Dismiss keyboard
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
     
-    //MARK: Click Log In Function
+    // MARK: Click Log In Function
     @objc func clickLogIn() {
         let homePageViewController = HomePageViewController()
         let navigactionController = UINavigationController(rootViewController: homePageViewController)
@@ -141,7 +141,7 @@ private extension LogInViewController {
     }
 }
 
-//MARK: - Constants
+// MARK: - Constants
 private extension LogInViewController {
     enum Constants {
         static let logInTextFieldCornerRadius: CGFloat = 12
