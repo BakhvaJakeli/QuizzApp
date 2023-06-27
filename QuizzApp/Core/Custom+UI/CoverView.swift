@@ -14,8 +14,8 @@ final class CoverView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.backgroundColor = .clear
-        label.text = Constants.titleText
-        label.font = .boldSystemFont(ofSize: Constants.titleFontSize)
+        label.text = Constants.title.titleText
+        label.font = .boldSystemFont(ofSize: Constants.title.titleFontSize)
         label.textColor = .white
         label.textAlignment = .center
         
@@ -25,7 +25,7 @@ final class CoverView: UIView {
     private let logInImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = QuizzAppImages.myFirstQuizzImage
+        imageView.image = QuizzAppImage.myFirstQuizzImage
         imageView.backgroundColor = .clear
         imageView.contentMode = .scaleAspectFit
         
@@ -35,9 +35,9 @@ final class CoverView: UIView {
     // MARK: Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configUI()
+        configureUI()
         addViews()
-        constraints()
+        setConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -45,7 +45,7 @@ final class CoverView: UIView {
     }
     
     // MARK: Config UI
-    private func configUI() {
+    private func configureUI() {
         backgroundColor = .clear
     }
     
@@ -56,7 +56,7 @@ final class CoverView: UIView {
     }
     
     // MARK: Add constraints
-    private func constraints() {
+    private func setConstraints() {
         titleConstraints()
         logInImageConstraints()
     }
@@ -65,10 +65,10 @@ final class CoverView: UIView {
     private func titleConstraints() {
         NSLayoutConstraint.activate([
             title.topAnchor.constraint(equalTo: topAnchor,
-                                       constant: Constants.titleTopPadding),
+                                       constant: Constants.title.titleTopPadding),
             title.centerXAnchor.constraint(equalTo: centerXAnchor),
             title.bottomAnchor.constraint(equalTo: logInImageView.topAnchor,
-                                          constant: Constants.titleBottomPadding)
+                                          constant: Constants.title.titleBottomPadding)
         ])
     }
     
@@ -77,7 +77,7 @@ final class CoverView: UIView {
         NSLayoutConstraint.activate([
             logInImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             logInImageView.bottomAnchor.constraint(equalTo: bottomAnchor,
-                                                   constant: Constants.logInImageBottomPadding)
+                                                   constant: Constants.logInImageView.logInImageBottomPadding)
         ])
     }
     
@@ -99,7 +99,7 @@ final class CoverView: UIView {
         let topEdgePoint = CGPoint(x: rect.minX, y: rect.minY)
         
         let gradientLayer = CAGradientLayer()
-        gradientLayer.backgroundColor = QuizzAppColors.blueSecondaryDefault.cgColor
+        gradientLayer.backgroundColor = QuizzAppColor.blueSecondaryDefault.cgColor
         gradientLayer.locations = [0.0, 1.0]
         gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
         gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
@@ -138,17 +138,22 @@ final class CoverView: UIView {
         path.close()
         
         // Set the fill color
-        QuizzAppColors.blueSecondaryLight.setFill()
+        QuizzAppColor.blueSecondaryLight.setFill()
         path.fill()
     }
 }
 
+// MARK: - Constants
 private extension CoverView {
     enum Constants {
-        static let titleFontSize: CGFloat = 20
-        static let titleTopPadding: CGFloat = 121
-        static let titleBottomPadding: CGFloat = -34
-        static let logInImageBottomPadding: CGFloat = -23
-        static let titleText = "ჩემი პირველი ქვიზი"
+        enum title {
+            static let titleFontSize: CGFloat = 20
+            static let titleTopPadding: CGFloat = 121
+            static let titleBottomPadding: CGFloat = -34
+            static let titleText = "ჩემი პირველი ქვიზი"
+        }
+        enum logInImageView{
+            static let logInImageBottomPadding: CGFloat = -23
+        }
     }
 }

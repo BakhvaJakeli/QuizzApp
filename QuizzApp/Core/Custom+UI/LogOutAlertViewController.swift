@@ -19,8 +19,8 @@ final class LogOutAlertViewController: UIViewController {
     // MARK: Components
     private let alertView: UIView = {
         let view = UIView()
-        view.backgroundColor = QuizzAppColors.buttonColor
-        view.layer.cornerRadius = Constants.alertViewRadius
+        view.backgroundColor = QuizzAppColor.buttonColor
+        view.layer.cornerRadius = Constants.alertView.alertViewRadius
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
@@ -28,18 +28,18 @@ final class LogOutAlertViewController: UIViewController {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: Constants.titleLabelFont)
+        label.font = .boldSystemFont(ofSize: Constants.titleLabel.titleLabelFont)
         label.textColor = .systemBackground
         label.textAlignment = .center
-        label.numberOfLines = Constants.titleLabelNumberOfLines
+        label.numberOfLines = Constants.titleLabel.titleLabelNumberOfLines
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
     }()
     
-    private lazy var yesButton = createButton(Constants.yesButtonTitle)
+    private lazy var yesButton = makeButton(Constants.yesButton.yesButtonTitle)
     
-    private lazy var noButton = createButton(Constants.noButtonTitle)
+    private lazy var noButton = makeButton(Constants.noButton.noButtonTitle)
     
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView()
@@ -47,7 +47,7 @@ final class LogOutAlertViewController: UIViewController {
         stackView.addArrangedSubview(noButton)
         stackView.addArrangedSubview(yesButton)
         stackView.axis = .horizontal
-        stackView.spacing = Constants.stackViewSpacing
+        stackView.spacing = Constants.stackView.stackViewSpacing
         
         return stackView
     }()
@@ -55,9 +55,9 @@ final class LogOutAlertViewController: UIViewController {
     // MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        configUI()
+        configureUI()
         addViews()
-        constraints()
+        setConstraints()
     }
     
     func setTitleText(_ text: String) {
@@ -65,22 +65,26 @@ final class LogOutAlertViewController: UIViewController {
     }
 }
 
-// MARK: -Private Functions
+// MARK: - Private Functions
 private extension LogOutAlertViewController {
     // MARK: Config UI
-    func configUI() {
+    func configureUI() {
         view.backgroundColor = Constants.backgroundViewColor
-        yesButton.addTarget(self, action: #selector(yesPressed), for: .touchUpInside)
-        noButton.addTarget(self, action: #selector(noPressed), for: .touchUpInside)
+        yesButton.addTarget(self,
+                            action: #selector(yesPressed),
+                            for: .touchUpInside)
+        noButton.addTarget(self,
+                           action: #selector(noPressed),
+                           for: .touchUpInside)
     }
     
     // MARK: Create Button
-    func createButton(_ text: String) -> UIButton {
+    func makeButton(_ text: String) -> UIButton {
         let button = UIButton()
         var configuration = UIButton.Configuration.filled()
         configuration.cornerStyle = .capsule
         configuration.title = text
-        configuration.baseBackgroundColor = QuizzAppColors.alertButonColor
+        configuration.baseBackgroundColor = QuizzAppColor.alertButonColor
         configuration.baseForegroundColor = .black
         button.configuration = configuration
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -96,7 +100,7 @@ private extension LogOutAlertViewController {
     }
     
     // MARK: Add Constraints
-    func constraints() {
+    func setConstraints() {
         alertViewConstraints()
         titleLabelConstraints()
         stackViewConstraints()
@@ -108,9 +112,9 @@ private extension LogOutAlertViewController {
             alertView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             alertView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             alertView.leadingAnchor.constraint(lessThanOrEqualTo: view.leadingAnchor,
-                                               constant: Constants.alertViewLeftPadding),
+                                               constant: Constants.alertView.alertViewLeftPadding),
             alertView.topAnchor.constraint(lessThanOrEqualTo: view.topAnchor,
-                                           constant: Constants.alertViewTopPadding)
+                                           constant: Constants.alertView.alertViewTopPadding)
         ])
     }
     
@@ -118,10 +122,10 @@ private extension LogOutAlertViewController {
     func titleLabelConstraints() {
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: alertView.topAnchor,
-                                            constant: Constants.titleTopPadding),
+                                            constant: Constants.titleLabel.titleTopPadding),
             titleLabel.centerXAnchor.constraint(equalTo: alertView.centerXAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: alertView.leadingAnchor,
-                                                constant: Constants.titleLeftPadding)
+                                                constant: Constants.titleLabel.titleLeftPadding)
         ])
     }
     
@@ -129,12 +133,12 @@ private extension LogOutAlertViewController {
     func stackViewConstraints() {
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor,
-                                           constant: Constants.stackViewTopPadding),
+                                           constant: Constants.stackView.stackViewTopPadding),
             stackView.centerXAnchor.constraint(equalTo: alertView.centerXAnchor),
             stackView.leadingAnchor.constraint(equalTo: alertView.leadingAnchor,
-                                               constant: Constants.stackViewLeftPadding),
+                                               constant: Constants.stackView.stackViewLeftPadding),
             stackView.bottomAnchor.constraint(equalTo: alertView.bottomAnchor,
-                                              constant: Constants.stackViewBottomPadding)
+                                              constant: Constants.stackView.stackViewBottomPadding)
         ])
     }
     
@@ -151,22 +155,32 @@ private extension LogOutAlertViewController {
     }
 }
 
-// MARK: -Constants
+// MARK: - Constants
 private extension LogOutAlertViewController {
     enum Constants {
-        static let alertViewRadius: CGFloat = 31
-        static let titleLabelFont: CGFloat = 16
         static let backgroundViewColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.6)
-        static let yesButtonTitle = "კი"
-        static let noButtonTitle = "არა"
-        static let stackViewSpacing: CGFloat = 10
-        static let alertViewLeftPadding: CGFloat = 53
-        static let alertViewTopPadding: CGFloat = 350
-        static let titleTopPadding: CGFloat = 40
-        static let titleLeftPadding: CGFloat = 24
-        static let stackViewTopPadding: CGFloat = 20
-        static let stackViewLeftPadding: CGFloat = 24
-        static let stackViewBottomPadding: CGFloat = -40
-        static let titleLabelNumberOfLines = 0
+        enum alertView{
+            static let alertViewRadius: CGFloat = 31
+            static let alertViewLeftPadding: CGFloat = 53
+            static let alertViewTopPadding: CGFloat = 350
+        }
+        enum titleLabel {
+            static let titleLabelFont: CGFloat = 16
+            static let titleTopPadding: CGFloat = 40
+            static let titleLeftPadding: CGFloat = 24
+            static let titleLabelNumberOfLines = 0
+        }
+        enum yesButton {
+            static let yesButtonTitle = "კი"
+        }
+        enum noButton {
+            static let noButtonTitle = "არა"
+        }
+        enum stackView{
+            static let stackViewSpacing: CGFloat = 10
+            static let stackViewTopPadding: CGFloat = 20
+            static let stackViewLeftPadding: CGFloat = 24
+            static let stackViewBottomPadding: CGFloat = -40
+        }
     }
 }

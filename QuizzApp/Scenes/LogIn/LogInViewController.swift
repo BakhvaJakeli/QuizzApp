@@ -28,10 +28,10 @@ final class LogInViewController: UIViewController {
         let textFIeld = UITextField()
         textFIeld.translatesAutoresizingMaskIntoConstraints = false
         textFIeld.textAlignment = .center
-        textFIeld.placeholder = Constants.logInTextFieldPlaceHolder
-        textFIeld.layer.cornerRadius = Constants.logInTextFieldCornerRadius
-        textFIeld.layer.borderWidth = Constants.logInTextFieldBorderWidth
-        textFIeld.layer.borderColor = QuizzAppColors.buttonColor.cgColor
+        textFIeld.placeholder = Constants.logInTextField.logInTextFieldPlaceHolder
+        textFIeld.layer.cornerRadius = Constants.logInTextField.logInTextFieldCornerRadius
+        textFIeld.layer.borderWidth = Constants.logInTextField.logInTextFieldBorderWidth
+        textFIeld.layer.borderColor = QuizzAppColor.buttonColor.cgColor
         textFIeld.autocorrectionType = .no
         
         return textFIeld
@@ -40,11 +40,14 @@ final class LogInViewController: UIViewController {
     private lazy var logInButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(Constants.logInButtonTitle, for: .normal)
-        button.titleLabel?.font = .boldSystemFont(ofSize: Constants.logInButtonTitleLableFont)
-        button.layer.cornerRadius = Constants.logInTextFieldCornerRadius
-        button.backgroundColor = QuizzAppColors.buttonColor
-        button.addTarget(self, action: #selector(clickLogIn), for: .touchUpInside)
+        button.setTitle(Constants.logInButton.logInButtonTitle,
+                        for: .normal)
+        button.titleLabel?.font = .boldSystemFont(ofSize: Constants.logInButton.logInButtonTitleLableFont)
+        button.layer.cornerRadius = Constants.logInTextField.logInTextFieldCornerRadius
+        button.backgroundColor = QuizzAppColor.buttonColor
+        button.addTarget(self,
+                         action: #selector(clickLogIn),
+                         for: .touchUpInside)
         
         return button
     }()
@@ -53,8 +56,8 @@ final class LogInViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubViews()
-        addConstraints()
-        configUI()
+        setConstraints()
+        configureUI()
     }
     
     // MARK: View Will Appear
@@ -70,16 +73,18 @@ final class LogInViewController: UIViewController {
     }
 }
 
-// MARK: - Functions
+// MARK: - Private Functions
 private extension LogInViewController {
-    
     // MARK: Config UI
-    func configUI() {
+    func configureUI() {
         view.backgroundColor = .systemBackground
         hideKeyboardWhenTappedAround()
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillShow),
+                                               name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillHide),
+                                               name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     // MARK: Add SubViews
@@ -91,7 +96,7 @@ private extension LogInViewController {
     }
     
     // MARK: Add Constrants
-    func addConstraints() {
+    func setConstraints() {
         logInImageConstraints()
         logInTextFieldConstraints()
         logInButtonConstraints()
@@ -111,11 +116,11 @@ private extension LogInViewController {
     func logInTextFieldConstraints() {
         NSLayoutConstraint.activate([
             logInTextField.topAnchor.constraint(equalTo: logInImageView.bottomAnchor,
-                                                constant: Constants.logInTextFieldTopPadding),
+                                                constant: Constants.logInTextField.logInTextFieldTopPadding),
             logInTextField.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             logInTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor,
-                                                    constant: Constants.logInTextFieldLeadingPadding),
-            logInTextField.heightAnchor.constraint(equalToConstant: Constants.logInTextFieldHeight)
+                                                    constant: Constants.logInTextField.logInTextFieldLeadingPadding),
+            logInTextField.heightAnchor.constraint(equalToConstant: Constants.logInTextField.logInTextFieldHeight)
         ])
     }
     
@@ -123,13 +128,13 @@ private extension LogInViewController {
     func logInButtonConstraints() {
         NSLayoutConstraint.activate([
             logInButton.topAnchor.constraint(equalTo: logInTextField.bottomAnchor,
-                                             constant: Constants.logInButtonTopPadding),
+                                             constant: Constants.logInButton.logInButtonTopPadding),
             logInButton.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             logInButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor,
-                                                 constant: Constants.logInButtonLeadingPadding),
-            logInButton.heightAnchor.constraint(equalToConstant: Constants.logInButtonHeight),
+                                                 constant: Constants.logInButton.logInButtonLeadingPadding),
+            logInButton.heightAnchor.constraint(equalToConstant: Constants.logInButton.logInButtonHeight),
             logInButton.bottomAnchor.constraint(lessThanOrEqualTo: scrollView.bottomAnchor,
-                                                constant: Constants.logInButtonBottomPadding)
+                                                constant: Constants.logInButton.logInButtonBottomPadding)
         ])
     }
     
@@ -145,7 +150,8 @@ private extension LogInViewController {
     
     // MARK: Hide Keyboard Function
     func hideKeyboardWhenTappedAround() {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        let tap = UITapGestureRecognizer(target: self,
+                                         action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
     }
@@ -160,27 +166,31 @@ private extension LogInViewController {
         let homePageViewController = HomePageViewController()
         let navigactionController = UINavigationController(rootViewController: homePageViewController)
         navigactionController.modalPresentationStyle = .fullScreen
-        present(navigactionController, animated: true)
+        present(navigactionController,
+                animated: true)
     }
     
+    // MARK: Keyboard will show
     @objc func keyboardWillShow(notification: NSNotification) {
         let frame = logInButton.frame
-        let convertedOrigin = view.convert(frame.origin, to: logInButton.superview)
+        let convertedOrigin = view.convert(frame.origin,
+                                           to: logInButton.superview)
         let buttonYCoordinate = view.bounds.height - convertedOrigin.y
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.view.frame.origin.y == 0 {
+            if view.frame.origin.y == 0 {
                 if keyboardSize.height > buttonYCoordinate {
-                    self.view.frame.origin.y -= keyboardSize.height
+                    view.frame.origin.y -= keyboardSize.height
                 } else {
-                    self.view.frame.origin.y -= keyboardSize.height + Constants.logInButtonBottomPadding
+                    view.frame.origin.y -= keyboardSize.height + Constants.logInButton.logInButtonBottomPadding
                 }
             }
         }
     }
     
+    // MARK: Keyboard will hide
     @objc func keyboardWillHide(notification: NSNotification) {
-        if self.view.frame.origin.y != 0 {
-            self.view.frame.origin.y = 0
+        if view.frame.origin.y != 0 {
+            view.frame.origin.y = 0
         }
     }
 }
@@ -188,17 +198,21 @@ private extension LogInViewController {
 // MARK: - Constants
 private extension LogInViewController {
     enum Constants {
-        static let logInTextFieldCornerRadius: CGFloat = 12
-        static let logInTextFieldBorderWidth: CGFloat = 1
-        static let logInTextFieldTopPadding: CGFloat = 92
-        static let logInTextFieldLeadingPadding: CGFloat = 55
-        static let logInTextFieldHeight: CGFloat = 44
-        static let logInButtonTopPadding: CGFloat = 26
-        static let logInButtonBottomPadding: CGFloat = -149
-        static let logInButtonLeadingPadding: CGFloat = 117
-        static let logInButtonHeight: CGFloat = 44
-        static let logInButtonTitleLableFont: CGFloat = 12
-        static let logInTextFieldPlaceHolder = "შეიყვანე სახელი"
-        static let logInButtonTitle = "ქვიზის დაწყება"
+        enum logInTextField {
+            static let logInTextFieldCornerRadius: CGFloat = 12
+            static let logInTextFieldBorderWidth: CGFloat = 1
+            static let logInTextFieldTopPadding: CGFloat = 92
+            static let logInTextFieldLeadingPadding: CGFloat = 55
+            static let logInTextFieldHeight: CGFloat = 44
+            static let logInTextFieldPlaceHolder = "შეიყვანე სახელი"
+        }
+        enum logInButton {
+            static let logInButtonTopPadding: CGFloat = 26
+            static let logInButtonBottomPadding: CGFloat = -149
+            static let logInButtonLeadingPadding: CGFloat = 117
+            static let logInButtonHeight: CGFloat = 44
+            static let logInButtonTitleLableFont: CGFloat = 12
+            static let logInButtonTitle = "ქვიზის დაწყება"
+        }
     }
 }

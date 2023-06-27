@@ -9,14 +9,14 @@ import UIKit
 
 final class SubjectsTableViewCell: UITableViewCell {
     
-    static let identifier = "SubjectsTableViewCell"
+    static let identifier = String(describing: SubjectsTableViewCell.self)
     
     // MARK: Components
     private let mainView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = QuizzAppColors.cellViewColor
-        view.layer.cornerRadius = Constants.mainViewCornerRadius
+        view.backgroundColor = QuizzAppColor.cellViewColor
+        view.layer.cornerRadius = Constants.mainView.mainViewCornerRadius
         
         return view
     }()
@@ -32,7 +32,7 @@ final class SubjectsTableViewCell: UITableViewCell {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .boldSystemFont(ofSize: Constants.titleLabelFont)
+        label.font = .boldSystemFont(ofSize: Constants.titleLabel.titleLabelFont)
         label.textColor = .black
         
         return label
@@ -41,9 +41,9 @@ final class SubjectsTableViewCell: UITableViewCell {
     private let descriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: Constants.desciptionLabelFont)
-        label.text = Constants.descriptionLabelText
-        label.textColor = QuizzAppColors.descriptionLabelTextColor
+        label.font = .systemFont(ofSize: Constants.descriptionLabel.desciptionLabelFont)
+        label.text = Constants.descriptionLabel.descriptionLabelText
+        label.textColor = QuizzAppColor.descriptionLabelTextColor
         
         return label
     }()
@@ -52,8 +52,8 @@ final class SubjectsTableViewCell: UITableViewCell {
         let button = UIButton()
         var configuration = UIButton.Configuration.filled()
         configuration.cornerStyle = .capsule
-        configuration.baseBackgroundColor = QuizzAppColors.buttonColor
-        configuration.image = QuizzAppImages.nextArrow
+        configuration.baseBackgroundColor = QuizzAppColor.buttonColor
+        configuration.image = QuizzAppImage.nextArrow
         button.configuration = configuration
         button.translatesAutoresizingMaskIntoConstraints = false
         button.isUserInteractionEnabled = false
@@ -77,7 +77,7 @@ final class SubjectsTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
         addViews()
-        constraints()
+        setConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -85,7 +85,7 @@ final class SubjectsTableViewCell: UITableViewCell {
     }
     
     // MARK: Config Cell
-    func configCell(with subject: Subject) {
+    func configure(with subject: Subject) {
         subjectImageView.image = subject.image
         titleLabel.text = subject.title
     }
@@ -99,7 +99,7 @@ final class SubjectsTableViewCell: UITableViewCell {
     }
 }
 
-// MARK: -Private Functions
+// MARK: - Private Functions
 private extension SubjectsTableViewCell {
     // MARK: Add Sub Views
     private func addViews() {
@@ -110,7 +110,7 @@ private extension SubjectsTableViewCell {
     }
     
     // MARK: Add Constraints
-    func constraints() {
+    func setConstraints() {
         mainViewConstraints()
         subjectImageViewConstraints()
         stackViewConstraints()
@@ -121,9 +121,9 @@ private extension SubjectsTableViewCell {
     func mainViewConstraints() {
         NSLayoutConstraint.activate([
             mainView.topAnchor.constraint(equalTo: contentView.topAnchor,
-                                          constant: -Constants.mainViewBottomPadding),
+                                          constant: -Constants.mainView.mainViewBottomPadding),
             mainView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,
-                                             constant: Constants.mainViewBottomPadding),
+                                             constant: Constants.mainView.mainViewBottomPadding),
             mainView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             mainView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
         ])
@@ -133,10 +133,10 @@ private extension SubjectsTableViewCell {
     func subjectImageViewConstraints() {
         NSLayoutConstraint.activate([
             subjectImageView.topAnchor.constraint(equalTo: mainView.topAnchor,
-                                                  constant: Constants.subjectImageViewTopPadding),
+                                                  constant: Constants.subjectImageView.subjectImageViewTopPadding),
             subjectImageView.centerYAnchor.constraint(equalTo: mainView.centerYAnchor),
             subjectImageView.leadingAnchor.constraint(equalTo: mainView.leadingAnchor,
-                                                      constant: Constants.subjectImageViewLeftPadding),
+                                                      constant: Constants.subjectImageView.subjectImageViewLeftPadding),
         ])
     }
     
@@ -144,11 +144,11 @@ private extension SubjectsTableViewCell {
     func stackViewConstraints() {
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: mainView.topAnchor,
-                                           constant: Constants.stackViewTopPadding),
+                                           constant: Constants.stackView.stackViewTopPadding),
             stackView.leadingAnchor.constraint(equalTo: subjectImageView.trailingAnchor,
-                                               constant: Constants.stackViewLeftPadding),
+                                               constant: Constants.stackView.stackViewLeftPadding),
             stackView.bottomAnchor.constraint(equalTo: mainView.bottomAnchor,
-                                              constant: Constants.stackViewBottomPadding)
+                                              constant: Constants.stackView.stackViewBottomPadding)
         ])
     }
     
@@ -156,33 +156,45 @@ private extension SubjectsTableViewCell {
     func nextButtonConstraints() {
         NSLayoutConstraint.activate([
             nextButton.leadingAnchor.constraint(greaterThanOrEqualTo: stackView.trailingAnchor,
-                                                constant: Constants.nextButtonLeftPadding),
+                                                constant: Constants.nextButton.nextButtonLeftPadding),
             nextButton.topAnchor.constraint(equalTo: mainView.topAnchor,
-                                            constant: Constants.nextButtonTopPadding),
+                                            constant: Constants.nextButton.nextButtonTopPadding),
             nextButton.trailingAnchor.constraint(equalTo: mainView.trailingAnchor,
-                                                 constant: Constants.nextButtonRightPadding),
+                                                 constant: Constants.nextButton.nextButtonRightPadding),
             nextButton.centerYAnchor.constraint(equalTo: mainView.centerYAnchor),
-            nextButton.widthAnchor.constraint(equalToConstant: Constants.nextButtonWidthAnchor)
+            nextButton.widthAnchor.constraint(equalToConstant: Constants.nextButton.nextButtonWidthAnchor)
         ])
     }
 }
 
-// MARK: -Constants
+// MARK: - Constants
 private extension SubjectsTableViewCell {
     enum Constants {
-        static let mainViewCornerRadius: CGFloat = 26
-        static let desciptionLabelFont: CGFloat = 12
-        static let titleLabelFont: CGFloat = 16
-        static let descriptionLabelText = "აღწერა"
-        static let subjectImageViewTopPadding: CGFloat = 22
-        static let subjectImageViewLeftPadding: CGFloat = 30
-        static let stackViewTopPadding: CGFloat = 33
-        static let stackViewLeftPadding: CGFloat = 18
-        static let stackViewBottomPadding: CGFloat = -34
-        static let nextButtonLeftPadding: CGFloat = 27
-        static let nextButtonTopPadding: CGFloat = 30
-        static let nextButtonRightPadding: CGFloat = -30
-        static let nextButtonWidthAnchor: CGFloat = 46
-        static let mainViewBottomPadding: CGFloat = -10
+        enum mainView {
+            static let mainViewCornerRadius: CGFloat = 26
+            static let mainViewBottomPadding: CGFloat = -10
+        }
+        enum descriptionLabel {
+            static let desciptionLabelFont: CGFloat = 12
+            static let descriptionLabelText = "აღწერა"
+        }
+        enum titleLabel {
+            static let titleLabelFont: CGFloat = 16
+        }
+        enum subjectImageView {
+            static let subjectImageViewTopPadding: CGFloat = 22
+            static let subjectImageViewLeftPadding: CGFloat = 30
+        }
+        enum stackView {
+            static let stackViewTopPadding: CGFloat = 33
+            static let stackViewLeftPadding: CGFloat = 18
+            static let stackViewBottomPadding: CGFloat = -34
+        }
+        enum nextButton {
+            static let nextButtonLeftPadding: CGFloat = 27
+            static let nextButtonTopPadding: CGFloat = 30
+            static let nextButtonRightPadding: CGFloat = -30
+            static let nextButtonWidthAnchor: CGFloat = 46
+        }
     }
 }

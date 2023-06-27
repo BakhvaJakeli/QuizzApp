@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum QuizzAppColors {
+enum QuizzAppColor {
     static let buttonColor = UIColor(red: 1,
                                      green: 0.769,
                                      blue: 0.29,

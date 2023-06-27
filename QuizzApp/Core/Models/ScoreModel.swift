@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct Score {
+struct SubjectScore {
     let image: UIImage
     let title: String
     let score: Int

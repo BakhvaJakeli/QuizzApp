@@ -5,7 +5,6 @@
 //  Created by bakhva  on 15.06.23.
 //
 
-import Foundation
 import UIKit
 
 final class ScoreView: UIView {
@@ -13,24 +12,24 @@ final class ScoreView: UIView {
     // MARK: Components
     private let gpaLabel: UILabel = {
         let label = UILabel()
-        let attributedString = NSMutableAttributedString(string: Constants.gpaText)
+        let attributedString = NSMutableAttributedString(string: Constants.gpaLabel.gpaText)
         let initialAttributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.systemBackground,
-            .font: UIFont.systemFont(ofSize: Constants.gpaLabelFont)
+            .font: UIFont.systemFont(ofSize: Constants.gpaLabel.gpaLabelFont)
         ]
         let yellowBoldAttributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: QuizzAppColors.buttonColor,
-            .font: UIFont.boldSystemFont(ofSize: Constants.gpaLabelFont)
+            .foregroundColor: QuizzAppColor.buttonColor,
+            .font: UIFont.boldSystemFont(ofSize: Constants.gpaLabel.gpaLabelFont)
         ]
         attributedString.addAttributes(initialAttributes,
-                                       range: NSRange(location: Constants.defaultAttributeLocation,
-                                                      length: Constants.defaultAttributeLength))
+                                       range: NSRange(location: Constants.gpaLabel.defaultAttributeLocation,
+                                                      length: Constants.gpaLabel.defaultAttributeLength))
         attributedString.addAttributes(yellowBoldAttributes,
-                                       range: NSRange(location: Constants.defaultAttributeLength,
-                                                      length: Constants.gpaText.count - Constants.defaultAttributeLength))
+                                       range: NSRange(location: Constants.gpaLabel.defaultAttributeLength,
+                                                      length: Constants.gpaLabel.gpaText.count - Constants.gpaLabel.defaultAttributeLength))
         label.attributedText = attributedString
-        label.backgroundColor = QuizzAppColors.blueSecondaryLight
-        label.layer.cornerRadius = Constants.gpaLabelCornerRadius
+        label.backgroundColor = QuizzAppColor.blueSecondaryLight
+        label.layer.cornerRadius = Constants.gpaLabel.gpaLabelCornerRadius
         label.clipsToBounds = true
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -40,8 +39,8 @@ final class ScoreView: UIView {
     
     private let detailLabel: UILabel = {
         let label = UILabel()
-        label.text = Constants.detailLabelText
-        label.font = .boldSystemFont(ofSize: Constants.detailLabelFont)
+        label.text = Constants.detailLabel.detailLabelText
+        label.font = .boldSystemFont(ofSize: Constants.detailLabel.detailLabelFont)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .systemBackground
         
@@ -50,7 +49,7 @@ final class ScoreView: UIView {
     
     private let arrowImageVIew: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = QuizzAppImages.detailsArrow
+        imageView.image = QuizzAppImage.detailsArrow
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
         return imageView
@@ -60,7 +59,7 @@ final class ScoreView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         addViews()
-        constraints()
+        setConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -68,7 +67,7 @@ final class ScoreView: UIView {
     }
 }
 
-// MARK: - Functions
+// MARK: - Private Functions
 private extension ScoreView {
     // MARK: Add SubViews
     func addViews() {
@@ -78,7 +77,7 @@ private extension ScoreView {
     }
     
     // MARK: Add Constraints
-    func constraints() {
+    func setConstraints() {
         gpaLabelConstrints()
         detailsLabelConstraints()
         arrowImageConstraints()
@@ -88,11 +87,11 @@ private extension ScoreView {
     func gpaLabelConstrints() {
         NSLayoutConstraint.activate([
             gpaLabel.topAnchor.constraint(equalTo: topAnchor,
-                                          constant: Constants.gpaLabelTopPadding),
+                                          constant: Constants.gpaLabel.gpaLabelTopPadding),
             gpaLabel.leadingAnchor.constraint(equalTo: leadingAnchor,
-                                              constant: Constants.gpaLabelLeftPadding),
+                                              constant: Constants.gpaLabel.gpaLabelLeftPadding),
             gpaLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-            gpaLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: Constants.gpaLabelMaxWidth)
+            gpaLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: Constants.gpaLabel.gpaLabelMaxWidth)
         ])
     }
     
@@ -100,7 +99,7 @@ private extension ScoreView {
     func detailsLabelConstraints() {
         NSLayoutConstraint.activate([
             detailLabel.topAnchor.constraint(equalTo: topAnchor,
-                                             constant: Constants.detailsLabelTopPadding),
+                                             constant: Constants.detailLabel.detailsLabelTopPadding),
             detailLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
         ])
     }
@@ -108,31 +107,38 @@ private extension ScoreView {
     func arrowImageConstraints() {
         NSLayoutConstraint.activate([
             arrowImageVIew.topAnchor.constraint(equalTo: topAnchor,
-                                                constant: Constants.arrowImageTopPadding),
+                                                constant: Constants.arrowImageView.arrowImageTopPadding),
             arrowImageVIew.centerYAnchor.constraint(equalTo: centerYAnchor),
             arrowImageVIew.trailingAnchor.constraint(equalTo: trailingAnchor,
-                                                     constant: -Constants.arrowImageRigtPadding),
+                                                     constant: -Constants.arrowImageView.arrowImageRigtPadding),
             arrowImageVIew.leadingAnchor.constraint(equalTo: detailLabel.trailingAnchor,
-                                                    constant: Constants.arrowImageLeftPadding)
+                                                    constant: Constants.arrowImageView.arrowImageLeftPadding)
         ])
     }
 }
 
+// MARK: - Constants
 private extension ScoreView {
     enum Constants {
-        static let gpaText = "GPA - 4.0"
-        static let gpaLabelCornerRadius: CGFloat = 15
-        static let detailLabelText = "დეტალურად"
-        static let gpaLabelTopPadding: CGFloat = 20
-        static let gpaLabelLeftPadding: CGFloat = 18
-        static let gpaLabelMaxWidth: CGFloat = 82
-        static let detailsLabelTopPadding: CGFloat = 28
-        static let arrowImageTopPadding: CGFloat = 30
-        static let arrowImageRigtPadding: CGFloat = 34
-        static let arrowImageLeftPadding: CGFloat = 4
-        static let detailLabelFont: CGFloat = 12
-        static let gpaLabelFont: CGFloat = 16
-        static let defaultAttributeLocation = 0
-        static let defaultAttributeLength = 6
+        enum gpaLabel {
+            static let gpaText = "GPA - 4.0"
+            static let gpaLabelCornerRadius: CGFloat = 15
+            static let gpaLabelTopPadding: CGFloat = 20
+            static let gpaLabelLeftPadding: CGFloat = 18
+            static let gpaLabelMaxWidth: CGFloat = 82
+            static let gpaLabelFont: CGFloat = 16
+            static let defaultAttributeLocation = 0
+            static let defaultAttributeLength = 6
+        }
+        enum detailLabel {
+            static let detailLabelText = "დეტალურად"
+            static let detailsLabelTopPadding: CGFloat = 28
+            static let detailLabelFont: CGFloat = 12
+        }
+        enum arrowImageView {
+            static let arrowImageTopPadding: CGFloat = 30
+            static let arrowImageRigtPadding: CGFloat = 34
+            static let arrowImageLeftPadding: CGFloat = 4
+        }
     }
 }

@@ -10,20 +10,20 @@ import UIKit
 final class HomePageViewController: UIViewController {
     
     let subjects = [
-        Subject(image: QuizzAppImages.georgraphy ?? UIImage(),
+        Subject(image: QuizzAppImage.georgraphy ?? UIImage(),
                 title: "გეოგრაფია"),
-        Subject(image: QuizzAppImages.programming ?? UIImage(),
+        Subject(image: QuizzAppImage.programming ?? UIImage(),
                 title: "პროგრამირება"),
-        Subject(image: QuizzAppImages.history ?? UIImage(),
+        Subject(image: QuizzAppImage.history ?? UIImage(),
                 title: "ისტორია"),
-        Subject(image: QuizzAppImages.physics ?? UIImage(),
+        Subject(image: QuizzAppImage.physics ?? UIImage(),
                 title: "ფიზიკა"),
     ]
     
     // MARK: Components
     let alertView: LogOutAlertViewController = {
         let view = LogOutAlertViewController()
-        view.setTitleText(Constants.alertTitleLabelText)
+        view.setTitleText(Constants.alertTitle.alertTitleLabelText)
         
         return view
     }()
@@ -31,9 +31,9 @@ final class HomePageViewController: UIViewController {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = QuizzAppColors.buttonColor
-        label.text = Constants.titleLabelText
-        label.font = .boldSystemFont(ofSize: Constants.titleLabelFont)
+        label.textColor = QuizzAppColor.buttonColor
+        label.text = Constants.titleLabel.titleLabelText
+        label.font = .boldSystemFont(ofSize: Constants.titleLabel.titleLabelFont)
         
         return label
     }()
@@ -41,8 +41,8 @@ final class HomePageViewController: UIViewController {
     private lazy var scoreView: ScoreView = {
         let view = ScoreView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = QuizzAppColors.blueSecondaryDefault
-        view.layer.cornerRadius = Constants.scoreViewCornerRadius
+        view.backgroundColor = QuizzAppColor.blueSecondaryDefault
+        view.layer.cornerRadius = Constants.scoreView.scoreViewCornerRadius
         
         let tap = UITapGestureRecognizer(target: self,
                                          action: #selector(moveToScore))
@@ -54,8 +54,8 @@ final class HomePageViewController: UIViewController {
     private let chooseSubjectLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: Constants.chooseLabelFont)
-        label.text = Constants.chooseLabelText
+        label.font = .systemFont(ofSize: Constants.chooseLabel.chooseLabelFont)
+        label.text = Constants.chooseLabel.chooseLabelText
         
         return label
     }()
@@ -76,7 +76,7 @@ final class HomePageViewController: UIViewController {
     
     private let separatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = QuizzAppColors.lightGray
+        view.backgroundColor = QuizzAppColor.lightGray
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
@@ -86,8 +86,8 @@ final class HomePageViewController: UIViewController {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         var configuration = UIButton.Configuration.filled()
-        configuration.baseBackgroundColor = QuizzAppColors.buttonColor
-        configuration.image = QuizzAppImages.logOut
+        configuration.baseBackgroundColor = QuizzAppColor.buttonColor
+        configuration.image = QuizzAppImage.logOut
         configuration.cornerStyle = .capsule
         button.configuration = configuration
         button.addTarget(self,
@@ -102,7 +102,7 @@ final class HomePageViewController: UIViewController {
         super.viewDidLoad()
         configUI()
         addSubViews()
-        addConstraints()
+        setConstraints()
     }
     
     // MARK: View Will Appear
@@ -133,7 +133,7 @@ private extension HomePageViewController {
     }
     
     // MARK: Constraints
-    func addConstraints() {
+    func setConstraints() {
         titleLabelConstraints()
         scoreViewConstraints()
         chooseSubjectLabelConstraints()
@@ -146,10 +146,10 @@ private extension HomePageViewController {
     func titleLabelConstraints() {
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
-                                            constant: Constants.titleLabelTopPadding),
+                                            constant: Constants.titleLabel.titleLabelTopPadding),
             titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,
-                                                constant: Constants.titleLabelLeftPadding),
-            titleLabel.heightAnchor.constraint(equalToConstant: Constants.titleLabelHeight)
+                                                constant: Constants.titleLabel.titleLabelLeftPadding),
+            titleLabel.heightAnchor.constraint(equalToConstant: Constants.titleLabel.titleLabelHeight)
         ])
     }
     
@@ -157,10 +157,10 @@ private extension HomePageViewController {
     func scoreViewConstraints() {
         NSLayoutConstraint.activate([
             scoreView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor,
-                                           constant: Constants.scoreViewTopPadding),
+                                           constant: Constants.scoreView.scoreViewTopPadding),
             scoreView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             scoreView.leadingAnchor.constraint(equalTo: view.leadingAnchor,
-                                               constant: Constants.scoreViewLeftPadding)
+                                               constant: Constants.scoreView.scoreViewLeftPadding)
         ])
     }
     
@@ -168,11 +168,11 @@ private extension HomePageViewController {
     func chooseSubjectLabelConstraints() {
         NSLayoutConstraint.activate([
             chooseSubjectLabel.topAnchor.constraint(equalTo: scoreView.bottomAnchor,
-                                                    constant: Constants.chooseSubjectLabelTopPadding),
+                                                    constant: Constants.chooseSubjectLabel.chooseSubjectLabelTopPadding),
             chooseSubjectLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,
-                                                        constant: Constants.chooseSubjectLabelLeftPadding),
+                                                        constant: Constants.chooseSubjectLabel.chooseSubjectLabelLeftPadding),
             chooseSubjectLabel.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor,
-                                                         constant: Constants.chooseSubjectLabelRightPadding)
+                                                         constant: Constants.chooseSubjectLabel.chooseSubjectLabelRightPadding)
         ])
     }
     
@@ -180,10 +180,10 @@ private extension HomePageViewController {
     func subjectsTableViewConstraints() {
         NSLayoutConstraint.activate([
             subjectsTableView.topAnchor.constraint(equalTo: chooseSubjectLabel.bottomAnchor,
-                                                   constant: Constants.subjectsTableViewTopPadding),
+                                                   constant: Constants.subjectsTableView.subjectsTableViewTopPadding),
             subjectsTableView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             subjectsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor,
-                                                       constant: Constants.subjectsTableViewLeftPadding),
+                                                       constant: Constants.subjectsTableView.subjectsTableViewLeftPadding),
         ])
     }
     
@@ -191,11 +191,11 @@ private extension HomePageViewController {
     func separatorViewConstraints() {
         NSLayoutConstraint.activate([
             separatorView.topAnchor.constraint(lessThanOrEqualTo: subjectsTableView.bottomAnchor,
-                                               constant: Constants.separatorViewTopPadding),
+                                               constant: Constants.separatorView.separatorViewTopPadding),
             separatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             separatorView.leadingAnchor.constraint(equalTo: view.leadingAnchor,
-                                                   constant: Constants.separatorViewLeftPadding),
-            separatorView.heightAnchor.constraint(equalToConstant: Constants.separatorViewHeight)
+                                                   constant: Constants.separatorView.separatorViewLeftPadding),
+            separatorView.heightAnchor.constraint(equalToConstant: Constants.separatorView.separatorViewHeight)
         ])
     }
     
@@ -203,24 +203,25 @@ private extension HomePageViewController {
     func logOutButtonConstraints() {
         NSLayoutConstraint.activate([
             logOutButton.topAnchor.constraint(equalTo: separatorView.bottomAnchor,
-                                              constant: Constants.logOutButtonTopPadding),
+                                              constant: Constants.logOutButton.logOutButtonTopPadding),
             logOutButton.trailingAnchor.constraint(equalTo: view.trailingAnchor,
-                                                   constant: Constants.logOutButtonRightPadding),
+                                                   constant: Constants.logOutButton.logOutButtonRightPadding),
             logOutButton.bottomAnchor.constraint(equalTo: view.bottomAnchor,
-                                                 constant: Constants.logOutButtonBottomPadding)
+                                                 constant: Constants.logOutButton.logOutButtonBottomPadding)
         ])
     }
     
     // MARK: Move To Score View Controller
     @objc func moveToScore() {
-        let viewController = ScoreViewController()
-        navigationController?.pushViewController(viewController, animated: true)
+        navigationController?.pushViewController(ScoreViewController(),
+                                                 animated: true)
     }
     
     // MARK: Log Out
     @objc func logOut() {
         alertView.modalPresentationStyle = .overFullScreen
-        present(alertView, animated: true)
+        present(alertView,
+                animated: true)
     }
 }
 
@@ -233,7 +234,7 @@ extension HomePageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SubjectsTableViewCell.identifier) as? SubjectsTableViewCell else {return UITableViewCell()}
         let subject = subjects[indexPath.row]
-        cell.configCell(with: subject)
+        cell.configure(with: subject)
         
         return cell
     }
@@ -244,12 +245,11 @@ extension HomePageViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let viewController = TestViewController()
-        navigationController?.pushViewController(viewController, animated: true)
+        navigationController?.pushViewController(TestViewController(), animated: true)
     }
 }
 
-// MARK: -Alert View Delegate
+// MARK: - Alert View Delegate
 extension HomePageViewController: logOutAlertDelegate {
     func pressedYesOnLogOut() {
         dismiss(animated: true)
@@ -263,27 +263,43 @@ extension HomePageViewController: logOutAlertDelegate {
 // MARK: - Constants
 private extension HomePageViewController {
     enum Constants {
-        static let titleLabelText = "გამარჯობა, ირაკლი"
-        static let titleLabelFont: CGFloat = 16
-        static let scoreViewCornerRadius: CGFloat = 26
-        static let chooseLabelText = "აირჩიე საგანი"
-        static let chooseLabelFont: CGFloat = 16
-        static let titleLabelTopPadding: CGFloat = 8
-        static let titleLabelLeftPadding: CGFloat = 16
-        static let titleLabelHeight: CGFloat = 21
-        static let scoreViewTopPadding: CGFloat = 20
-        static let scoreViewLeftPadding: CGFloat = 16
-        static let chooseSubjectLabelTopPadding: CGFloat = 32
-        static let chooseSubjectLabelLeftPadding: CGFloat = 16
-        static let chooseSubjectLabelRightPadding: CGFloat = 253
-        static let subjectsTableViewTopPadding: CGFloat = 16
-        static let subjectsTableViewLeftPadding: CGFloat = 16
-        static let separatorViewTopPadding: CGFloat = 20
-        static let separatorViewLeftPadding: CGFloat = 0
-        static let separatorViewHeight: CGFloat = 2
-        static let logOutButtonTopPadding: CGFloat = 12
-        static let logOutButtonRightPadding: CGFloat = -16
-        static let logOutButtonBottomPadding: CGFloat = -11
-        static let alertTitleLabelText = "ნამდვილად გსურს გასვლა?"
+        enum titleLabel {
+            static let titleLabelText = "გამარჯობა, ირაკლი"
+            static let titleLabelFont: CGFloat = 16
+            static let titleLabelTopPadding: CGFloat = 8
+            static let titleLabelLeftPadding: CGFloat = 16
+            static let titleLabelHeight: CGFloat = 21
+        }
+        enum scoreView {
+            static let scoreViewCornerRadius: CGFloat = 26
+            static let scoreViewTopPadding: CGFloat = 20
+            static let scoreViewLeftPadding: CGFloat = 16
+        }
+        enum chooseLabel {
+            static let chooseLabelText = "აირჩიე საგანი"
+            static let chooseLabelFont: CGFloat = 16
+        }
+        enum chooseSubjectLabel {
+            static let chooseSubjectLabelTopPadding: CGFloat = 32
+            static let chooseSubjectLabelLeftPadding: CGFloat = 16
+            static let chooseSubjectLabelRightPadding: CGFloat = 253
+        }
+        enum subjectsTableView {
+            static let subjectsTableViewTopPadding: CGFloat = 16
+            static let subjectsTableViewLeftPadding: CGFloat = 16
+        }
+        enum separatorView {
+            static let separatorViewTopPadding: CGFloat = 20
+            static let separatorViewLeftPadding: CGFloat = 0
+            static let separatorViewHeight: CGFloat = 2
+        }
+        enum logOutButton {
+            static let logOutButtonTopPadding: CGFloat = 12
+            static let logOutButtonRightPadding: CGFloat = -16
+            static let logOutButtonBottomPadding: CGFloat = -11
+        }
+        enum alertTitle {
+            static let alertTitleLabelText = "ნამდვილად გსურს გასვლა?"
+        }
     }
 }

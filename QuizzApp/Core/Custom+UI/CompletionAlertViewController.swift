@@ -18,8 +18,8 @@ final class CompletionAlertViewController: UIViewController {
     // MARK: Components
     private let alertView: UIView = {
         let view = UIView()
-        view.backgroundColor = QuizzAppColors.buttonColor
-        view.layer.cornerRadius = Constants.alertViewRadius
+        view.backgroundColor = QuizzAppColor.buttonColor
+        view.layer.cornerRadius = Constants.alertView.alertViewRadius
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
@@ -27,7 +27,7 @@ final class CompletionAlertViewController: UIViewController {
     
     private let alertImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = QuizzAppImages.confetti
+        imageView.image = QuizzAppImage.confetti
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         
@@ -36,8 +36,8 @@ final class CompletionAlertViewController: UIViewController {
     
     private let congratulationsLabel: UILabel = {
         let label = UILabel()
-        label.text = Constants.congratulationsLabelText
-        label.font = .boldSystemFont(ofSize: Constants.congratulationsLabeFont)
+        label.text = Constants.congratulationsLabel.congratulationsLabelText
+        label.font = .boldSystemFont(ofSize: Constants.congratulationsLabel.congratulationsLabeFont)
         label.textColor = .systemBackground
         label.textAlignment = .center
         
@@ -46,8 +46,8 @@ final class CompletionAlertViewController: UIViewController {
     
     private let pointsLabel: UILabel = {
         let label = UILabel()
-        label.text = Constants.pointsLabelText
-        label.font = .boldSystemFont(ofSize: Constants.pointsLabelFont)
+        label.text = Constants.pointsLabel.pointsLabelText
+        label.font = .boldSystemFont(ofSize: Constants.pointsLabel.pointsLabelFont)
         label.textAlignment = .center
         label.textColor = .link
         
@@ -75,7 +75,7 @@ final class CompletionAlertViewController: UIViewController {
     private lazy var closeButton: UIButton = {
         let button = UIButton()
         var configuration = UIButton.Configuration.filled()
-        configuration.title = Constants.closeButtonTitle
+        configuration.title = Constants.closeButton.closeButtonTitle
         configuration.baseBackgroundColor = .clear
         button.configuration = configuration
         button.addTarget(self, action: #selector(close), for: .touchUpInside)
@@ -87,32 +87,27 @@ final class CompletionAlertViewController: UIViewController {
     // MARK: View Did Load
     override func viewDidLoad() {
         super.viewDidLoad()
-        configUI()
+        configureUI()
         addViews()
-        constraints()
+        setConstraints()
     }
 }
 
-// MARK: -Private Functions
+// MARK: - Private Functions
 private extension CompletionAlertViewController {
     // MARK: Config UI
-    func configUI() {
+    func configureUI() {
         view.backgroundColor = Constants.backgroundViewColor
     }
     
     // MARK: Add Sub Views
     func addViews() {
         view.addSubview(alertView)
-        [
-            alertImageView,
-            stackView,
-            dividerView,
-            closeButton
-        ].forEach{alertView.addSubview($0)}
+        [alertImageView,stackView,dividerView,closeButton].forEach{ alertView.addSubview($0) }
     }
     
     // MARK: Add Constraints
-    func constraints() {
+    func setConstraints() {
         alertViewConstraints()
         alertImageViewConstraints()
         stackViewConstraints()
@@ -126,9 +121,9 @@ private extension CompletionAlertViewController {
             alertView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             alertView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             alertView.leadingAnchor.constraint(lessThanOrEqualTo: view.leadingAnchor,
-                                               constant: Constants.alertViewLeftPadding),
+                                               constant: Constants.alertView.alertViewLeftPadding),
             alertView.topAnchor.constraint(lessThanOrEqualTo: view.topAnchor,
-                                           constant: Constants.alertViewTopPadding)
+                                           constant: Constants.alertView.alertViewTopPadding)
         ])
     }
     
@@ -136,7 +131,7 @@ private extension CompletionAlertViewController {
     func alertImageViewConstraints() {
         NSLayoutConstraint.activate([
             alertImageView.topAnchor.constraint(equalTo: alertView.topAnchor,
-                                                constant: Constants.alertImageViewTopPadding),
+                                                constant: Constants.alertImageView.alertImageViewTopPadding),
             alertImageView.centerXAnchor.constraint(equalTo: alertView.centerXAnchor)
         ])
     }
@@ -145,10 +140,10 @@ private extension CompletionAlertViewController {
     func stackViewConstraints() {
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: alertImageView.bottomAnchor,
-                                           constant: Constants.stackViewTopPadding),
+                                           constant: Constants.stackView.stackViewTopPadding),
             stackView.centerXAnchor.constraint(equalTo: alertView.centerXAnchor),
             stackView.leadingAnchor.constraint(equalTo: alertView.leadingAnchor,
-                                               constant: Constants.stackViewLeftPadding)
+                                               constant: Constants.stackView.stackViewLeftPadding)
         ])
     }
     
@@ -157,9 +152,9 @@ private extension CompletionAlertViewController {
         NSLayoutConstraint.activate([
             dividerView.centerXAnchor.constraint(equalTo: alertView.centerXAnchor),
             dividerView.leadingAnchor.constraint(equalTo: alertView.leadingAnchor),
-            dividerView.heightAnchor.constraint(equalToConstant: Constants.dividerViewHeight),
+            dividerView.heightAnchor.constraint(equalToConstant: Constants.dividerView.dividerViewHeight),
             dividerView.topAnchor.constraint(equalTo: stackView.bottomAnchor,
-                                             constant: Constants.dividerViewTopPadding)
+                                             constant: Constants.dividerView.dividerViewTopPadding)
         ])
     }
     
@@ -167,12 +162,12 @@ private extension CompletionAlertViewController {
     func closeButtonConstraints() {
         NSLayoutConstraint.activate([
             closeButton.topAnchor.constraint(equalTo: dividerView.bottomAnchor,
-                                             constant: Constants.closeButtonTopPadding),
+                                             constant: Constants.closeButton.closeButtonTopPadding),
             closeButton.centerXAnchor.constraint(equalTo: alertView.centerXAnchor),
             closeButton.leadingAnchor.constraint(equalTo: alertView.leadingAnchor,
-                                                 constant: Constants.closeButtonLeftPadding),
+                                                 constant: Constants.closeButton.closeButtonLeftPadding),
             closeButton.bottomAnchor.constraint(equalTo: alertView.bottomAnchor,
-                                                constant: Constants.closeButtonBottomPadding)
+                                                constant: Constants.closeButton.closeButtonBottomPadding)
         ])
     }
     
@@ -183,25 +178,39 @@ private extension CompletionAlertViewController {
     }
 }
 
-// MARK: -Constants
+// MARK: - Constants
 private extension CompletionAlertViewController {
     enum Constants {
-        static let alertViewRadius: CGFloat = 31
-        static let congratulationsLabelText = "გილოცავ!"
-        static let congratulationsLabeFont: CGFloat = 16
-        static let pointsLabelText = "შენ დააგროვე 14 ქულა"
-        static let pointsLabelFont: CGFloat = 14
-        static let closeButtonTitle = "დახურვა"
         static let backgroundViewColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.4)
-        static let alertImageViewTopPadding: CGFloat = 39
-        static let stackViewLeftPadding: CGFloat = 24
-        static let stackViewTopPadding: CGFloat = 17
-        static let dividerViewHeight: CGFloat = 1
-        static let dividerViewTopPadding: CGFloat = 33
-        static let closeButtonBottomPadding: CGFloat = -12
-        static let closeButtonLeftPadding: CGFloat = 24
-        static let closeButtonTopPadding: CGFloat = 12.5
-        static let alertViewLeftPadding: CGFloat = 53
-        static let alertViewTopPadding: CGFloat = 350
+        enum alertView {
+            static let alertViewRadius: CGFloat = 31
+            static let alertViewLeftPadding: CGFloat = 53
+            static let alertViewTopPadding: CGFloat = 350
+        }
+        enum congratulationsLabel {
+            static let congratulationsLabelText = "გილოცავ!"
+            static let congratulationsLabeFont: CGFloat = 16
+        }
+        enum pointsLabel {
+            static let pointsLabelText = "შენ დააგროვე 14 ქულა"
+            static let pointsLabelFont: CGFloat = 14
+        }
+        enum closeButton {
+            static let closeButtonTitle = "დახურვა"
+            static let closeButtonBottomPadding: CGFloat = -12
+            static let closeButtonLeftPadding: CGFloat = 24
+            static let closeButtonTopPadding: CGFloat = 12.5
+        }
+        enum alertImageView {
+            static let alertImageViewTopPadding: CGFloat = 39
+        }
+        enum stackView {
+            static let stackViewLeftPadding: CGFloat = 24
+            static let stackViewTopPadding: CGFloat = 17
+        }
+        enum dividerView {
+            static let dividerViewHeight: CGFloat = 1
+            static let dividerViewTopPadding: CGFloat = 33
+        }
     }
 }

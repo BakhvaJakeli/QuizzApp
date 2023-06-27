@@ -9,7 +9,7 @@ import UIKit
 
 final class AnswerTableViewCell: UITableViewCell {
     
-    static let identifier = "AnswerTableViewCell"
+    static let identifier = String(describing: AnswerTableViewCell.self)
     
     private var stackViewIsHidden: Bool = true
     
@@ -17,8 +17,8 @@ final class AnswerTableViewCell: UITableViewCell {
     private let mainView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.cornerRadius = Constants.mainViewCornerRadius
-        view.backgroundColor = QuizzAppColors.cellViewColor
+        view.layer.cornerRadius = Constants.mainView.mainViewCornerRadius
+        view.backgroundColor = QuizzAppColor.cellViewColor
         
         return view
     }()
@@ -27,7 +27,7 @@ final class AnswerTableViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black
-        label.font = .systemFont(ofSize: Constants.answerLabelFont)
+        label.font = .systemFont(ofSize: Constants.answerLabel.answerLabelFont)
         
         return label
     }()
@@ -35,16 +35,16 @@ final class AnswerTableViewCell: UITableViewCell {
     private let pointLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = .systemFont(ofSize: Constants.pointLabelFont)
+        label.font = .systemFont(ofSize: Constants.pointLabel.pointLabelFont)
         label.textColor = .systemBackground
-        label.text = Constants.pointLabelText
+        label.text = Constants.pointLabel.pointLabelText
         
         return label
     }()
     
     private let starImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = QuizzAppImages.star
+        imageView.image = QuizzAppImage.star
         imageView.contentMode = .scaleAspectFit
         
         return imageView
@@ -64,7 +64,7 @@ final class AnswerTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
         addViews()
-        constraints()
+        setConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -72,7 +72,7 @@ final class AnswerTableViewCell: UITableViewCell {
     }
     
     // MARK: Config Cell
-    func configCell(with answer: String) {
+    func configure(with answer: String) {
         answerLabel.text = answer
     }
     
@@ -92,7 +92,7 @@ final class AnswerTableViewCell: UITableViewCell {
     }
 }
 
-// MARK: -Private Functions
+// MARK: - Private Functions
 private extension AnswerTableViewCell {
     // MARK: Add Sub Views
     func addViews() {
@@ -104,7 +104,7 @@ private extension AnswerTableViewCell {
     }
     
     // MARK: Add Constraints
-    func constraints() {
+    func setConstraints() {
         mainViewConstraints()
         answerLabelConstraints()
         stackViewConstraints()
@@ -114,11 +114,11 @@ private extension AnswerTableViewCell {
     func mainViewConstraints() {
         NSLayoutConstraint.activate([
             mainView.topAnchor.constraint(equalTo: contentView.topAnchor,
-                                          constant: Constants.mainViewBottomPadding),
+                                          constant: Constants.mainView.mainViewBottomPadding),
             mainView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             mainView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             mainView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,
-                                             constant: -Constants.mainViewBottomPadding)
+                                             constant: -Constants.mainView.mainViewBottomPadding)
         ])
     }
     
@@ -126,10 +126,10 @@ private extension AnswerTableViewCell {
     func answerLabelConstraints() {
         NSLayoutConstraint.activate([
             answerLabel.topAnchor.constraint(equalTo: mainView.topAnchor,
-                                             constant: Constants.answerLabelTopPadding),
+                                             constant: Constants.answerLabel.answerLabelTopPadding),
             answerLabel.centerYAnchor.constraint(equalTo: mainView.centerYAnchor),
             answerLabel.leadingAnchor.constraint(equalTo: mainView.leadingAnchor,
-                                                 constant: Constants.answerLabelLeftPadding)
+                                                 constant: Constants.answerLabel.answerLabelLeftPadding)
         ])
     }
     
@@ -137,25 +137,33 @@ private extension AnswerTableViewCell {
     func stackViewConstraints() {
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: mainView.topAnchor,
-                                           constant: Constants.stackViewTopPadding),
+                                           constant: Constants.stackView.stackViewTopPadding),
             stackView.centerYAnchor.constraint(equalTo: mainView.centerYAnchor),
             stackView.trailingAnchor.constraint(equalTo: mainView.trailingAnchor,
-                                                constant: Constants.stackViewRightPadding)
+                                                constant: Constants.stackView.stackViewRightPadding)
         ])
     }
 }
 
-// MARK: -Constants
+// MARK: - Constants
 private extension AnswerTableViewCell {
     enum Constants {
-        static let mainViewCornerRadius: CGFloat = 22
-        static let answerLabelFont: CGFloat = 14
-        static let mainViewBottomPadding: CGFloat = 6
-        static let answerLabelTopPadding: CGFloat = 22
-        static let answerLabelLeftPadding: CGFloat = 30
-        static let pointLabelFont: CGFloat = 14
-        static let pointLabelText = "+1"
-        static let stackViewTopPadding: CGFloat = 22
-        static let stackViewRightPadding: CGFloat = -20
+        enum mainView {
+            static let mainViewCornerRadius: CGFloat = 22
+            static let mainViewBottomPadding: CGFloat = 6
+        }
+        enum answerLabel {
+            static let answerLabelFont: CGFloat = 14
+            static let answerLabelTopPadding: CGFloat = 22
+            static let answerLabelLeftPadding: CGFloat = 30
+        }
+        enum pointLabel {
+            static let pointLabelFont: CGFloat = 14
+            static let pointLabelText = "+1"
+        }
+        enum stackView {
+            static let stackViewTopPadding: CGFloat = 22
+            static let stackViewRightPadding: CGFloat = -20
+        }
     }
 }

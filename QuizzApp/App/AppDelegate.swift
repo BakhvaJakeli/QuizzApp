@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  QuizzApp
 //
-//  Created by bakhva  on 14.06.23.
+//  Created by Bakhva Jakeli on 14.06.23.
 //
 
 import UIKit
@@ -11,7 +11,7 @@ import CoreData
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    var orientationLock = UIInterfaceOrientationMask.all
+    var orientationMask = UIInterfaceOrientationMask.all
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
-        return self.orientationLock
+        orientationMask
     }
 
     // MARK: - Core Data stack

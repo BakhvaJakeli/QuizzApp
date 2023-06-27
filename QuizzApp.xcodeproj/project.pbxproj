@@ -17,12 +17,11 @@
 		8F04CC1F2A39DF93000A9BBB /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F04CC1E2A39DF93000A9BBB /* HomePageViewController.swift */; };
 		8F04CC232A39DFCD000A9BBB /* ScoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F04CC222A39DFCD000A9BBB /* ScoreViewController.swift */; };
 		8F04CC272A3A3413000A9BBB /* CoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F04CC262A3A3413000A9BBB /* CoverView.swift */; };
-		8F04CC2A2A3A34EA000A9BBB /* QuizzAppImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F04CC292A3A34EA000A9BBB /* QuizzAppImages.swift */; };
-		8F04CC2D2A3A3766000A9BBB /* QuizzAppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F04CC2C2A3A3766000A9BBB /* QuizzAppColors.swift */; };
+		8F04CC2A2A3A34EA000A9BBB /* QuizzAppImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F04CC292A3A34EA000A9BBB /* QuizzAppImage.swift */; };
+		8F04CC2D2A3A3766000A9BBB /* QuizzAppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F04CC2C2A3A3766000A9BBB /* QuizzAppColor.swift */; };
 		8F04CC312A3B9326000A9BBB /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F04CC302A3B9326000A9BBB /* TestViewController.swift */; };
 		8F04CC332A3BA0A9000A9BBB /* ScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F04CC322A3BA0A9000A9BBB /* ScoreView.swift */; };
 		8F04CC362A3C8812000A9BBB /* SubjectsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F04CC352A3C8812000A9BBB /* SubjectsTableViewCell.swift */; };
-		8F04CC382A3F2B3C000A9BBB /* HomePageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F04CC372A3F2B3C000A9BBB /* HomePageViewModel.swift */; };
 		8F04CC3A2A3F3429000A9BBB /* SubjectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F04CC392A3F3429000A9BBB /* SubjectModel.swift */; };
 		8FB326082A3FA890001727E7 /* AppUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB326072A3FA890001727E7 /* AppUtility.swift */; };
 		8FB3260A2A3FB9DF001727E7 /* ScoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB326092A3FB9DF001727E7 /* ScoreTableViewCell.swift */; };
@@ -45,12 +44,11 @@
 		8F04CC1E2A39DF93000A9BBB /* HomePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageViewController.swift; sourceTree = "<group>"; };
 		8F04CC222A39DFCD000A9BBB /* ScoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreViewController.swift; sourceTree = "<group>"; };
 		8F04CC262A3A3413000A9BBB /* CoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverView.swift; sourceTree = "<group>"; };
-		8F04CC292A3A34EA000A9BBB /* QuizzAppImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizzAppImages.swift; sourceTree = "<group>"; };
-		8F04CC2C2A3A3766000A9BBB /* QuizzAppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizzAppColors.swift; sourceTree = "<group>"; };
+		8F04CC292A3A34EA000A9BBB /* QuizzAppImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizzAppImage.swift; sourceTree = "<group>"; };
+		8F04CC2C2A3A3766000A9BBB /* QuizzAppColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizzAppColor.swift; sourceTree = "<group>"; };
 		8F04CC302A3B9326000A9BBB /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		8F04CC322A3BA0A9000A9BBB /* ScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreView.swift; sourceTree = "<group>"; };
 		8F04CC352A3C8812000A9BBB /* SubjectsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectsTableViewCell.swift; sourceTree = "<group>"; };
-		8F04CC372A3F2B3C000A9BBB /* HomePageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageViewModel.swift; sourceTree = "<group>"; };
 		8F04CC392A3F3429000A9BBB /* SubjectModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectModel.swift; sourceTree = "<group>"; };
 		8FB326072A3FA890001727E7 /* AppUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUtility.swift; sourceTree = "<group>"; };
 		8FB326092A3FB9DF001727E7 /* ScoreTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreTableViewCell.swift; sourceTree = "<group>"; };
@@ -200,18 +198,9 @@
 			isa = PBXGroup;
 			children = (
 				1BB1A8C52A45C05500BECAE5 /* SubjectsTableViewCell */,
-				8F04CC202A39DF9F000A9BBB /* ViewModel */,
 				8F04CC1E2A39DF93000A9BBB /* HomePageViewController.swift */,
 			);
 			path = HomePage;
-			sourceTree = "<group>";
-		};
-		8F04CC202A39DF9F000A9BBB /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				8F04CC372A3F2B3C000A9BBB /* HomePageViewModel.swift */,
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		8F04CC212A39DFAE000A9BBB /* Score */ = {
@@ -238,8 +227,8 @@
 		8F04CC282A3A34DB000A9BBB /* Constants */ = {
 			isa = PBXGroup;
 			children = (
-				8F04CC292A3A34EA000A9BBB /* QuizzAppImages.swift */,
-				8F04CC2C2A3A3766000A9BBB /* QuizzAppColors.swift */,
+				8F04CC292A3A34EA000A9BBB /* QuizzAppImage.swift */,
+				8F04CC2C2A3A3766000A9BBB /* QuizzAppColor.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -344,9 +333,8 @@
 				8F04CBFF2A39D27B000A9BBB /* LogInViewController.swift in Sources */,
 				8FB3260A2A3FB9DF001727E7 /* ScoreTableViewCell.swift in Sources */,
 				8FB326082A3FA890001727E7 /* AppUtility.swift in Sources */,
-				8F04CC2D2A3A3766000A9BBB /* QuizzAppColors.swift in Sources */,
-				8F04CC2A2A3A34EA000A9BBB /* QuizzAppImages.swift in Sources */,
-				8F04CC382A3F2B3C000A9BBB /* HomePageViewModel.swift in Sources */,
+				8F04CC2D2A3A3766000A9BBB /* QuizzAppColor.swift in Sources */,
+				8F04CC2A2A3A34EA000A9BBB /* QuizzAppImage.swift in Sources */,
 				8F04CC362A3C8812000A9BBB /* SubjectsTableViewCell.swift in Sources */,
 				8F04CC052A39D27C000A9BBB /* QuizzApp.xcdatamodeld in Sources */,
 				8F04CBFB2A39D27B000A9BBB /* AppDelegate.swift in Sources */,

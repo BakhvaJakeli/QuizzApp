@@ -12,9 +12,9 @@ final class ScoreProgressBarView: UIView {
     // MARK: Components
     private let onGoingLabel: UILabel = {
         let label = UILabel()
-        label.text = Constants.onGoingScoreLabelText
-        label.font = .systemFont(ofSize: Constants.onGoingLabelFont)
-        label.textColor = QuizzAppColors.buttonColor
+        label.text = Constants.onGoingScoreLabel.onGoingScoreLabelText
+        label.font = .systemFont(ofSize: Constants.onGoingScoreLabel.onGoingLabelFont)
+        label.textColor = QuizzAppColor.buttonColor
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -22,8 +22,8 @@ final class ScoreProgressBarView: UIView {
     
     private let onGoingScoreLabel: UILabel = {
         let labal = UILabel()
-        labal.font = .boldSystemFont(ofSize: Constants.onGoingLabelFont)
-        labal.textColor = QuizzAppColors.buttonColor
+        labal.font = .boldSystemFont(ofSize: Constants.onGoingScoreLabel.onGoingLabelFont)
+        labal.textColor = QuizzAppColor.buttonColor
         labal.text = "-1 ★"
         
         return labal
@@ -32,7 +32,7 @@ final class ScoreProgressBarView: UIView {
     private let countLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = .boldSystemFont(ofSize: Constants.countLabelFont)
+        label.font = .boldSystemFont(ofSize: Constants.countLabel.countLabelFont)
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -60,7 +60,7 @@ final class ScoreProgressBarView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         addViews()
-        constraints()
+        setConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -74,7 +74,7 @@ final class ScoreProgressBarView: UIView {
     }
 }
 
-// MARK: -Private Functions
+// MARK: - Private Functions
 private extension ScoreProgressBarView {
     // MARK: Add Sub Views
     func addViews() {
@@ -84,7 +84,7 @@ private extension ScoreProgressBarView {
     }
     
     // MARK: Add Constraints
-    func constraints() {
+    func setConstraints() {
         countLabelConstraints()
         stackViewConstraints()
         progressBarConstraints()
@@ -110,7 +110,7 @@ private extension ScoreProgressBarView {
     func progressBarConstraints() {
         NSLayoutConstraint.activate([
             progressBar.topAnchor.constraint(equalTo: countLabel.bottomAnchor,
-                                             constant: Constants.progressBarTopPadding),
+                                             constant: Constants.progressBar.progressBarTopPadding),
             progressBar.centerXAnchor.constraint(equalTo: centerXAnchor),
             progressBar.leadingAnchor.constraint(equalTo: leadingAnchor),
             progressBar.bottomAnchor.constraint(equalTo: bottomAnchor)
@@ -118,12 +118,18 @@ private extension ScoreProgressBarView {
     }
 }
 
-// MARK: -Constants
+// MARK: - Constants
 private extension ScoreProgressBarView {
     enum Constants {
-        static let onGoingScoreLabelText = "მიმდინარე ქულა"
-        static let onGoingLabelFont: CGFloat = 12
-        static let countLabelFont: CGFloat = 14
-        static let progressBarTopPadding: CGFloat = 5
+        enum onGoingScoreLabel {
+            static let onGoingScoreLabelText = "მიმდინარე ქულა"
+            static let onGoingLabelFont: CGFloat = 12
+        }
+        enum countLabel {
+            static let countLabelFont: CGFloat = 14
+        }
+        enum progressBar {
+            static let progressBarTopPadding: CGFloat = 5
+        }
     }
 }

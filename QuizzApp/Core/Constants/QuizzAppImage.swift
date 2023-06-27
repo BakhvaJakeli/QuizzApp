@@ -5,10 +5,9 @@
 //  Created by bakhva  on 14.06.23.
 //
 
-import Foundation
 import UIKit
 
-enum QuizzAppImages {
+enum QuizzAppImage {
     static let confetti = UIImage(named: "Confetti")
     static let detailsArrow = UIImage(named: "Detail_Arrow")
     static let georgraphy = UIImage(named: "Georgraphy")

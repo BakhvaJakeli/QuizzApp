@@ -9,7 +9,7 @@ import UIKit
 
 final class ScoreViewController: UIViewController {
     
-    let scores: [Score] = [
+    let scores: [SubjectScore] = [
 //        Score(image: QuizzAppImages.georgraphy ?? UIImage(), title: "გეოგრაფია", score: 2),
 //        Score(image: QuizzAppImages.programming ?? UIImage(), title: "პროგრამირება", score: 4),
 //        Score(image: QuizzAppImages.history ?? UIImage(), title: "ისტორია", score: 2),
@@ -19,7 +19,7 @@ final class ScoreViewController: UIViewController {
     // MARK: Components    
     private let alertView: LogOutAlertViewController = {
         let view = LogOutAlertViewController()
-        view.setTitleText(Constants.alertTitleLabelText)
+        view.setTitleText(Constants.alert.alertTitleLabelText)
         
         return view
     }()
@@ -27,10 +27,10 @@ final class ScoreViewController: UIViewController {
     private let noScoreLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.text = Constants.noScoreLabelText
-        label.font = .systemFont(ofSize: Constants.noScoreLabelFont)
+        label.text = Constants.noScoreLabel.noScoreLabelText
+        label.font = .systemFont(ofSize: Constants.noScoreLabel.noScoreLabelFont)
         label.textColor = .black
-        label.numberOfLines = Constants.noScoreLabelNumberOfLines
+        label.numberOfLines = Constants.noScoreLabel.noScoreLabelNumberOfLines
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -39,7 +39,8 @@ final class ScoreViewController: UIViewController {
     private lazy var scoreTableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(ScoreTableViewCell.self, forCellReuseIdentifier: ScoreTableViewCell.identifier)
+        tableView.register(ScoreTableViewCell.self,
+                           forCellReuseIdentifier: ScoreTableViewCell.identifier)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorStyle = .none
@@ -51,7 +52,7 @@ final class ScoreViewController: UIViewController {
     
     private let separatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = QuizzAppColors.lightGray
+        view.backgroundColor = QuizzAppColor.lightGray
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
@@ -61,11 +62,13 @@ final class ScoreViewController: UIViewController {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         var configuration = UIButton.Configuration.filled()
-        configuration.baseBackgroundColor = QuizzAppColors.buttonColor
-        configuration.image = QuizzAppImages.logOut
+        configuration.baseBackgroundColor = QuizzAppColor.buttonColor
+        configuration.image = QuizzAppImage.logOut
         configuration.cornerStyle = .capsule
         button.configuration = configuration
-        button.addTarget(self, action: #selector(logOut), for: .touchUpInside)
+        button.addTarget(self,
+                         action: #selector(logOut),
+                         for: .touchUpInside)
         
         return button
     }()
@@ -75,7 +78,7 @@ final class ScoreViewController: UIViewController {
         super.viewDidLoad()
         configUI()
         addSubViews()
-        addConstraints()
+        setConstraints()
     }
 }
 
@@ -87,7 +90,7 @@ private extension ScoreViewController {
         navigationController?.isNavigationBarHidden = false
         navigationController?.navigationBar.tintColor = .black
         navigationController?.navigationBar.backItem?.title = ""
-        navigationController?.navigationBar.topItem?.title = Constants.navigationTitle
+        navigationController?.navigationBar.topItem?.title = Constants.navigationBar.navigationTitle
         alertView.delegate = self
     }
     
@@ -99,7 +102,7 @@ private extension ScoreViewController {
     }
     
     // MARK: Add Constraints
-    func addConstraints() {
+    func setConstraints() {
         separatorViewConstraints()
         scoreTableViewConstraints()
         logOutButtonConstraints()
@@ -122,7 +125,7 @@ private extension ScoreViewController {
             scoreTableView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             scoreTableView.bottomAnchor.constraint(equalTo: separatorView.topAnchor),
             scoreTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor,
-                                                    constant: Constants.scoreTableViewLeftPadding)
+                                                    constant: Constants.scoreTableView.scoreTableViewLeftPadding)
         ])
     }
     
@@ -131,8 +134,8 @@ private extension ScoreViewController {
         NSLayoutConstraint.activate([
             separatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             separatorView.leadingAnchor.constraint(equalTo: view.leadingAnchor,
-                                                   constant: Constants.separatorViewLeftPadding),
-            separatorView.heightAnchor.constraint(equalToConstant: Constants.separatorViewHeight)
+                                                   constant: Constants.separatorView.separatorViewLeftPadding),
+            separatorView.heightAnchor.constraint(equalToConstant: Constants.separatorView.separatorViewHeight)
         ])
     }
     
@@ -140,18 +143,19 @@ private extension ScoreViewController {
     func logOutButtonConstraints() {
         NSLayoutConstraint.activate([
             logOutButton.topAnchor.constraint(equalTo: separatorView.bottomAnchor,
-                                              constant: Constants.logOutButtonTopPadding),
+                                              constant: Constants.logOutButton.logOutButtonTopPadding),
             logOutButton.trailingAnchor.constraint(equalTo: view.trailingAnchor,
-                                                   constant: Constants.logOutButtonRightPadding),
+                                                   constant: Constants.logOutButton.logOutButtonRightPadding),
             logOutButton.bottomAnchor.constraint(equalTo: view.bottomAnchor,
-                                                 constant: Constants.logOutButtonBottomPadding)
+                                                 constant: Constants.logOutButton.logOutButtonBottomPadding)
         ])
     }
     
     // MARK: Log Out
     @objc func logOut() {
         alertView.modalPresentationStyle = .overFullScreen
-        present(alertView, animated: true)
+        present(alertView,
+                animated: true)
     }
 }
 
@@ -164,7 +168,7 @@ extension ScoreViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ScoreTableViewCell.identifier) as? ScoreTableViewCell else {return UITableViewCell()}
         let score = scores[indexPath.row]
-        cell.configCell(with: score)
+        cell.configure(with: score)
         
         return cell
     }
@@ -174,7 +178,7 @@ extension ScoreViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-// MARK: -Log Out Alert Delegate
+// MARK: - Log Out Alert Delegate
 extension ScoreViewController: logOutAlertDelegate {
     func pressedYesOnLogOut() {
         dismiss(animated: true)
@@ -185,21 +189,32 @@ extension ScoreViewController: logOutAlertDelegate {
     }
 }
 
-// MARK: -Constants
+// MARK: - Constants
 private extension ScoreViewController {
     enum Constants {
-        static let navigationTitle = "დაგროვილი ქულები ⭐"
-        static let separatorViewTopPadding: CGFloat = 81
-        static let separatorViewLeftPadding: CGFloat = 0
-        static let separatorViewHeight: CGFloat = 2
-        static let logOutButtonTopPadding: CGFloat = 12
-        static let logOutButtonRightPadding: CGFloat = -16
-        static let logOutButtonBottomPadding: CGFloat = -11
-        static let noScoreLabelText = "🧐 \nსამწუხაროდ,\nქულები ჯერ არ გაქვს \nდაგროვილი."
-        static let noScoreLabelFont: CGFloat = 18
-        static let scoreTableViewLeftPadding: CGFloat = 16
-        static let alertTitleLabelText = "ნამდვილად გსურს გასვლა?"
-        static let noScoreLabelNumberOfLines = 0
-        static let defaultAttributeLength = 17
+        enum navigationBar {
+            static let navigationTitle = "დაგროვილი ქულები ⭐"
+        }
+        enum separatorView {
+            static let separatorViewTopPadding: CGFloat = 81
+            static let separatorViewLeftPadding: CGFloat = 0
+            static let separatorViewHeight: CGFloat = 2
+        }
+        enum logOutButton {
+            static let logOutButtonTopPadding: CGFloat = 12
+            static let logOutButtonRightPadding: CGFloat = -16
+            static let logOutButtonBottomPadding: CGFloat = -11
+        }
+        enum noScoreLabel {
+            static let noScoreLabelText = "🧐 \nსამწუხაროდ,\nქულები ჯერ არ გაქვს \nდაგროვილი."
+            static let noScoreLabelFont: CGFloat = 18
+            static let noScoreLabelNumberOfLines = 0
+        }
+        enum scoreTableView {
+            static let scoreTableViewLeftPadding: CGFloat = 16
+        }
+        enum alert {
+            static let alertTitleLabelText = "ნამდვილად გსურს გასვლა?"
+        }
     }
 }
