@@ -8,7 +8,7 @@
 import UIKit
 
 protocol CompletionAlertDelegate: AnyObject {
-    func pressedCloseOnCompletion()
+    func didTapNoOnCompletion()
 }
 
 final class CompletionAlertViewController: UIViewController {
@@ -55,11 +55,9 @@ final class CompletionAlertViewController: UIViewController {
     }()
     
     private lazy var stackView: UIStackView = {
-        let stackView = UIStackView()
+        let stackView = UIStackView(arrangedSubviews: [congratulationsLabel, pointsLabel])
         stackView.axis = .vertical
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.addArrangedSubview(congratulationsLabel)
-        stackView.addArrangedSubview(pointsLabel)
         
         return stackView
     }()
@@ -78,7 +76,7 @@ final class CompletionAlertViewController: UIViewController {
         configuration.title = Constants.closeButton.closeButtonTitle
         configuration.baseBackgroundColor = .clear
         button.configuration = configuration
-        button.addTarget(self, action: #selector(close), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didTapClose), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
@@ -172,9 +170,9 @@ private extension CompletionAlertViewController {
     }
     
     // MARK: Close Function
-    @objc func close() {
+    @objc func didTapClose() {
         dismiss(animated: true)
-        delegate?.pressedCloseOnCompletion()
+        delegate?.didTapNoOnCompletion()
     }
 }
 

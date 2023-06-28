@@ -39,8 +39,7 @@ final class ScoreViewController: UIViewController {
     private lazy var scoreTableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(ScoreTableViewCell.self,
-                           forCellReuseIdentifier: ScoreTableViewCell.identifier)
+        tableView.registerCell(ScoreTableViewCell.self)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorStyle = .none
@@ -67,7 +66,7 @@ final class ScoreViewController: UIViewController {
         configuration.cornerStyle = .capsule
         button.configuration = configuration
         button.addTarget(self,
-                         action: #selector(logOut),
+                         action: #selector(didTapLogOut),
                          for: .touchUpInside)
         
         return button
@@ -152,7 +151,7 @@ private extension ScoreViewController {
     }
     
     // MARK: Log Out
-    @objc func logOut() {
+    @objc func didTapLogOut() {
         alertView.modalPresentationStyle = .overFullScreen
         present(alertView,
                 animated: true)
@@ -166,7 +165,7 @@ extension ScoreViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: ScoreTableViewCell.identifier) as? ScoreTableViewCell else {return UITableViewCell()}
+        let cell: ScoreTableViewCell = tableView.dequeReusableCell(for: indexPath)
         let score = scores[indexPath.row]
         cell.configure(with: score)
         
@@ -180,11 +179,11 @@ extension ScoreViewController: UITableViewDelegate, UITableViewDataSource {
 
 // MARK: - Log Out Alert Delegate
 extension ScoreViewController: logOutAlertDelegate {
-    func pressedYesOnLogOut() {
+    func didTapYesOnLogout() {
         dismiss(animated: true)
     }
     
-    func pressedNoOnLogOut() {
+    func didTapNoOnLogOut() {
         navigationController?.isNavigationBarHidden = false
     }
 }

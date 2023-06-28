@@ -46,7 +46,7 @@ final class LogInViewController: UIViewController {
         button.layer.cornerRadius = Constants.logInTextField.logInTextFieldCornerRadius
         button.backgroundColor = QuizzAppColor.buttonColor
         button.addTarget(self,
-                         action: #selector(clickLogIn),
+                         action: #selector(didTapLogIn),
                          for: .touchUpInside)
         
         return button
@@ -162,8 +162,8 @@ private extension LogInViewController {
     }
     
     // MARK: Click Log In Function
-    @objc func clickLogIn() {
-        let homePageViewController = HomePageViewController()
+    @objc func didTapLogIn() {
+        let homePageViewController = HomeViewController()
         let navigactionController = UINavigationController(rootViewController: homePageViewController)
         navigactionController.modalPresentationStyle = .fullScreen
         present(navigactionController,

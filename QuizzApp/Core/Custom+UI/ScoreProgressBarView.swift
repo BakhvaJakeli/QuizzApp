@@ -12,8 +12,8 @@ final class ScoreProgressBarView: UIView {
     // MARK: Components
     private let onGoingLabel: UILabel = {
         let label = UILabel()
-        label.text = Constants.onGoingScoreLabel.onGoingScoreLabelText
-        label.font = .systemFont(ofSize: Constants.onGoingScoreLabel.onGoingLabelFont)
+        label.text = Constants.onGoingLabel.onGoingLabelText
+        label.font = .systemFont(ofSize: Constants.onGoingLabel.onGoingLabelFont)
         label.textColor = QuizzAppColor.buttonColor
         label.translatesAutoresizingMaskIntoConstraints = false
         
@@ -22,9 +22,9 @@ final class ScoreProgressBarView: UIView {
     
     private let onGoingScoreLabel: UILabel = {
         let labal = UILabel()
-        labal.font = .boldSystemFont(ofSize: Constants.onGoingScoreLabel.onGoingLabelFont)
+        labal.font = .boldSystemFont(ofSize: Constants.onGoingLabel.onGoingLabelFont)
         labal.textColor = QuizzAppColor.buttonColor
-        labal.text = "-1 ★"
+        labal.text = Constants.onGoingScoreLabel.onGoingScoreLabelText
         
         return labal
     }()
@@ -47,9 +47,7 @@ final class ScoreProgressBarView: UIView {
     }()
     
     private lazy var stackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.addArrangedSubview(onGoingLabel)
-        stackView.addArrangedSubview(onGoingScoreLabel)
+        let stackView = UIStackView(arrangedSubviews: [onGoingLabel, onGoingScoreLabel])
         stackView.axis = .horizontal
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -122,7 +120,10 @@ private extension ScoreProgressBarView {
 private extension ScoreProgressBarView {
     enum Constants {
         enum onGoingScoreLabel {
-            static let onGoingScoreLabelText = "მიმდინარე ქულა"
+            static let onGoingScoreLabelText = "1 ★"
+        }
+        enum onGoingLabel {
+            static let onGoingLabelText = "მიმდინარე ქულა:"
             static let onGoingLabelFont: CGFloat = 12
         }
         enum countLabel {

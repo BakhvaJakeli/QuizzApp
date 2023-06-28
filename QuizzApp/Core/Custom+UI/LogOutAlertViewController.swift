@@ -8,8 +8,8 @@
 import UIKit
 
 protocol logOutAlertDelegate: AnyObject {
-    func pressedYesOnLogOut()
-    func pressedNoOnLogOut()
+    func didTapYesOnLogout()
+    func didTapNoOnLogOut()
 }
 
 final class LogOutAlertViewController: UIViewController {
@@ -42,10 +42,8 @@ final class LogOutAlertViewController: UIViewController {
     private lazy var noButton = makeButton(Constants.noButton.noButtonTitle)
     
     private lazy var stackView: UIStackView = {
-        let stackView = UIStackView()
+        let stackView = UIStackView(arrangedSubviews: [noButton, yesButton])
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.addArrangedSubview(noButton)
-        stackView.addArrangedSubview(yesButton)
         stackView.axis = .horizontal
         stackView.spacing = Constants.stackView.stackViewSpacing
         
@@ -71,10 +69,10 @@ private extension LogOutAlertViewController {
     func configureUI() {
         view.backgroundColor = Constants.backgroundViewColor
         yesButton.addTarget(self,
-                            action: #selector(yesPressed),
+                            action: #selector(didTapYes),
                             for: .touchUpInside)
         noButton.addTarget(self,
-                           action: #selector(noPressed),
+                           action: #selector(didTapNo),
                            for: .touchUpInside)
     }
     
@@ -143,15 +141,15 @@ private extension LogOutAlertViewController {
     }
     
     // MARK: Yes Pressed Actin
-    @objc func yesPressed() {
+    @objc func didTapYes() {
         dismiss(animated: true)
-        delegate?.pressedYesOnLogOut()
+        delegate?.didTapYesOnLogout()
     }
     
     // MARK: No Pressed Action
-    @objc func noPressed() {
+    @objc func didTapNo() {
         dismiss(animated: true)
-        delegate?.pressedNoOnLogOut()
+        delegate?.didTapNoOnLogOut()
     }
 }
 

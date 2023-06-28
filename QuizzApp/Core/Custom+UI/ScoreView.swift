@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol ScoreViewDelegate: AnyObject {
+    func didTapScoreView()
+}
+
 final class ScoreView: UIView {
+    
+    weak var delegate: ScoreViewDelegate?
     
     // MARK: Components
     private let gpaLabel: UILabel = {
@@ -60,11 +66,13 @@ final class ScoreView: UIView {
         super.init(frame: frame)
         addViews()
         setConstraints()
+        didTapView()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
 }
 
 // MARK: - Private Functions
@@ -81,6 +89,12 @@ private extension ScoreView {
         gpaLabelConstrints()
         detailsLabelConstraints()
         arrowImageConstraints()
+    }
+    
+    // MARK: View Gesture
+    func didTapView() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        addGestureRecognizer(tapGesture)
     }
     
     // MARK: GPA Label Constraints
@@ -104,6 +118,7 @@ private extension ScoreView {
         ])
     }
     
+    // MARK: Arrow Image Constraints
     func arrowImageConstraints() {
         NSLayoutConstraint.activate([
             arrowImageVIew.topAnchor.constraint(equalTo: topAnchor,
@@ -115,7 +130,10 @@ private extension ScoreView {
                                                     constant: Constants.arrowImageView.arrowImageLeftPadding)
         ])
     }
-}
+    
+    @objc func handleTap(_ gesture: UITapGestureRecognizer) {
+        delegate?.didTapScoreView()
+    }}
 
 // MARK: - Constants
 private extension ScoreView {

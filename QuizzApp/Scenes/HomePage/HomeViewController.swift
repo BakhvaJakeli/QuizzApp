@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class HomePageViewController: UIViewController {
+final class HomeViewController: UIViewController {
     
     let subjects = [
         Subject(image: QuizzAppImage.georgraphy ?? UIImage(),
@@ -43,10 +43,7 @@ final class HomePageViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = QuizzAppColor.blueSecondaryDefault
         view.layer.cornerRadius = Constants.scoreView.scoreViewCornerRadius
-        
-        let tap = UITapGestureRecognizer(target: self,
-                                         action: #selector(moveToScore))
-        view.addGestureRecognizer(tap)
+        view.delegate = self
         
         return view
     }()
@@ -65,8 +62,7 @@ final class HomePageViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(SubjectsTableViewCell.self,
-                           forCellReuseIdentifier: SubjectsTableViewCell.identifier)
+        tableView.registerCell(SubjectsTableViewCell.self)
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         tableView.showsVerticalScrollIndicator = false
@@ -91,7 +87,7 @@ final class HomePageViewController: UIViewController {
         configuration.cornerStyle = .capsule
         button.configuration = configuration
         button.addTarget(self,
-                         action: #selector(logOut),
+                         action: #selector(didTapLogOut),
                          for: .touchUpInside)
         
         return button
@@ -114,7 +110,7 @@ final class HomePageViewController: UIViewController {
 }
 
 // MARK: - Private Functions
-private extension HomePageViewController {
+private extension HomeViewController {
     // MARK: Config UI
     func configUI() {
         view.backgroundColor = .systemBackground
@@ -211,14 +207,8 @@ private extension HomePageViewController {
         ])
     }
     
-    // MARK: Move To Score View Controller
-    @objc func moveToScore() {
-        navigationController?.pushViewController(ScoreViewController(),
-                                                 animated: true)
-    }
-    
     // MARK: Log Out
-    @objc func logOut() {
+    @objc func didTapLogOut() {
         alertView.modalPresentationStyle = .overFullScreen
         present(alertView,
                 animated: true)
@@ -226,13 +216,13 @@ private extension HomePageViewController {
 }
 
 // MARK: - Table View Functions
-extension HomePageViewController: UITableViewDelegate, UITableViewDataSource {
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         subjects.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: SubjectsTableViewCell.identifier) as? SubjectsTableViewCell else {return UITableViewCell()}
+        let cell: SubjectsTableViewCell = tableView.dequeReusableCell(for: indexPath)
         let subject = subjects[indexPath.row]
         cell.configure(with: subject)
         
@@ -250,18 +240,26 @@ extension HomePageViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 // MARK: - Alert View Delegate
-extension HomePageViewController: logOutAlertDelegate {
-    func pressedYesOnLogOut() {
+extension HomeViewController: logOutAlertDelegate {
+    func didTapYesOnLogout() {
         dismiss(animated: true)
     }
     
-    func pressedNoOnLogOut() {
+    func didTapNoOnLogOut() {
         alertView.dismiss(animated: true)
     }
 }
 
+// MARK: - Score View Delegate
+extension HomeViewController: ScoreViewDelegate {
+    func didTapScoreView() {
+        navigationController?.pushViewController(ScoreViewController(),
+                                                 animated: true)
+    }
+}
+
 // MARK: - Constants
-private extension HomePageViewController {
+private extension HomeViewController {
     enum Constants {
         enum titleLabel {
             static let titleLabelText = "გამარჯობა, ირაკლი"

@@ -53,7 +53,7 @@ final class TestViewController: UIViewController {
         configuration.baseBackgroundColor = .clear
         button.configuration = configuration
         button.addTarget(self,
-                         action: #selector(quit),
+                         action: #selector(didTapQuit),
                          for: .touchUpInside)
         
         return button
@@ -87,8 +87,7 @@ final class TestViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(AnswerTableViewCell.self,
-                           forCellReuseIdentifier: AnswerTableViewCell.identifier)
+        tableView.registerCell(AnswerTableViewCell.self)
         
         return tableView
     }()
@@ -185,7 +184,9 @@ private extension TestViewController {
                                               constant: Constants.questionView.questionViewTopPadding),
             questionView.leadingAnchor.constraint(equalTo: view.leadingAnchor,
                                                   constant: Constants.questionView.questionViewLeftPadding),
-            questionView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            questionView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            questionView.bottomAnchor.constraint(greaterThanOrEqualTo: questionsTableView.topAnchor,
+                                                 constant: -Constants.questionTableView.questionTableViewTopPadding)
         ])
     }
     
@@ -204,18 +205,17 @@ private extension TestViewController {
     // MARK: Questions Table View Constraints
     func questionsTableViewConstraints() {
         NSLayoutConstraint.activate([
-            questionsTableView.topAnchor.constraint(equalTo: questionView.bottomAnchor,
-                                                    constant: Constants.questionTableView.questionsTableViewTopPadding),
             questionsTableView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             questionsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor,
-                                                        constant: Constants.questionTableView.questionsTableViewLeftPadding)
+                                                        constant: Constants.questionTableView.questionsTableViewLeftPadding),
+            questionsTableView.heightAnchor.constraint(greaterThanOrEqualToConstant: 300)
         ])
     }
     
     // MARK: Next Button Constraints
     func nextButtonConstraints() {
         NSLayoutConstraint.activate([
-            nextButton.topAnchor.constraint(equalTo: questionsTableView.bottomAnchor,
+            nextButton.topAnchor.constraint(greaterThanOrEqualTo: questionsTableView.bottomAnchor,
                                             constant: Constants.nextButton.nextButtonTopPadding),
             nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor,
@@ -232,7 +232,7 @@ private extension TestViewController {
     }
     
     // MARK: Quit Action
-    @objc func quit() {
+    @objc func didTapQuit() {
         logOutAlertView.modalPresentationStyle = .overFullScreen
         present(logOutAlertView, animated: true)
     }
@@ -245,7 +245,7 @@ extension TestViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: AnswerTableViewCell.identifier) as? AnswerTableViewCell else {return UITableViewCell()}
+        let cell: AnswerTableViewCell = tableView.dequeReusableCell(for: indexPath)
         let answer = answers[indexPath.row]
         cell.configure(with: answer)
         
@@ -275,18 +275,18 @@ extension TestViewController: UITableViewDelegate, UITableViewDataSource {
 
 // MARK: - Log out Alert View Delegate
 extension TestViewController: logOutAlertDelegate {
-    func pressedYesOnLogOut() {
+    func didTapYesOnLogout() {
         navigationController?.popViewController(animated: true)
     }
     
-    func pressedNoOnLogOut() {
+    func didTapNoOnLogOut() {
         logOutAlertView.dismiss(animated: true)
     }
 }
 
 // MARK: - Completion Alert View Delegate
 extension TestViewController: CompletionAlertDelegate {
-    func pressedCloseOnCompletion() {
+    func didTapNoOnCompletion() {
         navigationController?.popViewController(animated: true)
     }
 }
@@ -328,8 +328,8 @@ private extension TestViewController {
             static let questionViewRadius: CGFloat = 26
         }
         enum questionTableView {
-            static let questionsTableViewTopPadding: CGFloat = 58
             static let questionsTableViewLeftPadding: CGFloat = 16
+            static let questionTableViewTopPadding: CGFloat = 58
         }
         enum logOutAlert {
             static let alertTitleLabelText = "ნამდვილად გსურს ქვიზის \nშეწყვეტა?"

@@ -62,12 +62,10 @@ final class SubjectsTableViewCell: UITableViewCell {
     }()
     
     private lazy var stackView: UIStackView = {
-        let stackView = UIStackView()
+        let stackView = UIStackView(arrangedSubviews: [titleLabel, descriptionLabel])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
-        stackView.addArrangedSubview(titleLabel)
-        stackView.addArrangedSubview(descriptionLabel)
         
         return stackView
     }()
