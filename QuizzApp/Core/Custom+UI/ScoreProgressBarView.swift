@@ -40,7 +40,7 @@ final class ScoreProgressBarView: UIView {
     
     private let progressBar: UIProgressView = {
         let progressView = UIProgressView()
-        progressView.progressTintColor = .blue
+        progressView.progressTintColor = QuizzAppColor.progressBarColor
         progressView.translatesAutoresizingMaskIntoConstraints = false
         
         return progressView
@@ -111,7 +111,8 @@ private extension ScoreProgressBarView {
                                              constant: Constants.progressBar.progressBarTopPadding),
             progressBar.centerXAnchor.constraint(equalTo: centerXAnchor),
             progressBar.leadingAnchor.constraint(equalTo: leadingAnchor),
-            progressBar.bottomAnchor.constraint(equalTo: bottomAnchor)
+            progressBar.bottomAnchor.constraint(equalTo: bottomAnchor),
+            progressBar.heightAnchor.constraint(equalToConstant: Constants.progressBar.progressBarHeight)
         ])
     }
 }
@@ -131,6 +132,7 @@ private extension ScoreProgressBarView {
         }
         enum progressBar {
             static let progressBarTopPadding: CGFloat = 5
+            static let progressBarHeight: CGFloat = 9
         }
     }
 }

@@ -101,7 +101,7 @@ private extension CompletionAlertViewController {
     // MARK: Add Sub Views
     func addViews() {
         view.addSubview(alertView)
-        [alertImageView,stackView,dividerView,closeButton].forEach{ alertView.addSubview($0) }
+        [alertImageView, stackView, dividerView, closeButton].forEach{ alertView.addSubview($0) }
     }
     
     // MARK: Add Constraints

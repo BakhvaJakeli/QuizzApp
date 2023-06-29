@@ -48,4 +48,8 @@ enum QuizzAppColor {
                                                  green: 208/255,
                                                  blue: 246/255,
                                                  alpha: 1)
+    static let progressBarColor = UIColor(red: 83/255,
+                                          green: 127/255,
+                                          blue: 246/255,
+                                          alpha: 1)
 }
