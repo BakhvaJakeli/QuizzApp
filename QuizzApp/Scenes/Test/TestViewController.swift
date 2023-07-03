@@ -208,7 +208,7 @@ private extension TestViewController {
             questionsTableView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             questionsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor,
                                                         constant: Constants.questionTableView.questionsTableViewLeftPadding),
-            questionsTableView.heightAnchor.constraint(greaterThanOrEqualToConstant: 300)
+            questionsTableView.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.questionTableView.questionTableViewheight)
         ])
     }
     
@@ -330,6 +330,7 @@ private extension TestViewController {
         enum questionTableView {
             static let questionsTableViewLeftPadding: CGFloat = 16
             static let questionTableViewTopPadding: CGFloat = 58
+            static let questionTableViewheight: CGFloat = 300
         }
         enum logOutAlert {
             static let alertTitleLabelText = "ნამდვილად გსურს ქვიზის \nშეწყვეტა?"

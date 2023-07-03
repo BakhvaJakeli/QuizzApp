@@ -10,10 +10,10 @@ import UIKit
 final class ScoreViewController: UIViewController {
     
     let scores: [SubjectScore] = [
-//        Score(image: QuizzAppImages.georgraphy ?? UIImage(), title: "გეოგრაფია", score: 2),
-//        Score(image: QuizzAppImages.programming ?? UIImage(), title: "პროგრამირება", score: 4),
-//        Score(image: QuizzAppImages.history ?? UIImage(), title: "ისტორია", score: 2),
-//        Score(image: QuizzAppImages.physics ?? UIImage(), title: "ფიზიკა", score: 5),
+//        SubjectScore(image: QuizzAppImage.georgraphy ?? UIImage(), title: "გეოგრაფია", score: 2),
+//        SubjectScore(image: QuizzAppImage.georgraphy ?? UIImage(), title: "გეოგრაფია", score: 2),
+//        SubjectScore(image: QuizzAppImage.georgraphy ?? UIImage(), title: "გეოგრაფია", score: 2),
+//        SubjectScore(image: QuizzAppImage.georgraphy ?? UIImage(), title: "გეოგრაფია", score: 2),
     ]
     
     // MARK: Components    
@@ -45,7 +45,9 @@ final class ScoreViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         tableView.backgroundView = noScoreLabel
-        
+        if scores.count > 0 {
+            tableView.backgroundView?.isHidden = true
+        }
         return tableView
     }()
     

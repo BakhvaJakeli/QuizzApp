@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1BB1A8C92A45E92200BECAE5 /* ScoreProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB1A8C82A45E92200BECAE5 /* ScoreProgressBarView.swift */; };
 		1BB1A8CB2A4C61E500BECAE5 /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB1A8CA2A4C61E500BECAE5 /* UITableView+Extension.swift */; };
+		1BB1A8CF2A52F7A500BECAE5 /* myriad_geo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1BB1A8CE2A52F7A500BECAE5 /* myriad_geo.ttf */; };
+		1BB1A8D12A52F81400BECAE5 /* QuizzAppFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB1A8D02A52F81400BECAE5 /* QuizzAppFont.swift */; };
 		8F04CBFB2A39D27B000A9BBB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F04CBFA2A39D27B000A9BBB /* AppDelegate.swift */; };
 		8F04CBFD2A39D27B000A9BBB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F04CBFC2A39D27B000A9BBB /* SceneDelegate.swift */; };
 		8F04CBFF2A39D27B000A9BBB /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F04CBFE2A39D27B000A9BBB /* LogInViewController.swift */; };
@@ -35,6 +37,8 @@
 /* Begin PBXFileReference section */
 		1BB1A8C82A45E92200BECAE5 /* ScoreProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreProgressBarView.swift; sourceTree = "<group>"; };
 		1BB1A8CA2A4C61E500BECAE5 /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
+		1BB1A8CE2A52F7A500BECAE5 /* myriad_geo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = myriad_geo.ttf; sourceTree = "<group>"; };
+		1BB1A8D02A52F81400BECAE5 /* QuizzAppFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizzAppFont.swift; sourceTree = "<group>"; };
 		8F04CBF72A39D27B000A9BBB /* QuizzApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuizzApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F04CBFA2A39D27B000A9BBB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8F04CBFC2A39D27B000A9BBB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -101,6 +105,14 @@
 				1BB1A8CA2A4C61E500BECAE5 /* UITableView+Extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		1BB1A8CD2A52F77800BECAE5 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				1BB1A8CE2A52F7A500BECAE5 /* myriad_geo.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		8F04CBEE2A39D27B000A9BBB = {
@@ -176,6 +188,7 @@
 		8F04CC162A39D925000A9BBB /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1BB1A8CD2A52F77800BECAE5 /* Fonts */,
 				8F04CC062A39D27E000A9BBB /* Assets.xcassets */,
 			);
 			path = Resources;
@@ -240,6 +253,7 @@
 			children = (
 				8F04CC292A3A34EA000A9BBB /* QuizzAppImage.swift */,
 				8F04CC2C2A3A3766000A9BBB /* QuizzAppColor.swift */,
+				1BB1A8D02A52F81400BECAE5 /* QuizzAppFont.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -330,6 +344,7 @@
 			files = (
 				8F04CC0A2A39D27E000A9BBB /* LaunchScreen.storyboard in Resources */,
 				8F04CC072A39D27E000A9BBB /* Assets.xcassets in Resources */,
+				1BB1A8CF2A52F7A500BECAE5 /* myriad_geo.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,6 +365,7 @@
 				8F04CC362A3C8812000A9BBB /* SubjectsTableViewCell.swift in Sources */,
 				8F04CC052A39D27C000A9BBB /* QuizzApp.xcdatamodeld in Sources */,
 				8F04CBFB2A39D27B000A9BBB /* AppDelegate.swift in Sources */,
+				1BB1A8D12A52F81400BECAE5 /* QuizzAppFont.swift in Sources */,
 				8FB326132A40BF1F001727E7 /* LogOutAlertViewController.swift in Sources */,
 				1BB1A8C92A45E92200BECAE5 /* ScoreProgressBarView.swift in Sources */,
 				8F04CC1F2A39DF93000A9BBB /* HomeViewController.swift in Sources */,
