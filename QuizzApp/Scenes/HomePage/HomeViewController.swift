@@ -51,7 +51,7 @@ final class HomeViewController: UIViewController {
     private let chooseSubjectLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: Constants.chooseLabel.chooseLabelFont)
+        label.font = UIFont(name: QuizzAppFont.myriadGeo, size: Constants.chooseLabel.chooseLabelFont)
         label.text = Constants.chooseLabel.chooseLabelText
         
         return label

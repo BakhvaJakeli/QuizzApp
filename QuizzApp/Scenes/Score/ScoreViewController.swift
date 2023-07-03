@@ -28,7 +28,7 @@ final class ScoreViewController: UIViewController {
         let label = UILabel()
         label.textAlignment = .center
         label.text = Constants.noScoreLabel.noScoreLabelText
-        label.font = .systemFont(ofSize: Constants.noScoreLabel.noScoreLabelFont)
+        label.font = UIFont(name: QuizzAppFont.myriadGeo, size: Constants.noScoreLabel.noScoreLabelFont)
         label.textColor = .black
         label.numberOfLines = Constants.noScoreLabel.noScoreLabelNumberOfLines
         label.translatesAutoresizingMaskIntoConstraints = false

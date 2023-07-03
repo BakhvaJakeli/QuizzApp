@@ -13,7 +13,7 @@ final class ScoreProgressBarView: UIView {
     private let onGoingLabel: UILabel = {
         let label = UILabel()
         label.text = Constants.onGoingLabel.onGoingLabelText
-        label.font = .systemFont(ofSize: Constants.onGoingLabel.onGoingLabelFont)
+        label.font = UIFont(name: QuizzAppFont.myriadGeo, size: Constants.onGoingLabel.onGoingLabelFont)
         label.textColor = QuizzAppColor.buttonColor
         label.translatesAutoresizingMaskIntoConstraints = false
         
@@ -22,7 +22,7 @@ final class ScoreProgressBarView: UIView {
     
     private let onGoingScoreLabel: UILabel = {
         let labal = UILabel()
-        labal.font = .boldSystemFont(ofSize: Constants.onGoingLabel.onGoingLabelFont)
+        labal.font = .boldSystemFont(ofSize: Constants.onGoingLabel.onGoingLabelFont + 4)
         labal.textColor = QuizzAppColor.buttonColor
         labal.text = Constants.onGoingScoreLabel.onGoingScoreLabelText
         
@@ -109,6 +109,8 @@ private extension ScoreProgressBarView {
         NSLayoutConstraint.activate([
             progressBar.topAnchor.constraint(equalTo: countLabel.bottomAnchor,
                                              constant: Constants.progressBar.progressBarTopPadding),
+            progressBar.topAnchor.constraint(equalTo: stackView.bottomAnchor,
+                                             constant: Constants.progressBar.progressBarTopPadding),
             progressBar.centerXAnchor.constraint(equalTo: centerXAnchor),
             progressBar.leadingAnchor.constraint(equalTo: leadingAnchor),
             progressBar.bottomAnchor.constraint(equalTo: bottomAnchor),
@@ -131,7 +133,7 @@ private extension ScoreProgressBarView {
             static let countLabelFont: CGFloat = 14
         }
         enum progressBar {
-            static let progressBarTopPadding: CGFloat = 5
+            static let progressBarTopPadding: CGFloat = 6
             static let progressBarHeight: CGFloat = 9
         }
     }

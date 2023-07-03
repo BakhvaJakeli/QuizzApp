@@ -41,7 +41,7 @@ final class ScoreTableViewCell: UITableViewCell {
     private let descriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: Constants.descriptionLabel.desciptionLabelFont)
+        label.font = UIFont(name: QuizzAppFont.myriadGeo, size: Constants.descriptionLabel.desciptionLabelFont)
         label.text = Constants.descriptionLabel.descriptionLabelText
         label.textColor = QuizzAppColor.descriptionLabelTextColor
         

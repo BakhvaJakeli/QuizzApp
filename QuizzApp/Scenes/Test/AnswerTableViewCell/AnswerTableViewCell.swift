@@ -35,7 +35,7 @@ final class AnswerTableViewCell: UITableViewCell {
     private let pointLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = .systemFont(ofSize: Constants.pointLabel.pointLabelFont)
+        label.font = UIFont(name: QuizzAppFont.myriadGeo, size: Constants.pointLabel.pointLabelFont)
         label.textColor = .systemBackground
         label.text = Constants.pointLabel.pointLabelText
         

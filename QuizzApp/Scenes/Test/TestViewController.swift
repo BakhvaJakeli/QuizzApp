@@ -73,7 +73,8 @@ final class TestViewController: UIViewController {
     private let questionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: Constants.questionLabel.questionLabelFont)
+//        label.font = .systemFont(ofSize: Constants.questionLabel.questionLabelFont)
+        label.font = UIFont(name: QuizzAppFont.myriadGeo, size: Constants.questionLabel.questionLabelFont)
         label.text = Constants.questionLabel.questionLabelText
         label.numberOfLines = Constants.questionLabel.questionLabelNumberOfLines
         label.textAlignment = .center
@@ -220,9 +221,11 @@ private extension TestViewController {
             nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor,
                                                 constant: Constants.nextButton.nextButtonLeftPadding),
-            nextButton.bottomAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor,
-                                               constant: Constants.nextButton.nextButtonBottomPadding),
-            nextButton.heightAnchor.constraint(equalToConstant: Constants.nextButton.nextButtonHeight)
+//            nextButton.bottomAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor,
+//                                               constant: Constants.nextButton.nextButtonBottomPadding),
+            nextButton.heightAnchor.constraint(equalToConstant: Constants.nextButton.nextButtonHeight),
+            view.safeAreaLayoutGuide.bottomAnchor.constraint(lessThanOrEqualTo: nextButton.bottomAnchor,
+                                                             constant: -Constants.nextButton.nextButtonBottomPadding)
         ])
     }
     
@@ -298,11 +301,11 @@ private extension TestViewController {
             static let titleLabelText = "პროგრამირება"
             static let titleLabelFont: CGFloat = 16
             static let titleLabelLeftPadding: CGFloat = 128
-            static let titleLabelTopPadding: CGFloat = 8
+            static let titleLabelTopPadding: CGFloat = 10
         }
         enum questionLabel {
             static let questionLabelFont: CGFloat = 14
-            static let questionLabelText = "რომელია ყველაზე პოპულარული პროგრამირების ენა?"
+            static let questionLabelText = "რომელია ყველაზე?"
             static let questionLabelNumberOfLines = 0
             static let questionLabelTopPadding: CGFloat = 34
             static let questionLabelLeftPadding: CGFloat = 56
@@ -315,7 +318,7 @@ private extension TestViewController {
             static let nextButtonHeight: CGFloat = 60
         }
         enum quitButton {
-            static let quitButtonTopPadding: CGFloat = 6
+            static let quitButtonTopPadding: CGFloat = 0
             static let quitButtonRightPadding: CGFloat = -16
         }
         enum scoreProgressView {
