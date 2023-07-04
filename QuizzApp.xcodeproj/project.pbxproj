@@ -11,6 +11,9 @@
 		1BB1A8CB2A4C61E500BECAE5 /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB1A8CA2A4C61E500BECAE5 /* UITableView+Extension.swift */; };
 		1BB1A8CF2A52F7A500BECAE5 /* myriad_geo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1BB1A8CE2A52F7A500BECAE5 /* myriad_geo.ttf */; };
 		1BB1A8D12A52F81400BECAE5 /* QuizzAppFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB1A8D02A52F81400BECAE5 /* QuizzAppFont.swift */; };
+		1BB1A8D62A543E9D00BECAE5 /* MyriadGEO-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1BB1A8D42A543E9D00BECAE5 /* MyriadGEO-Bold.otf */; };
+		1BB1A8D72A543E9D00BECAE5 /* MyriadGEO-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1BB1A8D52A543E9D00BECAE5 /* MyriadGEO-Medium.otf */; };
+		1BB1A8D92A543EF400BECAE5 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB1A8D82A543EF400BECAE5 /* UIFont+Extension.swift */; };
 		8F04CBFB2A39D27B000A9BBB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F04CBFA2A39D27B000A9BBB /* AppDelegate.swift */; };
 		8F04CBFD2A39D27B000A9BBB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F04CBFC2A39D27B000A9BBB /* SceneDelegate.swift */; };
 		8F04CBFF2A39D27B000A9BBB /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F04CBFE2A39D27B000A9BBB /* LogInViewController.swift */; };
@@ -39,6 +42,9 @@
 		1BB1A8CA2A4C61E500BECAE5 /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
 		1BB1A8CE2A52F7A500BECAE5 /* myriad_geo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = myriad_geo.ttf; sourceTree = "<group>"; };
 		1BB1A8D02A52F81400BECAE5 /* QuizzAppFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizzAppFont.swift; sourceTree = "<group>"; };
+		1BB1A8D42A543E9D00BECAE5 /* MyriadGEO-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MyriadGEO-Bold.otf"; sourceTree = "<group>"; };
+		1BB1A8D52A543E9D00BECAE5 /* MyriadGEO-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MyriadGEO-Medium.otf"; sourceTree = "<group>"; };
+		1BB1A8D82A543EF400BECAE5 /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		8F04CBF72A39D27B000A9BBB /* QuizzApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuizzApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F04CBFA2A39D27B000A9BBB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8F04CBFC2A39D27B000A9BBB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -103,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				1BB1A8CA2A4C61E500BECAE5 /* UITableView+Extension.swift */,
+				1BB1A8D82A543EF400BECAE5 /* UIFont+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -110,6 +117,8 @@
 		1BB1A8CD2A52F77800BECAE5 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				1BB1A8D42A543E9D00BECAE5 /* MyriadGEO-Bold.otf */,
+				1BB1A8D52A543E9D00BECAE5 /* MyriadGEO-Medium.otf */,
 				1BB1A8CE2A52F7A500BECAE5 /* myriad_geo.ttf */,
 			);
 			path = Fonts;
@@ -342,8 +351,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BB1A8D62A543E9D00BECAE5 /* MyriadGEO-Bold.otf in Resources */,
 				8F04CC0A2A39D27E000A9BBB /* LaunchScreen.storyboard in Resources */,
 				8F04CC072A39D27E000A9BBB /* Assets.xcassets in Resources */,
+				1BB1A8D72A543E9D00BECAE5 /* MyriadGEO-Medium.otf in Resources */,
 				1BB1A8CF2A52F7A500BECAE5 /* myriad_geo.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -360,6 +371,7 @@
 				1BB1A8CB2A4C61E500BECAE5 /* UITableView+Extension.swift in Sources */,
 				8FB3260A2A3FB9DF001727E7 /* ScoreTableViewCell.swift in Sources */,
 				8FB326082A3FA890001727E7 /* AppUtility.swift in Sources */,
+				1BB1A8D92A543EF400BECAE5 /* UIFont+Extension.swift in Sources */,
 				8F04CC2D2A3A3766000A9BBB /* QuizzAppColor.swift in Sources */,
 				8F04CC2A2A3A34EA000A9BBB /* QuizzAppImage.swift in Sources */,
 				8F04CC362A3C8812000A9BBB /* SubjectsTableViewCell.swift in Sources */,

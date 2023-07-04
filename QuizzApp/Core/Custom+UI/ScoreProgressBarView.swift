@@ -12,8 +12,8 @@ final class ScoreProgressBarView: UIView {
     // MARK: Components
     private let onGoingLabel: UILabel = {
         let label = UILabel()
-        label.text = Constants.onGoingLabel.onGoingLabelText
-        label.font = UIFont(name: QuizzAppFont.myriadGeo, size: Constants.onGoingLabel.onGoingLabelFont)
+        label.text = Constants.OnGoingLabel.text
+        label.font = Constants.OnGoingLabel.font
         label.textColor = QuizzAppColor.buttonColor
         label.translatesAutoresizingMaskIntoConstraints = false
         
@@ -22,9 +22,9 @@ final class ScoreProgressBarView: UIView {
     
     private let onGoingScoreLabel: UILabel = {
         let labal = UILabel()
-        labal.font = .boldSystemFont(ofSize: Constants.onGoingLabel.onGoingLabelFont + 4)
+        labal.font = Constants.OnGoingScoreLabel.font
         labal.textColor = QuizzAppColor.buttonColor
-        labal.text = Constants.onGoingScoreLabel.onGoingScoreLabelText
+        labal.text = Constants.OnGoingScoreLabel.text
         
         return labal
     }()
@@ -32,7 +32,7 @@ final class ScoreProgressBarView: UIView {
     private let countLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = .boldSystemFont(ofSize: Constants.countLabel.countLabelFont)
+        label.font = Constants.CountLabel.font
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -108,13 +108,13 @@ private extension ScoreProgressBarView {
     func progressBarConstraints() {
         NSLayoutConstraint.activate([
             progressBar.topAnchor.constraint(equalTo: countLabel.bottomAnchor,
-                                             constant: Constants.progressBar.progressBarTopPadding),
+                                             constant: Constants.ProgressBar.topPadding),
             progressBar.topAnchor.constraint(equalTo: stackView.bottomAnchor,
-                                             constant: Constants.progressBar.progressBarTopPadding),
+                                             constant: Constants.ProgressBar.topPadding),
             progressBar.centerXAnchor.constraint(equalTo: centerXAnchor),
             progressBar.leadingAnchor.constraint(equalTo: leadingAnchor),
             progressBar.bottomAnchor.constraint(equalTo: bottomAnchor),
-            progressBar.heightAnchor.constraint(equalToConstant: Constants.progressBar.progressBarHeight)
+            progressBar.heightAnchor.constraint(equalToConstant: Constants.ProgressBar.height)
         ])
     }
 }
@@ -122,19 +122,20 @@ private extension ScoreProgressBarView {
 // MARK: - Constants
 private extension ScoreProgressBarView {
     enum Constants {
-        enum onGoingScoreLabel {
-            static let onGoingScoreLabelText = "1 ★"
+        enum OnGoingScoreLabel {
+            static let text = "1 ★"
+            static let font: UIFont = .boldMyriadGeo(ofSize: 12)
         }
-        enum onGoingLabel {
-            static let onGoingLabelText = "მიმდინარე ქულა:"
-            static let onGoingLabelFont: CGFloat = 12
+        enum OnGoingLabel {
+            static let text = "მიმდინარე ქულა:"
+            static let font: UIFont = .myriaGeo(ofSize: 12)
         }
-        enum countLabel {
-            static let countLabelFont: CGFloat = 14
+        enum CountLabel {
+            static let font: UIFont = .boldMyriadGeo(ofSize: 14)
         }
-        enum progressBar {
-            static let progressBarTopPadding: CGFloat = 6
-            static let progressBarHeight: CGFloat = 9
+        enum ProgressBar {
+            static let topPadding: CGFloat = 6
+            static let height: CGFloat = 9
         }
     }
 }

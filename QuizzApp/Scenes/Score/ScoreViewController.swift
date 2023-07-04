@@ -19,7 +19,7 @@ final class ScoreViewController: UIViewController {
     // MARK: Components    
     private let alertView: LogOutAlertViewController = {
         let view = LogOutAlertViewController()
-        view.setTitleText(Constants.alert.alertTitleLabelText)
+        view.setTitleText(Constants.Alert.text)
         
         return view
     }()
@@ -27,10 +27,10 @@ final class ScoreViewController: UIViewController {
     private let noScoreLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.text = Constants.noScoreLabel.noScoreLabelText
-        label.font = UIFont(name: QuizzAppFont.myriadGeo, size: Constants.noScoreLabel.noScoreLabelFont)
+        label.text = Constants.NoScoreLabel.text
+        label.font = Constants.NoScoreLabel.font
         label.textColor = .black
-        label.numberOfLines = Constants.noScoreLabel.noScoreLabelNumberOfLines
+        label.numberOfLines = Constants.NoScoreLabel.numberOfLines
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -45,9 +45,7 @@ final class ScoreViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         tableView.backgroundView = noScoreLabel
-        if scores.count > 0 {
-            tableView.backgroundView?.isHidden = true
-        }
+        checkScore(tableView.backgroundView)
         return tableView
     }()
     
@@ -91,7 +89,7 @@ private extension ScoreViewController {
         navigationController?.isNavigationBarHidden = false
         navigationController?.navigationBar.tintColor = .black
         navigationController?.navigationBar.backItem?.title = ""
-        navigationController?.navigationBar.topItem?.title = Constants.navigationBar.navigationTitle
+        navigationController?.navigationBar.topItem?.title = Constants.NavigationBar.title
         alertView.delegate = self
     }
     
@@ -110,6 +108,14 @@ private extension ScoreViewController {
         noScoreLabelConstraints()
     }
     
+    // MARK: Check Score
+    func checkScore(_ backgroundView: UIView?) {
+        guard let view = backgroundView else {return}
+        if scores.count > 0 {
+            view.isHidden = true
+        }
+    }
+    
     // MARK: No Score Label Constraints
     func noScoreLabelConstraints() {
         guard let tableBackground = scoreTableView.backgroundView else {return}
@@ -126,7 +132,7 @@ private extension ScoreViewController {
             scoreTableView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             scoreTableView.bottomAnchor.constraint(equalTo: separatorView.topAnchor),
             scoreTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor,
-                                                    constant: Constants.scoreTableView.scoreTableViewLeftPadding)
+                                                    constant: Constants.ScoreTableView.leftPadding)
         ])
     }
     
@@ -135,8 +141,8 @@ private extension ScoreViewController {
         NSLayoutConstraint.activate([
             separatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             separatorView.leadingAnchor.constraint(equalTo: view.leadingAnchor,
-                                                   constant: Constants.separatorView.separatorViewLeftPadding),
-            separatorView.heightAnchor.constraint(equalToConstant: Constants.separatorView.separatorViewHeight)
+                                                   constant: Constants.SeparatorView.leftPadding),
+            separatorView.heightAnchor.constraint(equalToConstant: Constants.SeparatorView.height)
         ])
     }
     
@@ -144,11 +150,11 @@ private extension ScoreViewController {
     func logOutButtonConstraints() {
         NSLayoutConstraint.activate([
             logOutButton.topAnchor.constraint(equalTo: separatorView.bottomAnchor,
-                                              constant: Constants.logOutButton.logOutButtonTopPadding),
+                                              constant: Constants.LogOutButton.topPadding),
             logOutButton.trailingAnchor.constraint(equalTo: view.trailingAnchor,
-                                                   constant: Constants.logOutButton.logOutButtonRightPadding),
+                                                   constant: Constants.LogOutButton.rightPadding),
             logOutButton.bottomAnchor.constraint(equalTo: view.bottomAnchor,
-                                                 constant: Constants.logOutButton.logOutButtonBottomPadding)
+                                                 constant: Constants.LogOutButton.bottomPadding)
         ])
     }
     
@@ -193,29 +199,29 @@ extension ScoreViewController: logOutAlertDelegate {
 // MARK: - Constants
 private extension ScoreViewController {
     enum Constants {
-        enum navigationBar {
-            static let navigationTitle = "დაგროვილი ქულები ⭐"
+        enum NavigationBar {
+            static let title = "დაგროვილი ქულები ⭐"
         }
-        enum separatorView {
-            static let separatorViewTopPadding: CGFloat = 81
-            static let separatorViewLeftPadding: CGFloat = 0
-            static let separatorViewHeight: CGFloat = 2
+        enum SeparatorView {
+            static let topPadding: CGFloat = 81
+            static let leftPadding: CGFloat = 0
+            static let height: CGFloat = 2
         }
-        enum logOutButton {
-            static let logOutButtonTopPadding: CGFloat = 12
-            static let logOutButtonRightPadding: CGFloat = -16
-            static let logOutButtonBottomPadding: CGFloat = -11
+        enum LogOutButton {
+            static let topPadding: CGFloat = 12
+            static let rightPadding: CGFloat = -16
+            static let bottomPadding: CGFloat = -11
         }
-        enum noScoreLabel {
-            static let noScoreLabelText = "🧐 \nსამწუხაროდ,\nქულები ჯერ არ გაქვს \nდაგროვილი."
-            static let noScoreLabelFont: CGFloat = 18
-            static let noScoreLabelNumberOfLines = 0
+        enum NoScoreLabel {
+            static let text = "🧐 \nსამწუხაროდ,\nქულები ჯერ არ გაქვს \nდაგროვილი."
+            static let font: UIFont = .myriaGeo(ofSize: 18)
+            static let numberOfLines = 0
         }
-        enum scoreTableView {
-            static let scoreTableViewLeftPadding: CGFloat = 16
+        enum ScoreTableView {
+            static let leftPadding: CGFloat = 16
         }
-        enum alert {
-            static let alertTitleLabelText = "ნამდვილად გსურს გასვლა?"
+        enum Alert {
+            static let text = "ნამდვილად გსურს გასვლა?"
         }
     }
 }

@@ -30,7 +30,7 @@ final class TestViewController: UIViewController {
     
     private let logOutAlertView: LogOutAlertViewController = {
         let view = LogOutAlertViewController()
-        view.setTitleText(Constants.logOutAlert.alertTitleLabelText)
+        view.setTitleText(Constants.LogOutAlert.text)
         
         return view
     }()
@@ -38,7 +38,7 @@ final class TestViewController: UIViewController {
     private let questionView: UIView = {
         let view = UIView()
         view.backgroundColor = QuizzAppColor.questionBackgroundColor
-        view.layer.cornerRadius = Constants.questionView.questionViewRadius
+        view.layer.cornerRadius = Constants.QuestionView.radius
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
@@ -62,9 +62,9 @@ final class TestViewController: UIViewController {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .boldSystemFont(ofSize: Constants.titleLabel.titleLabelFont)
+        label.font = Constants.TitleLabel.font
         label.textColor = .black
-        label.text = Constants.titleLabel.titleLabelText
+        label.text = Constants.TitleLabel.text
         label.textAlignment = .center
         
         return label
@@ -73,10 +73,9 @@ final class TestViewController: UIViewController {
     private let questionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-//        label.font = .systemFont(ofSize: Constants.questionLabel.questionLabelFont)
-        label.font = UIFont(name: QuizzAppFont.myriadGeo, size: Constants.questionLabel.questionLabelFont)
-        label.text = Constants.questionLabel.questionLabelText
-        label.numberOfLines = Constants.questionLabel.questionLabelNumberOfLines
+        label.font = Constants.QuestionLabel.font
+        label.text = Constants.QuestionLabel.text
+        label.numberOfLines = Constants.QuestionLabel.numberOfLines
         label.textAlignment = .center
         
         return label
@@ -98,7 +97,7 @@ final class TestViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         var configuration = UIButton.Configuration.filled()
         configuration.baseBackgroundColor = QuizzAppColor.buttonColor
-        configuration.title = Constants.nextButton.nextButtonTitle
+        configuration.title = Constants.NextButton.title
         configuration.cornerStyle = .capsule
         button.configuration = configuration
         
@@ -150,9 +149,9 @@ private extension TestViewController {
     func quitButtonConstraints() {
         NSLayoutConstraint.activate([
             quitButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
-                                            constant: Constants.quitButton.quitButtonTopPadding),
+                                            constant: Constants.QuitButton.topPadding),
             quitButton.trailingAnchor.constraint(equalTo: view.trailingAnchor,
-                                                 constant: Constants.quitButton.quitButtonRightPadding)
+                                                 constant: Constants.QuitButton.rightPadding)
         ])
     }
     
@@ -161,9 +160,9 @@ private extension TestViewController {
         NSLayoutConstraint.activate([
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-                                                constant: Constants.titleLabel.titleLabelLeftPadding),
+                                                constant: Constants.TitleLabel.leftPadding),
             titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
-                                            constant: Constants.titleLabel.titleLabelTopPadding)
+                                            constant: Constants.TitleLabel.topPadding)
         ])
     }
     
@@ -171,10 +170,10 @@ private extension TestViewController {
     func scoreProgressViewConstraints() {
         NSLayoutConstraint.activate([
             scoreProgressView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor,
-                                                   constant: Constants.scoreProgressView.scoreProgressViewTopPadding),
+                                                   constant: Constants.ScoreProgressView.topPadding),
             scoreProgressView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             scoreProgressView.leadingAnchor.constraint(equalTo: view.leadingAnchor,
-                                                       constant: Constants.scoreProgressView.scoreProgressViewLeftPadding)
+                                                       constant: Constants.ScoreProgressView.leftPadding)
         ])
     }
     
@@ -182,12 +181,12 @@ private extension TestViewController {
     func questionViewConstraints() {
         NSLayoutConstraint.activate([
             questionView.topAnchor.constraint(equalTo: scoreProgressView.bottomAnchor,
-                                              constant: Constants.questionView.questionViewTopPadding),
+                                              constant: Constants.QuestionView.topPadding),
             questionView.leadingAnchor.constraint(equalTo: view.leadingAnchor,
-                                                  constant: Constants.questionView.questionViewLeftPadding),
+                                                  constant: Constants.QuestionView.leftPadding),
             questionView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             questionView.bottomAnchor.constraint(greaterThanOrEqualTo: questionsTableView.topAnchor,
-                                                 constant: -Constants.questionTableView.questionTableViewTopPadding)
+                                                 constant: -Constants.QuestionTableView.topPadding)
         ])
     }
     
@@ -197,9 +196,9 @@ private extension TestViewController {
             questionLabel.centerXAnchor.constraint(equalTo: questionView.centerXAnchor),
             questionLabel.centerYAnchor.constraint(equalTo: questionView.centerYAnchor),
             questionLabel.topAnchor.constraint(equalTo: questionView.topAnchor,
-                                               constant: Constants.questionLabel.questionLabelTopPadding),
+                                               constant: Constants.QuestionLabel.topPadding),
             questionLabel.leadingAnchor.constraint(equalTo: questionView.leadingAnchor,
-                                                   constant: Constants.questionLabel.questionLabelLeftPadding)
+                                                   constant: Constants.QuestionLabel.leftPadding)
         ])
     }
     
@@ -208,8 +207,8 @@ private extension TestViewController {
         NSLayoutConstraint.activate([
             questionsTableView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             questionsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor,
-                                                        constant: Constants.questionTableView.questionsTableViewLeftPadding),
-            questionsTableView.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.questionTableView.questionTableViewheight)
+                                                        constant: Constants.QuestionTableView.leftPadding),
+            questionsTableView.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.QuestionTableView.height)
         ])
     }
     
@@ -217,15 +216,13 @@ private extension TestViewController {
     func nextButtonConstraints() {
         NSLayoutConstraint.activate([
             nextButton.topAnchor.constraint(greaterThanOrEqualTo: questionsTableView.bottomAnchor,
-                                            constant: Constants.nextButton.nextButtonTopPadding),
+                                            constant: Constants.NextButton.topPadding),
             nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor,
-                                                constant: Constants.nextButton.nextButtonLeftPadding),
-//            nextButton.bottomAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor,
-//                                               constant: Constants.nextButton.nextButtonBottomPadding),
-            nextButton.heightAnchor.constraint(equalToConstant: Constants.nextButton.nextButtonHeight),
+                                                constant: Constants.NextButton.leftPadding),
+            nextButton.heightAnchor.constraint(equalToConstant: Constants.NextButton.nextButtonHeight),
             view.safeAreaLayoutGuide.bottomAnchor.constraint(lessThanOrEqualTo: nextButton.bottomAnchor,
-                                                             constant: -Constants.nextButton.nextButtonBottomPadding)
+                                                             constant: -Constants.NextButton.nextButtonBottomPadding)
         ])
     }
     
@@ -268,7 +265,7 @@ extension TestViewController: UITableViewDelegate, UITableViewDataSource {
         } else {
             cell.setIncorrectAnswerColor()
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + TimeInterval(Constants.completionAlert.delayForCompletionAlert)) {[weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + TimeInterval(Constants.CompletionAlert.delay)) {[weak self] in
             guard let self = self else {return}
             self.showFinishedQuizzAlert()
             tableView.allowsSelection = true
@@ -297,51 +294,51 @@ extension TestViewController: CompletionAlertDelegate {
 // MARK: - Constants
 private extension TestViewController {
     enum Constants {
-        enum titleLabel {
-            static let titleLabelText = "პროგრამირება"
-            static let titleLabelFont: CGFloat = 16
-            static let titleLabelLeftPadding: CGFloat = 128
-            static let titleLabelTopPadding: CGFloat = 10
+        enum TitleLabel {
+            static let text = "პროგრამირება"
+            static let font: UIFont = .boldMyriadGeo(ofSize: 16)
+            static let leftPadding: CGFloat = 128
+            static let topPadding: CGFloat = 10
         }
-        enum questionLabel {
-            static let questionLabelFont: CGFloat = 14
-            static let questionLabelText = "რომელია ყველაზე?"
-            static let questionLabelNumberOfLines = 0
-            static let questionLabelTopPadding: CGFloat = 34
-            static let questionLabelLeftPadding: CGFloat = 56
+        enum QuestionLabel {
+            static let font: UIFont = .myriaGeo(ofSize: 14)
+            static let text = "რომელია ყველაზე?"
+            static let numberOfLines = 0
+            static let topPadding: CGFloat = 34
+            static let leftPadding: CGFloat = 56
         }
-        enum nextButton {
-            static let nextButtonTitle = "შემდეგი"
-            static let nextButtonTopPadding: CGFloat = 10
-            static let nextButtonLeftPadding: CGFloat = 16
+        enum NextButton {
+            static let title = "შემდეგი"
+            static let topPadding: CGFloat = 10
+            static let leftPadding: CGFloat = 16
             static let nextButtonBottomPadding: CGFloat = -115
             static let nextButtonHeight: CGFloat = 60
         }
-        enum quitButton {
-            static let quitButtonTopPadding: CGFloat = 0
-            static let quitButtonRightPadding: CGFloat = -16
+        enum QuitButton {
+            static let topPadding: CGFloat = 0
+            static let rightPadding: CGFloat = -16
         }
-        enum scoreProgressView {
-            static let scoreProgressViewTopPadding: CGFloat = 16
-            static let scoreProgressViewLeftPadding: CGFloat = 16
+        enum ScoreProgressView {
+            static let topPadding: CGFloat = 16
+            static let leftPadding: CGFloat = 16
         }
-        enum questionView {
-            static let questionViewTopPadding: CGFloat = 32
-            static let questionViewLeftPadding: CGFloat = 16
-            static let questionViewRadius: CGFloat = 26
+        enum QuestionView {
+            static let topPadding: CGFloat = 32
+            static let leftPadding: CGFloat = 16
+            static let radius: CGFloat = 26
         }
-        enum questionTableView {
-            static let questionsTableViewLeftPadding: CGFloat = 16
-            static let questionTableViewTopPadding: CGFloat = 58
-            static let questionTableViewheight: CGFloat = 300
+        enum QuestionTableView {
+            static let leftPadding: CGFloat = 16
+            static let topPadding: CGFloat = 58
+            static let height: CGFloat = 300
         }
-        enum logOutAlert {
-            static let alertTitleLabelText = "ნამდვილად გსურს ქვიზის \nშეწყვეტა?"
-            static let logOutAlertAnimationDuration: CGFloat = 0.3
+        enum LogOutAlert {
+            static let text = "ნამდვილად გსურს ქვიზის \nშეწყვეტა?"
+            static let animationDuration: CGFloat = 0.3
         }
-        enum completionAlert {
-            static let comletionAlertAnimationDuration: CGFloat = 1
-            static let delayForCompletionAlert = 1
+        enum CompletionAlert {
+            static let alertAnimationDuration: CGFloat = 1
+            static let delay = 1
         }
     }
 }

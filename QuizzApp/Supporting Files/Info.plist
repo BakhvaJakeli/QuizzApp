@@ -4,6 +4,8 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
+		<string>MyriadGEO-Medium.otf</string>
+		<string>MyriadGEO-Bold.otf</string>
 		<string>myriad_geo.ttf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
