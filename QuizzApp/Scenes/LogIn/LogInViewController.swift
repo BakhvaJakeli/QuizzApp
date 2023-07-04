@@ -28,9 +28,9 @@ final class LogInViewController: UIViewController {
         let textFIeld = UITextField()
         textFIeld.translatesAutoresizingMaskIntoConstraints = false
         textFIeld.textAlignment = .center
-        textFIeld.placeholder = Constants.logInTextField.logInTextFieldPlaceHolder
-        textFIeld.layer.cornerRadius = Constants.logInTextField.logInTextFieldCornerRadius
-        textFIeld.layer.borderWidth = Constants.logInTextField.logInTextFieldBorderWidth
+        textFIeld.placeholder = Constants.LogInTextField.placeHolder
+        textFIeld.layer.cornerRadius = Constants.LogInTextField.cornerRadius
+        textFIeld.layer.borderWidth = Constants.LogInTextField.borderWidth
         textFIeld.layer.borderColor = QuizzAppColor.buttonColor.cgColor
         textFIeld.autocorrectionType = .no
         
@@ -40,10 +40,10 @@ final class LogInViewController: UIViewController {
     private lazy var logInButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(Constants.logInButton.logInButtonTitle,
+        button.setTitle(Constants.LogInButton.title,
                         for: .normal)
-        button.titleLabel?.font = .boldSystemFont(ofSize: Constants.logInButton.logInButtonTitleLableFont)
-        button.layer.cornerRadius = Constants.logInTextField.logInTextFieldCornerRadius
+        button.titleLabel?.font = Constants.LogInButton.font
+        button.layer.cornerRadius = Constants.LogInTextField.cornerRadius
         button.backgroundColor = QuizzAppColor.buttonColor
         button.addTarget(self,
                          action: #selector(didTapLogIn),
@@ -116,11 +116,11 @@ private extension LogInViewController {
     func logInTextFieldConstraints() {
         NSLayoutConstraint.activate([
             logInTextField.topAnchor.constraint(equalTo: logInImageView.bottomAnchor,
-                                                constant: Constants.logInTextField.logInTextFieldTopPadding),
+                                                constant: Constants.LogInTextField.topPadding),
             logInTextField.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             logInTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor,
-                                                    constant: Constants.logInTextField.logInTextFieldLeadingPadding),
-            logInTextField.heightAnchor.constraint(equalToConstant: Constants.logInTextField.logInTextFieldHeight)
+                                                    constant: Constants.LogInTextField.leftPadding),
+            logInTextField.heightAnchor.constraint(equalToConstant: Constants.LogInTextField.height)
         ])
     }
     
@@ -128,13 +128,13 @@ private extension LogInViewController {
     func logInButtonConstraints() {
         NSLayoutConstraint.activate([
             logInButton.topAnchor.constraint(equalTo: logInTextField.bottomAnchor,
-                                             constant: Constants.logInButton.logInButtonTopPadding),
+                                             constant: Constants.LogInButton.topPadding),
             logInButton.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             logInButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor,
-                                                 constant: Constants.logInButton.logInButtonLeadingPadding),
-            logInButton.heightAnchor.constraint(equalToConstant: Constants.logInButton.logInButtonHeight),
+                                                 constant: Constants.LogInButton.leftPadding),
+            logInButton.heightAnchor.constraint(equalToConstant: Constants.LogInButton.height),
             logInButton.bottomAnchor.constraint(lessThanOrEqualTo: scrollView.bottomAnchor,
-                                                constant: Constants.logInButton.logInButtonBottomPadding)
+                                                constant: Constants.LogInButton.bottomPadding)
         ])
     }
     
@@ -181,7 +181,7 @@ private extension LogInViewController {
                 if keyboardSize.height > buttonYCoordinate {
                     view.frame.origin.y -= keyboardSize.height
                 } else {
-                    view.frame.origin.y -= keyboardSize.height + Constants.logInButton.logInButtonBottomPadding
+                    view.frame.origin.y -= keyboardSize.height + Constants.LogInButton.bottomPadding
                 }
             }
         }
@@ -198,21 +198,21 @@ private extension LogInViewController {
 // MARK: - Constants
 private extension LogInViewController {
     enum Constants {
-        enum logInTextField {
-            static let logInTextFieldCornerRadius: CGFloat = 12
-            static let logInTextFieldBorderWidth: CGFloat = 1
-            static let logInTextFieldTopPadding: CGFloat = 92
-            static let logInTextFieldLeadingPadding: CGFloat = 55
-            static let logInTextFieldHeight: CGFloat = 44
-            static let logInTextFieldPlaceHolder = "შეიყვანე სახელი"
+        enum LogInTextField {
+            static let cornerRadius: CGFloat = 12
+            static let borderWidth: CGFloat = 1
+            static let topPadding: CGFloat = 92
+            static let leftPadding: CGFloat = 55
+            static let height: CGFloat = 44
+            static let placeHolder = "შეიყვანე სახელი"
         }
-        enum logInButton {
-            static let logInButtonTopPadding: CGFloat = 26
-            static let logInButtonBottomPadding: CGFloat = -149
-            static let logInButtonLeadingPadding: CGFloat = 117
-            static let logInButtonHeight: CGFloat = 44
-            static let logInButtonTitleLableFont: CGFloat = 12
-            static let logInButtonTitle = "ქვიზის დაწყება"
+        enum LogInButton {
+            static let topPadding: CGFloat = 26
+            static let bottomPadding: CGFloat = -149
+            static let leftPadding: CGFloat = 117
+            static let height: CGFloat = 44
+            static let font: UIFont = .boldMyriadGeo(ofSize: 12)
+            static let title = "ქვიზის დაწყება"
         }
     }
 }

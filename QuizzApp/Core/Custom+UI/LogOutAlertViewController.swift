@@ -20,7 +20,7 @@ final class LogOutAlertViewController: UIViewController {
     private let alertView: UIView = {
         let view = UIView()
         view.backgroundColor = QuizzAppColor.buttonColor
-        view.layer.cornerRadius = Constants.alertView.alertViewRadius
+        view.layer.cornerRadius = Constants.AlertView.radius
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
@@ -28,24 +28,24 @@ final class LogOutAlertViewController: UIViewController {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: Constants.titleLabel.titleLabelFont)
+        label.font = Constants.TitleLabel.font
         label.textColor = .systemBackground
         label.textAlignment = .center
-        label.numberOfLines = Constants.titleLabel.titleLabelNumberOfLines
+        label.numberOfLines = Constants.TitleLabel.numberOfLines
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
     }()
     
-    private lazy var yesButton = makeButton(Constants.yesButton.yesButtonTitle)
+    private lazy var yesButton = makeButton(Constants.YesButton.title)
     
-    private lazy var noButton = makeButton(Constants.noButton.noButtonTitle)
+    private lazy var noButton = makeButton(Constants.NoButton.title)
     
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [noButton, yesButton])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
-        stackView.spacing = Constants.stackView.stackViewSpacing
+        stackView.spacing = Constants.StackView.spacing
         
         return stackView
     }()
@@ -110,9 +110,9 @@ private extension LogOutAlertViewController {
             alertView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             alertView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             alertView.leadingAnchor.constraint(lessThanOrEqualTo: view.leadingAnchor,
-                                               constant: Constants.alertView.alertViewLeftPadding),
+                                               constant: Constants.AlertView.leftPadding),
             alertView.topAnchor.constraint(lessThanOrEqualTo: view.topAnchor,
-                                           constant: Constants.alertView.alertViewTopPadding)
+                                           constant: Constants.AlertView.topPadding)
         ])
     }
     
@@ -120,10 +120,10 @@ private extension LogOutAlertViewController {
     func titleLabelConstraints() {
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: alertView.topAnchor,
-                                            constant: Constants.titleLabel.titleTopPadding),
+                                            constant: Constants.TitleLabel.topPadding),
             titleLabel.centerXAnchor.constraint(equalTo: alertView.centerXAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: alertView.leadingAnchor,
-                                                constant: Constants.titleLabel.titleLeftPadding)
+                                                constant: Constants.TitleLabel.leftPadding)
         ])
     }
     
@@ -131,12 +131,12 @@ private extension LogOutAlertViewController {
     func stackViewConstraints() {
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor,
-                                           constant: Constants.stackView.stackViewTopPadding),
+                                           constant: Constants.StackView.topPadding),
             stackView.centerXAnchor.constraint(equalTo: alertView.centerXAnchor),
             stackView.leadingAnchor.constraint(equalTo: alertView.leadingAnchor,
-                                               constant: Constants.stackView.stackViewLeftPadding),
+                                               constant: Constants.StackView.leftPadding),
             stackView.bottomAnchor.constraint(equalTo: alertView.bottomAnchor,
-                                              constant: Constants.stackView.stackViewBottomPadding)
+                                              constant: Constants.StackView.bottomPadding)
         ])
     }
     
@@ -157,28 +157,28 @@ private extension LogOutAlertViewController {
 private extension LogOutAlertViewController {
     enum Constants {
         static let backgroundViewColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.6)
-        enum alertView{
-            static let alertViewRadius: CGFloat = 31
-            static let alertViewLeftPadding: CGFloat = 53
-            static let alertViewTopPadding: CGFloat = 350
+        enum AlertView{
+            static let radius: CGFloat = 31
+            static let leftPadding: CGFloat = 53
+            static let topPadding: CGFloat = 350
         }
-        enum titleLabel {
-            static let titleLabelFont: CGFloat = 16
-            static let titleTopPadding: CGFloat = 40
-            static let titleLeftPadding: CGFloat = 24
-            static let titleLabelNumberOfLines = 0
+        enum TitleLabel {
+            static let font: UIFont = .boldMyriadGeo(ofSize: 16)
+            static let topPadding: CGFloat = 40
+            static let leftPadding: CGFloat = 24
+            static let numberOfLines = 0
         }
-        enum yesButton {
-            static let yesButtonTitle = "კი"
+        enum YesButton {
+            static let title = "კი"
         }
-        enum noButton {
-            static let noButtonTitle = "არა"
+        enum NoButton {
+            static let title = "არა"
         }
-        enum stackView{
-            static let stackViewSpacing: CGFloat = 10
-            static let stackViewTopPadding: CGFloat = 20
-            static let stackViewLeftPadding: CGFloat = 24
-            static let stackViewBottomPadding: CGFloat = -40
+        enum StackView{
+            static let spacing: CGFloat = 10
+            static let topPadding: CGFloat = 20
+            static let leftPadding: CGFloat = 24
+            static let bottomPadding: CGFloat = -40
         }
     }
 }

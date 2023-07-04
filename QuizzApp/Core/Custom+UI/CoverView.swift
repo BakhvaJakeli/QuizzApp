@@ -14,8 +14,8 @@ final class CoverView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.backgroundColor = .clear
-        label.text = Constants.title.titleText
-        label.font = .boldSystemFont(ofSize: Constants.title.titleFontSize)
+        label.text = Constants.Title.titleText
+        label.font = Constants.Title.font
         label.textColor = .white
         label.textAlignment = .center
         
@@ -65,10 +65,10 @@ final class CoverView: UIView {
     private func titleConstraints() {
         NSLayoutConstraint.activate([
             title.topAnchor.constraint(equalTo: topAnchor,
-                                       constant: Constants.title.titleTopPadding),
+                                       constant: Constants.Title.topPadding),
             title.centerXAnchor.constraint(equalTo: centerXAnchor),
             title.bottomAnchor.constraint(equalTo: logInImageView.topAnchor,
-                                          constant: Constants.title.titleBottomPadding)
+                                          constant: Constants.Title.bottomPadding)
         ])
     }
     
@@ -77,7 +77,7 @@ final class CoverView: UIView {
         NSLayoutConstraint.activate([
             logInImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             logInImageView.bottomAnchor.constraint(equalTo: bottomAnchor,
-                                                   constant: Constants.logInImageView.logInImageBottomPadding)
+                                                   constant: Constants.LogInImageView.bottomPadding)
         ])
     }
     
@@ -146,14 +146,14 @@ final class CoverView: UIView {
 // MARK: - Constants
 private extension CoverView {
     enum Constants {
-        enum title {
-            static let titleFontSize: CGFloat = 20
-            static let titleTopPadding: CGFloat = 121
-            static let titleBottomPadding: CGFloat = -34
+        enum Title {
+            static let font: UIFont = .boldMyriadGeo(ofSize: 20)
+            static let topPadding: CGFloat = 121
+            static let bottomPadding: CGFloat = -34
             static let titleText = "ჩემი პირველი ქვიზი"
         }
-        enum logInImageView{
-            static let logInImageBottomPadding: CGFloat = -23
+        enum LogInImageView{
+            static let bottomPadding: CGFloat = -23
         }
     }
 }

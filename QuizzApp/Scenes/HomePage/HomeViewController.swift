@@ -23,7 +23,7 @@ final class HomeViewController: UIViewController {
     // MARK: Components
     let alertView: LogOutAlertViewController = {
         let view = LogOutAlertViewController()
-        view.setTitleText(Constants.alertTitle.alertTitleLabelText)
+        view.setTitleText(Constants.AlertTitle.text)
         
         return view
     }()
@@ -32,8 +32,8 @@ final class HomeViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = QuizzAppColor.buttonColor
-        label.text = Constants.titleLabel.titleLabelText
-        label.font = .boldSystemFont(ofSize: Constants.titleLabel.titleLabelFont)
+        label.text = Constants.TitleLabel.text
+        label.font = Constants.TitleLabel.font
         
         return label
     }()
@@ -42,7 +42,7 @@ final class HomeViewController: UIViewController {
         let view = ScoreView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = QuizzAppColor.blueSecondaryDefault
-        view.layer.cornerRadius = Constants.scoreView.scoreViewCornerRadius
+        view.layer.cornerRadius = Constants.ScoreView.cornerRadius
         view.delegate = self
         
         return view
@@ -51,8 +51,8 @@ final class HomeViewController: UIViewController {
     private let chooseSubjectLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: Constants.chooseLabel.chooseLabelFont)
-        label.text = Constants.chooseLabel.chooseLabelText
+        label.font = Constants.ChooseSubjectLabel.font
+        label.text = Constants.ChooseSubjectLabel.text
         
         return label
     }()
@@ -142,10 +142,10 @@ private extension HomeViewController {
     func titleLabelConstraints() {
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
-                                            constant: Constants.titleLabel.titleLabelTopPadding),
+                                            constant: Constants.TitleLabel.topPadding),
             titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,
-                                                constant: Constants.titleLabel.titleLabelLeftPadding),
-            titleLabel.heightAnchor.constraint(equalToConstant: Constants.titleLabel.titleLabelHeight)
+                                                constant: Constants.TitleLabel.leftPadding),
+            titleLabel.heightAnchor.constraint(equalToConstant: Constants.TitleLabel.height)
         ])
     }
     
@@ -153,10 +153,10 @@ private extension HomeViewController {
     func scoreViewConstraints() {
         NSLayoutConstraint.activate([
             scoreView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor,
-                                           constant: Constants.scoreView.scoreViewTopPadding),
+                                           constant: Constants.ScoreView.topPadding),
             scoreView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             scoreView.leadingAnchor.constraint(equalTo: view.leadingAnchor,
-                                               constant: Constants.scoreView.scoreViewLeftPadding)
+                                               constant: Constants.ScoreView.leftPadding)
         ])
     }
     
@@ -164,11 +164,11 @@ private extension HomeViewController {
     func chooseSubjectLabelConstraints() {
         NSLayoutConstraint.activate([
             chooseSubjectLabel.topAnchor.constraint(equalTo: scoreView.bottomAnchor,
-                                                    constant: Constants.chooseSubjectLabel.chooseSubjectLabelTopPadding),
+                                                    constant: Constants.ChooseSubjectLabel.topPadding),
             chooseSubjectLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,
-                                                        constant: Constants.chooseSubjectLabel.chooseSubjectLabelLeftPadding),
+                                                        constant: Constants.ChooseSubjectLabel.leftPadding),
             chooseSubjectLabel.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor,
-                                                         constant: Constants.chooseSubjectLabel.chooseSubjectLabelRightPadding)
+                                                         constant: Constants.ChooseSubjectLabel.rightPadding)
         ])
     }
     
@@ -176,10 +176,10 @@ private extension HomeViewController {
     func subjectsTableViewConstraints() {
         NSLayoutConstraint.activate([
             subjectsTableView.topAnchor.constraint(equalTo: chooseSubjectLabel.bottomAnchor,
-                                                   constant: Constants.subjectsTableView.subjectsTableViewTopPadding),
+                                                   constant: Constants.SubjectsTableView.topPadding),
             subjectsTableView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             subjectsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor,
-                                                       constant: Constants.subjectsTableView.subjectsTableViewLeftPadding),
+                                                       constant: Constants.SubjectsTableView.leftPadding),
         ])
     }
     
@@ -187,11 +187,11 @@ private extension HomeViewController {
     func separatorViewConstraints() {
         NSLayoutConstraint.activate([
             separatorView.topAnchor.constraint(lessThanOrEqualTo: subjectsTableView.bottomAnchor,
-                                               constant: Constants.separatorView.separatorViewTopPadding),
+                                               constant: Constants.SeparatorView.topPadding),
             separatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             separatorView.leadingAnchor.constraint(equalTo: view.leadingAnchor,
-                                                   constant: Constants.separatorView.separatorViewLeftPadding),
-            separatorView.heightAnchor.constraint(equalToConstant: Constants.separatorView.separatorViewHeight)
+                                                   constant: Constants.SeparatorView.leftPadding),
+            separatorView.heightAnchor.constraint(equalToConstant: Constants.SeparatorView.height)
         ])
     }
     
@@ -199,11 +199,11 @@ private extension HomeViewController {
     func logOutButtonConstraints() {
         NSLayoutConstraint.activate([
             logOutButton.topAnchor.constraint(equalTo: separatorView.bottomAnchor,
-                                              constant: Constants.logOutButton.logOutButtonTopPadding),
+                                              constant: Constants.LogOutButton.topPadding),
             logOutButton.trailingAnchor.constraint(equalTo: view.trailingAnchor,
-                                                   constant: Constants.logOutButton.logOutButtonRightPadding),
+                                                   constant: Constants.LogOutButton.rightPadding),
             logOutButton.bottomAnchor.constraint(equalTo: view.bottomAnchor,
-                                                 constant: Constants.logOutButton.logOutButtonBottomPadding)
+                                                 constant: Constants.LogOutButton.bottomPadding)
         ])
     }
     
@@ -261,43 +261,41 @@ extension HomeViewController: ScoreViewDelegate {
 // MARK: - Constants
 private extension HomeViewController {
     enum Constants {
-        enum titleLabel {
-            static let titleLabelText = "გამარჯობა, ირაკლი"
-            static let titleLabelFont: CGFloat = 16
-            static let titleLabelTopPadding: CGFloat = 8
-            static let titleLabelLeftPadding: CGFloat = 16
-            static let titleLabelHeight: CGFloat = 21
+        enum TitleLabel {
+            static let text = "გამარჯობა, ირაკლი"
+            static let font: UIFont = .boldMyriadGeo(ofSize: 16)
+            static let topPadding: CGFloat = 8
+            static let leftPadding: CGFloat = 16
+            static let height: CGFloat = 21
         }
-        enum scoreView {
-            static let scoreViewCornerRadius: CGFloat = 26
-            static let scoreViewTopPadding: CGFloat = 20
-            static let scoreViewLeftPadding: CGFloat = 16
+        enum ScoreView {
+            static let cornerRadius: CGFloat = 26
+            static let topPadding: CGFloat = 20
+            static let leftPadding: CGFloat = 16
         }
-        enum chooseLabel {
-            static let chooseLabelText = "აირჩიე საგანი"
-            static let chooseLabelFont: CGFloat = 16
+        enum ChooseSubjectLabel {
+            static let text = "აირჩიე საგანი"
+            static let font: UIFont = .myriaGeo(ofSize: 16)
+            static let topPadding: CGFloat = 32
+            static let leftPadding: CGFloat = 16
+            static let rightPadding: CGFloat = 253
         }
-        enum chooseSubjectLabel {
-            static let chooseSubjectLabelTopPadding: CGFloat = 32
-            static let chooseSubjectLabelLeftPadding: CGFloat = 16
-            static let chooseSubjectLabelRightPadding: CGFloat = 253
+        enum SubjectsTableView {
+            static let topPadding: CGFloat = 16
+            static let leftPadding: CGFloat = 16
         }
-        enum subjectsTableView {
-            static let subjectsTableViewTopPadding: CGFloat = 16
-            static let subjectsTableViewLeftPadding: CGFloat = 16
+        enum SeparatorView {
+            static let topPadding: CGFloat = 20
+            static let leftPadding: CGFloat = 0
+            static let height: CGFloat = 2
         }
-        enum separatorView {
-            static let separatorViewTopPadding: CGFloat = 20
-            static let separatorViewLeftPadding: CGFloat = 0
-            static let separatorViewHeight: CGFloat = 2
+        enum LogOutButton {
+            static let topPadding: CGFloat = 12
+            static let rightPadding: CGFloat = -16
+            static let bottomPadding: CGFloat = -11
         }
-        enum logOutButton {
-            static let logOutButtonTopPadding: CGFloat = 12
-            static let logOutButtonRightPadding: CGFloat = -16
-            static let logOutButtonBottomPadding: CGFloat = -11
-        }
-        enum alertTitle {
-            static let alertTitleLabelText = "ნამდვილად გსურს გასვლა?"
+        enum AlertTitle {
+            static let text = "ნამდვილად გსურს გასვლა?"
         }
     }
 }

@@ -18,24 +18,26 @@ final class ScoreView: UIView {
     // MARK: Components
     private let gpaLabel: UILabel = {
         let label = UILabel()
-        let attributedString = NSMutableAttributedString(string: Constants.gpaLabel.gpaText)
+        let attributedString = NSMutableAttributedString(string: Constants.GpaLabel.text)
         let initialAttributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.systemBackground,
-            .font: UIFont.systemFont(ofSize: Constants.gpaLabel.gpaLabelFont)
+//            .font: UIFont.systemFont(ofSize: Constants.GpaLabel.gpaLabelFont)
+            .font: Constants.GpaLabel.defaultFont
         ]
         let yellowBoldAttributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: QuizzAppColor.buttonColor,
-            .font: UIFont.boldSystemFont(ofSize: Constants.gpaLabel.gpaLabelFont)
+//            .font: UIFont.boldSystemFont(ofSize: Constants.GpaLabel.gpaLabelFont)
+            .font: Constants.GpaLabel.boldFont
         ]
         attributedString.addAttributes(initialAttributes,
-                                       range: NSRange(location: Constants.gpaLabel.defaultAttributeLocation,
-                                                      length: Constants.gpaLabel.defaultAttributeLength))
+                                       range: NSRange(location: Constants.GpaLabel.defaultAttributeLocation,
+                                                      length: Constants.GpaLabel.defaultAttributeLength))
         attributedString.addAttributes(yellowBoldAttributes,
-                                       range: NSRange(location: Constants.gpaLabel.defaultAttributeLength,
-                                                      length: Constants.gpaLabel.gpaText.count - Constants.gpaLabel.defaultAttributeLength))
+                                       range: NSRange(location: Constants.GpaLabel.defaultAttributeLength,
+                                                      length: Constants.GpaLabel.text.count - Constants.GpaLabel.defaultAttributeLength))
         label.attributedText = attributedString
         label.backgroundColor = QuizzAppColor.blueSecondaryLight
-        label.layer.cornerRadius = Constants.gpaLabel.gpaLabelCornerRadius
+        label.layer.cornerRadius = Constants.GpaLabel.cornerRadius
         label.clipsToBounds = true
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -45,8 +47,8 @@ final class ScoreView: UIView {
     
     private let detailLabel: UILabel = {
         let label = UILabel()
-        label.text = Constants.detailLabel.detailLabelText
-        label.font = .boldSystemFont(ofSize: Constants.detailLabel.detailLabelFont)
+        label.text = Constants.DetailLabel.text
+        label.font = Constants.DetailLabel.font
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .systemBackground
         
@@ -101,11 +103,11 @@ private extension ScoreView {
     func gpaLabelConstrints() {
         NSLayoutConstraint.activate([
             gpaLabel.topAnchor.constraint(equalTo: topAnchor,
-                                          constant: Constants.gpaLabel.gpaLabelTopPadding),
+                                          constant: Constants.GpaLabel.topPadding),
             gpaLabel.leadingAnchor.constraint(equalTo: leadingAnchor,
-                                              constant: Constants.gpaLabel.gpaLabelLeftPadding),
+                                              constant: Constants.GpaLabel.leftPadding),
             gpaLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-            gpaLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: Constants.gpaLabel.gpaLabelMaxWidth)
+            gpaLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: Constants.GpaLabel.maxWidth)
         ])
     }
     
@@ -113,7 +115,7 @@ private extension ScoreView {
     func detailsLabelConstraints() {
         NSLayoutConstraint.activate([
             detailLabel.topAnchor.constraint(equalTo: topAnchor,
-                                             constant: Constants.detailLabel.detailsLabelTopPadding),
+                                             constant: Constants.DetailLabel.topPadding),
             detailLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
         ])
     }
@@ -122,12 +124,12 @@ private extension ScoreView {
     func arrowImageConstraints() {
         NSLayoutConstraint.activate([
             arrowImageVIew.topAnchor.constraint(equalTo: topAnchor,
-                                                constant: Constants.arrowImageView.arrowImageTopPadding),
+                                                constant: Constants.ArrowImageView.topPadding),
             arrowImageVIew.centerYAnchor.constraint(equalTo: centerYAnchor),
             arrowImageVIew.trailingAnchor.constraint(equalTo: trailingAnchor,
-                                                     constant: -Constants.arrowImageView.arrowImageRigtPadding),
+                                                     constant: -Constants.ArrowImageView.rigtPadding),
             arrowImageVIew.leadingAnchor.constraint(equalTo: detailLabel.trailingAnchor,
-                                                    constant: Constants.arrowImageView.arrowImageLeftPadding)
+                                                    constant: Constants.ArrowImageView.leftPadding)
         ])
     }
     
@@ -138,25 +140,26 @@ private extension ScoreView {
 // MARK: - Constants
 private extension ScoreView {
     enum Constants {
-        enum gpaLabel {
-            static let gpaText = "GPA - 4.0"
-            static let gpaLabelCornerRadius: CGFloat = 15
-            static let gpaLabelTopPadding: CGFloat = 20
-            static let gpaLabelLeftPadding: CGFloat = 18
-            static let gpaLabelMaxWidth: CGFloat = 82
-            static let gpaLabelFont: CGFloat = 16
+        enum GpaLabel {
+            static let text = "GPA - 4.0"
+            static let cornerRadius: CGFloat = 15
+            static let topPadding: CGFloat = 20
+            static let leftPadding: CGFloat = 18
+            static let maxWidth: CGFloat = 82
+            static let defaultFont: UIFont = .myriaGeo(ofSize: 16)
+            static let boldFont: UIFont = .boldMyriadGeo(ofSize: 16)
             static let defaultAttributeLocation = 0
             static let defaultAttributeLength = 6
         }
-        enum detailLabel {
-            static let detailLabelText = "დეტალურად"
-            static let detailsLabelTopPadding: CGFloat = 28
-            static let detailLabelFont: CGFloat = 12
+        enum DetailLabel {
+            static let text = "დეტალურად"
+            static let topPadding: CGFloat = 28
+            static let font: UIFont = .boldMyriadGeo(ofSize: 12)
         }
-        enum arrowImageView {
-            static let arrowImageTopPadding: CGFloat = 30
-            static let arrowImageRigtPadding: CGFloat = 34
-            static let arrowImageLeftPadding: CGFloat = 4
+        enum ArrowImageView {
+            static let topPadding: CGFloat = 30
+            static let rigtPadding: CGFloat = 34
+            static let leftPadding: CGFloat = 4
         }
     }
 }
