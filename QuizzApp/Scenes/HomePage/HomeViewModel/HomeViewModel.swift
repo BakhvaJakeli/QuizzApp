@@ -23,5 +23,4 @@ final class HomeViewModel {
             self.subjects = data
         }
     }
-    
 }

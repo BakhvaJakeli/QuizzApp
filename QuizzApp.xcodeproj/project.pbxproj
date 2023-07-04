@@ -17,6 +17,7 @@
 		1BB1A8DB2A549C7800BECAE5 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB1A8DA2A549C7800BECAE5 /* NetworkManager.swift */; };
 		1BB1A8DE2A549D7300BECAE5 /* SubjectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB1A8DD2A549D7300BECAE5 /* SubjectManager.swift */; };
 		1BB1A8E12A54A02400BECAE5 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB1A8E02A54A02400BECAE5 /* HomeViewModel.swift */; };
+		1BB1A8E32A54A80200BECAE5 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB1A8E22A54A80200BECAE5 /* ImageManager.swift */; };
 		8F04CBFB2A39D27B000A9BBB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F04CBFA2A39D27B000A9BBB /* AppDelegate.swift */; };
 		8F04CBFD2A39D27B000A9BBB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F04CBFC2A39D27B000A9BBB /* SceneDelegate.swift */; };
 		8F04CBFF2A39D27B000A9BBB /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F04CBFE2A39D27B000A9BBB /* LogInViewController.swift */; };
@@ -51,6 +52,7 @@
 		1BB1A8DA2A549C7800BECAE5 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		1BB1A8DD2A549D7300BECAE5 /* SubjectManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectManager.swift; sourceTree = "<group>"; };
 		1BB1A8E02A54A02400BECAE5 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		1BB1A8E22A54A80200BECAE5 /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		8F04CBF72A39D27B000A9BBB /* QuizzApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuizzApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F04CBFA2A39D27B000A9BBB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8F04CBFC2A39D27B000A9BBB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 			children = (
 				1BB1A8DA2A549C7800BECAE5 /* NetworkManager.swift */,
 				1BB1A8DD2A549D7300BECAE5 /* SubjectManager.swift */,
+				1BB1A8E22A54A80200BECAE5 /* ImageManager.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -394,6 +397,7 @@
 				8F04CC312A3B9326000A9BBB /* TestViewController.swift in Sources */,
 				8F04CBFF2A39D27B000A9BBB /* LogInViewController.swift in Sources */,
 				1BB1A8CB2A4C61E500BECAE5 /* UITableView+Extension.swift in Sources */,
+				1BB1A8E32A54A80200BECAE5 /* ImageManager.swift in Sources */,
 				8FB3260A2A3FB9DF001727E7 /* ScoreTableViewCell.swift in Sources */,
 				8FB326082A3FA890001727E7 /* AppUtility.swift in Sources */,
 				1BB1A8D92A543EF400BECAE5 /* UIFont+Extension.swift in Sources */,

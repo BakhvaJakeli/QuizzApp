@@ -227,7 +227,6 @@ private extension HomeViewController {
 // MARK: - Table View Functions
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        subjects.count
         viewModel.subjects.count
     }
     

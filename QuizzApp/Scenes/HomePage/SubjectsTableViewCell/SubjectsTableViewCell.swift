@@ -40,8 +40,8 @@ final class SubjectsTableViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = Constants.DescriptionLabel.font
-        label.text = Constants.DescriptionLabel.text
         label.textColor = QuizzAppColor.descriptionLabelTextColor
+        label.numberOfLines = Constants.DescriptionLabel.numberOfLines
         
         return label
     }()
@@ -84,6 +84,11 @@ final class SubjectsTableViewCell: UITableViewCell {
     func configure(with subject: Subject) {
 //        subjectImageView.image = subject.image
         titleLabel.text = subject.quizTitle
+        ImageManager.shared.loadImage(from: subject.quizIcon) { [weak self] image in
+            guard let self = self else { return }
+            self.subjectImageView.image = image
+        }
+        descriptionLabel.text = subject.quizDescription
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -133,6 +138,8 @@ private extension SubjectsTableViewCell {
             subjectImageView.centerYAnchor.constraint(equalTo: mainView.centerYAnchor),
             subjectImageView.leadingAnchor.constraint(equalTo: mainView.leadingAnchor,
                                                       constant: Constants.SubjectImageView.leftPadding),
+            subjectImageView.widthAnchor.constraint(equalToConstant: Constants.SubjectImageView.width),
+            subjectImageView.heightAnchor.constraint(equalToConstant: Constants.SubjectImageView.height)
         ])
     }
     
@@ -143,7 +150,7 @@ private extension SubjectsTableViewCell {
                                            constant: Constants.StackView.topPadding),
             stackView.leadingAnchor.constraint(equalTo: subjectImageView.trailingAnchor,
                                                constant: Constants.StackView.leftPadding),
-            stackView.bottomAnchor.constraint(equalTo: mainView.bottomAnchor,
+            stackView.bottomAnchor.constraint(greaterThanOrEqualTo: mainView.bottomAnchor,
                                               constant: Constants.StackView.bottomPadding)
         ])
     }
@@ -172,7 +179,7 @@ private extension SubjectsTableViewCell {
         }
         enum DescriptionLabel {
             static let font: UIFont = .myriaGeo(ofSize: 12)
-            static let text = "აღწერა"
+            static let numberOfLines = 0
         }
         enum TitleLabel {
             static let font: UIFont = .boldMyriadGeo(ofSize: 16)
@@ -180,6 +187,8 @@ private extension SubjectsTableViewCell {
         enum SubjectImageView {
             static let topPadding: CGFloat = 22
             static let leftPadding: CGFloat = 30
+            static let height: CGFloat = 62
+            static let width: CGFloat = 64
         }
         enum StackView {
             static let topPadding: CGFloat = 33

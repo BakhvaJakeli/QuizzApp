@@ -21,12 +21,10 @@ final class ScoreView: UIView {
         let attributedString = NSMutableAttributedString(string: Constants.GpaLabel.text)
         let initialAttributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.systemBackground,
-//            .font: UIFont.systemFont(ofSize: Constants.GpaLabel.gpaLabelFont)
             .font: Constants.GpaLabel.defaultFont
         ]
         let yellowBoldAttributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: QuizzAppColor.buttonColor,
-//            .font: UIFont.boldSystemFont(ofSize: Constants.GpaLabel.gpaLabelFont)
             .font: Constants.GpaLabel.boldFont
         ]
         attributedString.addAttributes(initialAttributes,
@@ -154,7 +152,7 @@ private extension ScoreView {
         enum DetailLabel {
             static let text = "დეტალურად"
             static let topPadding: CGFloat = 28
-            static let font: UIFont = .boldMyriadGeo(ofSize: 12)
+            static let font: UIFont = .myriaGeo(ofSize: 12)
         }
         enum ArrowImageView {
             static let topPadding: CGFloat = 30
