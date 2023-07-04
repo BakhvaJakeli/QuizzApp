@@ -9,14 +9,16 @@ import UIKit
 
 final class HomeViewController: UIViewController {
     
+    let viewModel = HomeViewModel()
+    
     let subjects = [
-        Subject(image: QuizzAppImage.georgraphy ?? UIImage(),
+        TestSubject(image: QuizzAppImage.georgraphy ?? UIImage(),
                 title: "გეოგრაფია"),
-        Subject(image: QuizzAppImage.programming ?? UIImage(),
+        TestSubject(image: QuizzAppImage.programming ?? UIImage(),
                 title: "პროგრამირება"),
-        Subject(image: QuizzAppImage.history ?? UIImage(),
+        TestSubject(image: QuizzAppImage.history ?? UIImage(),
                 title: "ისტორია"),
-        Subject(image: QuizzAppImage.physics ?? UIImage(),
+        TestSubject(image: QuizzAppImage.physics ?? UIImage(),
                 title: "ფიზიკა"),
     ]
     
@@ -116,6 +118,13 @@ private extension HomeViewController {
         view.backgroundColor = .systemBackground
         navigationController?.isNavigationBarHidden = true
         alertView.delegate = self
+        viewModel.getData()
+        viewModel.reloadTableView = { [weak self] in
+            guard let self = self else {return}
+            DispatchQueue.main.async {
+                self.subjectsTableView.reloadData()
+            }
+        }
     }
     
     // MARK: Add Sub Views
@@ -218,12 +227,13 @@ private extension HomeViewController {
 // MARK: - Table View Functions
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        subjects.count
+//        subjects.count
+        viewModel.subjects.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: SubjectsTableViewCell = tableView.dequeReusableCell(for: indexPath)
-        let subject = subjects[indexPath.row]
+        let subject = viewModel.subjects[indexPath.row]
         cell.configure(with: subject)
         
         return cell

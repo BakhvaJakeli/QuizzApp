@@ -82,8 +82,8 @@ final class SubjectsTableViewCell: UITableViewCell {
     
     // MARK: Config Cell
     func configure(with subject: Subject) {
-        subjectImageView.image = subject.image
-        titleLabel.text = subject.title
+//        subjectImageView.image = subject.image
+        titleLabel.text = subject.quizTitle
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
