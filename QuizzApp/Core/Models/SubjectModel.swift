@@ -5,12 +5,7 @@
 //  Created by bakhva  on 18.06.23.
 //
 
-import UIKit
-
-struct TestSubject {
-    let image: UIImage
-    let title: String
-}
+import Foundation
 
 // MARK: - Subject
 struct Subject: Codable {

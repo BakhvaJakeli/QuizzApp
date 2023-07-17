@@ -11,17 +11,6 @@ final class HomeViewController: UIViewController {
     
     let viewModel = HomeViewModel()
     
-    let subjects = [
-        TestSubject(image: QuizzAppImage.georgraphy ?? UIImage(),
-                title: "გეოგრაფია"),
-        TestSubject(image: QuizzAppImage.programming ?? UIImage(),
-                title: "პროგრამირება"),
-        TestSubject(image: QuizzAppImage.history ?? UIImage(),
-                title: "ისტორია"),
-        TestSubject(image: QuizzAppImage.physics ?? UIImage(),
-                title: "ფიზიკა"),
-    ]
-    
     // MARK: Components
     let alertView: LogOutAlertViewController = {
         let view = LogOutAlertViewController()
@@ -243,8 +232,9 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        navigationController?.pushViewController(TestViewController(), animated: true)
+        let selectedSubject = viewModel.subjects[indexPath.row]
+        let testViewController = TestViewController(subject: selectedSubject)
+        navigationController?.pushViewController(testViewController, animated: true)
     }
 }
 

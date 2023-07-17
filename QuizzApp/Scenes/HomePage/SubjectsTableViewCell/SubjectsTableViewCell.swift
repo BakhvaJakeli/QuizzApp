@@ -82,11 +82,12 @@ final class SubjectsTableViewCell: UITableViewCell {
     
     // MARK: Config Cell
     func configure(with subject: Subject) {
-//        subjectImageView.image = subject.image
         titleLabel.text = subject.quizTitle
         ImageManager.shared.loadImage(from: subject.quizIcon) { [weak self] image in
             guard let self = self else { return }
-            self.subjectImageView.image = image
+            DispatchQueue.main.async {
+                self.subjectImageView.image = image
+            }
         }
         descriptionLabel.text = subject.quizDescription
     }

@@ -9,18 +9,15 @@ import UIKit
 
 final class TestViewController: UIViewController {
     
-    let answers = [
-        "Python",
-        "Java",
-        "C++",
-        "Kotlin"
-    ]
+    private var questionNumber = 0
+        
+    private let subject: Subject
     
     // MARK: Components
-    private let scoreProgressView: ScoreProgressBarView = {
+    private lazy var scoreProgressView: ScoreProgressBarView = {
         let progressView = ScoreProgressBarView()
-        progressView.updateProgessBar(count: 8,
-                                      total: 10)
+        progressView.updateProgessBar(count: questionNumber,
+                                      total: subject.questionsCount)
         progressView.translatesAutoresizingMaskIntoConstraints = false
         
         return progressView
@@ -70,11 +67,12 @@ final class TestViewController: UIViewController {
         return label
     }()
     
-    private let questionLabel: UILabel = {
+    private lazy var questionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = Constants.QuestionLabel.font
-        label.text = Constants.QuestionLabel.text
+//        label.text = Constants.QuestionLabel.text
+        label.text = subject.questions[questionNumber].questionTitle
         label.numberOfLines = Constants.QuestionLabel.numberOfLines
         label.textAlignment = .center
         
@@ -112,6 +110,15 @@ final class TestViewController: UIViewController {
         setConstraints()
     }
     
+    // MARK: Init
+    init(subject: Subject) {
+        self.subject = subject
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 // MARK: - Private Functions
@@ -222,13 +229,27 @@ private extension TestViewController {
                                                 constant: Constants.NextButton.leftPadding),
             nextButton.heightAnchor.constraint(equalToConstant: Constants.NextButton.nextButtonHeight),
             view.safeAreaLayoutGuide.bottomAnchor.constraint(lessThanOrEqualTo: nextButton.bottomAnchor,
-                                                             constant: -Constants.NextButton.nextButtonBottomPadding)
+                                                             constant: -Constants.NextButton.nextButtonBottomPadding),
+            nextButton.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor,
+                                              constant: -10)
         ])
     }
     
     func showFinishedQuizzAlert() {
         completionViewController.modalPresentationStyle = .overFullScreen
         present(completionViewController, animated: true)
+    }
+    
+    func didAnswerQuestion() {
+        if questionNumber < subject.questionsCount - 1 {
+            questionNumber += 1
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+                guard let self = self else {return}
+                self.questionLabel.text = subject.questions[questionNumber].questionTitle
+            }
+        } else {
+            questionNumber = 0
+        }
     }
     
     // MARK: Quit Action
@@ -241,12 +262,12 @@ private extension TestViewController {
 // MARK: - Table View Functions
 extension TestViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        answers.count
+        subject.questions[questionNumber].answers.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: AnswerTableViewCell = tableView.dequeReusableCell(for: indexPath)
-        let answer = answers[indexPath.row]
+        let answer = subject.questions[questionNumber].answers[indexPath.row]
         cell.configure(with: answer)
         
         return cell
@@ -259,15 +280,17 @@ extension TestViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) as? AnswerTableViewCell else {return}
         tableView.allowsSelection = false
-        if indexPath.row == 2 {
+        if cell.answerLabel.text == subject.questions[questionNumber].correctAnswer {
             cell.correctAnswerSelected()
             cell.setCorrectAnswerColor()
         } else {
             cell.setIncorrectAnswerColor()
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + TimeInterval(Constants.CompletionAlert.delay)) {[weak self] in
-            guard let self = self else {return}
-            self.showFinishedQuizzAlert()
+        didAnswerQuestion()
+        DispatchQueue.main.asyncAfter(deadline: .now() + TimeInterval(Constants.CompletionAlert.delay)) {
+//            guard let self = self else {return}
+//            self.showFinishedQuizzAlert()
+            tableView.reloadData()
             tableView.allowsSelection = true
         }
     }

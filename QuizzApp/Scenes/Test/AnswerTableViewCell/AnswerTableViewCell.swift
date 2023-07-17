@@ -21,7 +21,7 @@ final class AnswerTableViewCell: UITableViewCell {
         return view
     }()
     
-    private let answerLabel: UILabel = {
+    let answerLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black
@@ -77,16 +77,28 @@ final class AnswerTableViewCell: UITableViewCell {
     // MARK: Point gets added
     func correctAnswerSelected() {
         stackView.isHidden = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            guard let self = self else { return }
+            self.stackView.isHidden = true
+        }
     }
     
     // MARK: Correct Answer Color Set
     func setCorrectAnswerColor() {
         mainView.backgroundColor = .green
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            guard let self = self else { return }
+            self.mainView.backgroundColor = QuizzAppColor.cellViewColor
+        }
     }
     
     // MARK: Incorrect Answer Color Set
     func setIncorrectAnswerColor() {
         mainView.backgroundColor = .red
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            guard let self = self else { return }
+            self.mainView.backgroundColor = QuizzAppColor.cellViewColor
+        }
     }
 }
 
